@@ -1,20 +1,21 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import { v4 } from 'uuid';
 
 @ObjectType()
 @Entity()
 export class User {
   @Field(() => ID)
-  @PrimaryKey()
-  id!: number;
+  @PrimaryKey({ type: 'uuid' })
+  id: string = v4();
 
   @Field(() => Date)
-  @Property()
-  createdAt = new Date();
+  @Property({ nullable: true })
+  createdAt?: Date = new Date();
 
   @Field(() => Date)
-  @Property({ onUpdate: () => new Date() })
-  updatedAt = new Date();
+  @Property({ nullable: true, onUpdate: () => new Date() })
+  updatedAt?: Date = new Date();
 
   @Field()
   @Property()

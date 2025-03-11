@@ -6,6 +6,6 @@ import { NotFoundError } from '@mikro-orm/core';
 export class EntityNotFoundFilter<T> implements GqlExceptionFilter {
   catch(exception: NotFoundError, host: ArgumentsHost) {
     GqlArgumentsHost.create(host);
-    return new NotFoundException(exception.message);
+    return new NotFoundException('Entity not found');
   }
 }

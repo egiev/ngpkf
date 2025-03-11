@@ -1,12 +1,16 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { EntityNotFoundFilter } from './exceptions/entity-not-found.filter';
+import { EntityNotFoundFilter } from './exceptions';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Global Exception Filter
   app.useGlobalFilters(new EntityNotFoundFilter());
+
+  // Global Validation Pipe
+  app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(process.env.PORT ?? 3000);
 }
