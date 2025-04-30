@@ -4,6 +4,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { KafkaModule } from './kafka/kafka.module';
+import { TestConsumer } from './test.consumer';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -16,8 +18,9 @@ import { UserModule } from './user/user.module';
     }),
     MikroOrmModule.forRoot(),
     UserModule,
+    KafkaModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, TestConsumer],
 })
 export class AppModule {}

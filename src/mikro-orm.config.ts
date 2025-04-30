@@ -3,12 +3,6 @@ import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import * as path from 'path';
 
-console.log({
-  dbName: process.env.DATABASE_NAME,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  host: process.env.DATABASE_HOST,
-});
 const options: Options = {
   driver: PostgreSqlDriver,
   dbName: process.env.DATABASE_NAME,
