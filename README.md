@@ -77,6 +77,14 @@ To stop the running containers:
 docker-compose down
 ```
 
+## Migration
+
+```
+docker exec -ti backend npx mikro-orm migration:create --config ./src/database/postgres/config.ts --context postgres
+
+docker exec -ti backend npx mikro-orm migration:up --config ./src/database/postgres/config.ts --context postgres
+```
+
 ## Docker Compose Configuration
 
 Ensure you have both `docker-compose.dev.yml` for development and `docker-compose.prod.yml` for production. Use the appropriate copy command before running the application.

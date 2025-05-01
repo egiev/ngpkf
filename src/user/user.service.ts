@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { EntityManager, wrap } from '@mikro-orm/core';
+import { InjectEntityManager } from '@mikro-orm/nestjs';
+import { User } from '../database/postgres/entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from './dto';
-import { User } from './user.entity';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly em: EntityManager) {}
+  constructor(
+    @InjectEntityManager('postgres') private readonly em: EntityManager,
+  ) {}
 
   async findAll(): Promise<User[]> {
     return await this.em.findAll(User, {});
