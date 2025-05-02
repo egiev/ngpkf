@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-// import { MongoModule } from './mongo/mongo.module';
-import { PostgresModule } from './postgres/postgres.module';
+import { MongoModule } from './mongo';
+import { PostgresModule } from './postgres';
 
 @Module({
-  imports: [PostgresModule],
-  exports: [PostgresModule],
+  imports: [MongoModule, PostgresModule],
+  exports: [MongoModule, PostgresModule],
 })
 export class DatabaseModule {}

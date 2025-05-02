@@ -11,6 +11,7 @@ const options: MikroOrmModuleSyncOptions = {
   user: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   host: process.env.POSTGRES_HOST,
+  port: process.env.POSTGRES_HOST ? Number(process.env.POSTGRES_HOST) : 5432,
   entities: [
     path.join(__dirname, '../../../dist/database/postgres/**/*.entity.js'),
   ],

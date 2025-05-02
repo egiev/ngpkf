@@ -3,23 +3,15 @@ import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
 
 @ObjectType()
-@Entity()
-export class User {
+@Entity({ collection: 'patient' })
+export class Patient {
   @Field(() => ID)
   @PrimaryKey({ type: 'uuid' })
-  id: string = v4();
+  _id: string = v4();
 
   @Field()
   @Property()
-  name!: string;
-
-  @Field()
-  @Property()
-  email!: string;
-
-  @Field(() => Number, { nullable: true })
-  @Property()
-  age?: number;
+  mrn!: string;
 
   @Field(() => Date)
   @Property({ nullable: true })
