@@ -13,8 +13,8 @@ export class UserResolver {
   }
 
   @Query(() => User, { name: 'user' })
-  async findOne(@Args('id', { type: () => String }) id: string) {
-    return await this.userService.findOne(id);
+  async findOne(@Args('userId', { type: () => String }) userId: string) {
+    return await this.userService.findOne({ userId });
   }
 
   @Mutation(() => User)
@@ -24,15 +24,15 @@ export class UserResolver {
 
   @Mutation(() => User)
   async updateUser(
-    @Args('id', { type: () => String }) id: string,
+    @Args('userId', { type: () => String }) userId: string,
     @Args('createUserInput') input: UpdateUserDto,
   ) {
-    return await this.userService.update(id, input);
+    return await this.userService.update(userId, input);
   }
 
   @Mutation(() => Boolean)
-  async removeUser(@Args('id', { type: () => String }) id: string) {
-    await this.userService.remove(id);
+  async removeUser(@Args('userId', { type: () => String }) userId: string) {
+    await this.userService.remove(userId);
     return true;
   }
 }

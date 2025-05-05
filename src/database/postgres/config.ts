@@ -2,9 +2,10 @@ import { MikroOrmModuleSyncOptions } from '@mikro-orm/nestjs';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import * as path from 'path';
+import { Database } from '../database.enum';
 
 const options: MikroOrmModuleSyncOptions = {
-  contextName: 'postgres',
+  contextName: Database.Postgres,
   registerRequestContext: false,
   driver: PostgreSqlDriver,
   dbName: process.env.POSTGRES_NAME,

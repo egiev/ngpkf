@@ -2,12 +2,12 @@ import { Field, InputType } from '@nestjs/graphql';
 import { IsNotEmpty } from 'class-validator';
 
 @InputType()
-export class CreateUserDto {
+export class VerifyOTPDto {
   @Field()
   @IsNotEmpty()
-  userId: string;
+  mrn!: string;
 
   @Field()
   @IsNotEmpty()
-  totpSecretKey: string;
+  otp!: string;
 }

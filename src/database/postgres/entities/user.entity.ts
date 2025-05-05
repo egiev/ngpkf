@@ -11,15 +11,15 @@ export class User {
 
   @Field()
   @Property()
-  name!: string;
+  userId!: string;
 
   @Field()
   @Property()
-  email!: string;
+  totpSecretKey!: string;
 
-  @Field(() => Number, { nullable: true })
-  @Property()
-  age?: number;
+  @Field(() => Date)
+  @Property({ nullable: true, onUpdate: () => new Date() })
+  lastRequestAt?: Date = new Date();
 
   @Field(() => Date)
   @Property({ nullable: true })

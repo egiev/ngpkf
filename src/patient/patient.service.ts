@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { EntityManager, wrap } from '@mikro-orm/core';
 import { InjectEntityManager } from '@mikro-orm/nestjs';
+import { Database } from '../database';
 import { Patient } from '../database/mongo/entities/patient.entity';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update.patient.dto';
@@ -8,7 +9,7 @@ import { UpdatePatientDto } from './dto/update.patient.dto';
 @Injectable()
 export class PatientService {
   constructor(
-    @InjectEntityManager('mongo') private readonly em: EntityManager,
+    @InjectEntityManager(Database.Mongo) private readonly em: EntityManager,
   ) {}
 
   async findAll(): Promise<Patient[]> {
