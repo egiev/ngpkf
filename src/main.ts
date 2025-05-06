@@ -6,6 +6,8 @@ import { EntityNotFoundFilter } from './exceptions';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors();
+
   // Global Exception Filter
   app.useGlobalFilters(new EntityNotFoundFilter());
 

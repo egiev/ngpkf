@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { EntityManager, wrap } from '@mikro-orm/core';
 import { InjectEntityManager } from '@mikro-orm/nestjs';
+import { maskEmail2, maskPhone } from 'maskdata';
 import { Database } from '../database';
 import { Patient } from '../database/mongo/entities/patient.entity';
 import { CreatePatientDto } from './dto/create-patient.dto';
@@ -17,7 +18,25 @@ export class PatientService {
   }
 
   async findOne(mrn: string): Promise<Patient> {
-    return await this.em.findOneOrFail(Patient, { mrn });
+    const patient = await this.em.findOne(Patient, { mrn });
+
+    if (!patient) {
+      throw new NotFoundException('Patient not found');
+    }
+
+    patient.contact.email = maskEmail2(patient.contact.email, {
+      maskWith: '*',
+      unmaskedStartCharactersBeforeAt: 2,
+      unmaskedEndCharactersAfterAt: 20,
+      maskAtTheRate: false,
+    });
+    patient.contact.mobile = maskPhone(patient.contact.mobile, {
+      maskWith: '*',
+      unmaskedStartDigits: 4,
+      unmaskedEndDigits: 2,
+    });
+
+    return patient;
   }
 
   async create(dto: CreatePatientDto): Promise<Patient> {

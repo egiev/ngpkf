@@ -7,11 +7,16 @@ import {
 } from '@nestjs/common';
 import { authenticator, totp } from 'otplib';
 import { ProducerService } from '../kafka/producer.service';
+import { PatientService } from '../patient/patient.service';
 import { UserService } from '../user/user.service';
 import { GenerateOTPDto } from './dto/generate-otp.dto';
 import { VerifyOTPDto } from './dto/verify-otp.dto';
 import { OTPConsumerTopic } from './otp.enum';
 import { generateUserId } from './utils';
+
+totp.options = {
+  step: 300,
+};
 
 @Injectable()
 export class OtpService {
@@ -20,11 +25,14 @@ export class OtpService {
   constructor(
     private readonly producer: ProducerService,
     private readonly userService: UserService,
+    private readonly patientService: PatientService,
   ) {}
 
   // TODO: Refactor to follow clean code
-  async generateOTP(dto: GenerateOTPDto): Promise<string> {
+  async generateOTP(dto: GenerateOTPDto): Promise<boolean> {
     try {
+      const patient = await this.patientService.findOne(dto.mrn);
+
       const userId = generateUserId(dto.mrn, this.secretKey);
 
       // Create user
@@ -32,7 +40,6 @@ export class OtpService {
 
       if (!user) {
         const totpSecretKey = authenticator.generateSecret();
-        console.log(totpSecretKey);
         user = await this.userService.create({
           userId,
           totpSecretKey,
@@ -52,7 +59,7 @@ export class OtpService {
         throw new ServiceUnavailableException('Failed to send OTP Message');
       }
 
-      return otp;
+      return true;
     } catch (error) {
       throw new InternalServerErrorException(
         error.message || 'Failed to generate OTP',

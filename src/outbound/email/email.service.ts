@@ -15,8 +15,7 @@ export class EmailService {
 
       await transporter.sendMail(options);
     } catch (e) {
-      console.log(e);
-      console.log("Can't send an email.");
+      throw new Error("Can't send an email.");
     }
   }
 }

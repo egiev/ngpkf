@@ -19,14 +19,14 @@ export class PatientResolver {
   }
 
   @Mutation(() => Patient)
-  async createPatient(@Args('createUserInput') input: CreatePatientDto) {
+  async createPatient(@Args('createPatientInput') input: CreatePatientDto) {
     return await this.patientService.create(input);
   }
 
   @Mutation(() => Patient)
   async updateUser(
     @Args('id', { type: () => String }) id: string,
-    @Args('createUserInput') input: UpdatePatientDto,
+    @Args('updateUserInput') input: UpdatePatientDto,
   ) {
     return await this.patientService.update(id, input);
   }

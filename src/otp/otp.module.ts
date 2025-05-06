@@ -4,6 +4,7 @@ import { Database } from '../database';
 import { User } from '../database/postgres';
 import { KafkaModule } from '../kafka/kafka.module';
 import { OutboundModule } from '../outbound/outbound.module';
+import { PatientModule } from '../patient/patient.module';
 import { UserModule } from '../user/user.module';
 import { OtpConsumerService } from './otp.consumer';
 import { OtpResolver } from './otp.resolver';
@@ -13,6 +14,7 @@ import { OtpService } from './otp.service';
   imports: [
     MikroOrmModule.forFeature([User], Database.Postgres),
     UserModule,
+    PatientModule,
     KafkaModule,
     OutboundModule,
   ],

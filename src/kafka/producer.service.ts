@@ -19,8 +19,6 @@ export class ProducerService implements OnModuleInit, OnApplicationShutdown {
   private readonly producer: Producer = this.kafka.producer();
 
   async onModuleInit() {
-    console.log('#######################################');
-    console.log(process.env.KAFKA_BROKER || 'kafka:9092');
     await this.producer.connect();
   }
 

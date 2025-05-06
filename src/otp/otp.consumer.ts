@@ -16,7 +16,6 @@ export class OtpConsumerService implements OnModuleInit {
       { topics: [OTPConsumerTopic.GENERATE_OTP] },
       {
         eachMessage: async ({ topic, message, partition }) => {
-          console.log(topic, message.value?.toString());
           const content = generateOtpEmailMessage(
             'reginaldventura23@gmail.com',
             message.value!.toString(),
