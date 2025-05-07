@@ -3,6 +3,8 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { DatabaseModule } from './database/database.module';
+import { FileModule } from './file/file.module';
+import { FileStorageModule } from './infrastructure/file-storage/file-storage.module';
 import { OtpModule } from './otp/otp.module';
 import { OutboundModule } from './outbound/outbound.module';
 import { PatientModule } from './patient/patient.module';
@@ -22,6 +24,8 @@ import { UserModule } from './user/user.module';
     PatientModule,
     OtpModule,
     OutboundModule,
+    FileModule,
+    FileStorageModule,
   ],
 })
 export class AppModule {}

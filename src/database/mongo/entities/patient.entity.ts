@@ -2,6 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Embedded, Entity, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
 import { Contact } from './contact.entity';
+import { Result } from './result.entity';
 
 @ObjectType()
 @Entity({ collection: 'patient' })
@@ -21,6 +22,10 @@ export class Patient {
   @Field(() => Contact)
   @Embedded(() => Contact)
   contact!: Contact;
+
+  @Field(() => [Result])
+  @Embedded(() => Result)
+  results?: Result[] = [];
 
   @Field(() => Date)
   @Property({ nullable: true })

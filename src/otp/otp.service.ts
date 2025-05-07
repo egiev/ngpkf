@@ -49,6 +49,8 @@ export class OtpService {
       // Generate OTP
       const otp = totp.generate(user.totpSecretKey);
 
+      console.log('generate-otp', otp);
+
       // Send OTP through Kafka
       try {
         await this.producer.produce({
@@ -86,6 +88,14 @@ export class OtpService {
       if (!isOTPValid) {
         throw new BadRequestException('Invalid or expired OTP');
       }
+
+      const patient = await this.patientService.findOne(dto.mrn);
+      console.log('verifyOTP', patient);
+
+      await this.producer.produce({
+        topic: OTPConsumerTopic.VERIFY_OTP,
+        messages: [{ value: JSON.stringify(patient) }],
+      });
 
       return true;
     } catch (error) {

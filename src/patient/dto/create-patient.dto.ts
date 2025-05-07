@@ -1,6 +1,14 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsNotEmpty, IsObject, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsObject,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { ContactDto } from './contact.dto';
+import { ResultDto } from './result.dto';
 
 @InputType()
 export class CreatePatientDto {
@@ -17,4 +25,10 @@ export class CreatePatientDto {
   @Field(() => ContactDto)
   @IsObject()
   contact!: ContactDto;
+
+  @Field(() => [ResultDto])
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ResultDto)
+  results: ResultDto[];
 }
