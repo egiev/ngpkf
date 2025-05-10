@@ -5,6 +5,5 @@ import { UserOrmEntity } from './entities';
 
 @Module({
   imports: [MikroOrmModule.forFeature([UserOrmEntity], Database.Postgres)],
-  exports: [MikroOrmModule],
 })
 export class PostgresModule {}

@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
+import { InfrastructureModule } from '@infrastructure';
 import { FileController } from './file.controller';
-import { FileService } from './file.service';
 
 @Module({
+  imports: [InfrastructureModule],
   controllers: [FileController],
-  providers: [FileService],
 })
 export class FileModule {}

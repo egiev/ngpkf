@@ -37,7 +37,14 @@ export class GenerateTOTPUserCase implements UseCase<string, boolean> {
     try {
       await this.messageBroker.produce({
         topic: UserConsumerTopic.GENERATE_OTP,
-        messages: [{ value: totp }],
+        messages: [
+          {
+            value: JSON.stringify({
+              to: patient.contact.email,
+              totp,
+            }),
+          },
+        ],
       });
     } catch (error) {
       // TODO: don't use 3rd party on application layer

@@ -1,10 +1,10 @@
 import { Controller, Get, Param, Query, Res } from '@nestjs/common';
 import { Response } from 'express';
-import { FileService } from './file.service';
+import { DownloadFileCase } from '@application/use-cases';
 
 @Controller('files')
 export class FileController {
-  constructor(private readonly fileService: FileService) {}
+  constructor(private readonly downloadFileCase: DownloadFileCase) {}
 
   @Get(':filename')
   async downloadFile(
@@ -12,6 +12,6 @@ export class FileController {
     @Query('token') token: string,
     @Res() res: Response,
   ) {
-    this.fileService.download(filename, token, res);
+    await this.downloadFileCase.execute({ filename, token, res });
   }
 }

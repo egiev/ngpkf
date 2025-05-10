@@ -1,11 +1,23 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { UserAdapter } from '@application/adapters';
+import {
+  CreateUserCase,
+  FindUserCase,
+  GenerateTOTPUserCase,
+  VerifyTOTPUserCase,
+} from '@application/use-cases';
 import { UserOrmEntity } from '@infrastructure/database/postgres';
 import { CreateUserDto } from './dtos';
+import { GenerateOTPDto } from './dtos/generate-totp.dto';
+import { VerifyOTPDto } from './dtos/verify-otp.dto';
 
 @Resolver(() => UserOrmEntity)
 export class UserResolver {
-  constructor(private readonly userAdapter: UserAdapter) {}
+  constructor(
+    private readonly findUserCase: FindUserCase,
+    private readonly createUserCase: CreateUserCase,
+    private readonly generateTOTPUserCase: GenerateTOTPUserCase,
+    private readonly verifyTOTPUserCase: VerifyTOTPUserCase,
+  ) {}
 
   // @Query(() => [User], { name: 'users' })
   // async findAll() {
@@ -14,12 +26,22 @@ export class UserResolver {
 
   @Query(() => UserOrmEntity, { name: 'user' })
   async findOne(@Args('userId', { type: () => String }) userId: string) {
-    return await this.userAdapter.findOne(userId);
+    return await this.findUserCase.execute(userId);
   }
 
   @Mutation(() => UserOrmEntity)
   async createUser(@Args('createUserInput') input: CreateUserDto) {
-    return await this.userAdapter.create(input);
+    return await this.createUserCase.execute(input);
+  }
+
+  @Mutation(() => String)
+  async generateOTP(@Args('generateOTPInput') input: GenerateOTPDto) {
+    return await this.generateTOTPUserCase.execute(input.mrn);
+  }
+
+  @Mutation(() => String)
+  async verifyOTP(@Args('validateOTPInput') input: VerifyOTPDto) {
+    return await this.verifyTOTPUserCase.execute(input);
   }
 
   // @Mutation(() => User)

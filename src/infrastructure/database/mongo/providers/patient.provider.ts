@@ -4,24 +4,11 @@ import {
   CreatePatientCase,
   FindPatientCase,
 } from '@application/use-cases/patient';
+import { createUseCaseProvider } from '@shared/utils';
 import { PatientService } from '../implementations';
-
-const useCases: Provider[] = [
-  {
-    provide: FindPatientCase,
-    useFactory: (patientRepository: PatientRepository) =>
-      new FindPatientCase(patientRepository),
-    inject: [PatientRepository],
-  },
-  {
-    provide: CreatePatientCase,
-    useFactory: (patientRepository: PatientRepository) =>
-      new CreatePatientCase(patientRepository),
-    inject: [PatientRepository],
-  },
-];
 
 export const patientProvider: Provider[] = [
   { provide: PatientRepository, useClass: PatientService },
-  ...useCases,
+  createUseCaseProvider(FindPatientCase, [PatientRepository]),
+  createUseCaseProvider(CreatePatientCase, [PatientRepository]),
 ];

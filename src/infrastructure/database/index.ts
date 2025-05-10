@@ -1,2 +1,2 @@
+export * from './database-config.module';
 export * from './database.enum';
-export * from './database.module';

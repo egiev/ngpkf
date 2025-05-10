@@ -10,4 +10,4 @@ import postgresConfig from './postgres/config';
     MikroOrmModule.forMiddleware(),
   ],
 })
-export class DatabaseModule {}
+export class DatabaseConfigModule {}

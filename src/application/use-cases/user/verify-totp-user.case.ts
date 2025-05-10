@@ -2,6 +2,7 @@ import {
   BadRequestException,
   InternalServerErrorException,
   NotFoundException,
+  ServiceUnavailableException,
 } from '@nestjs/common';
 import { MessageBroker, Totp, UseCase } from '@core/abstracts';
 import { UserConsumerTopic } from '@core/enums';
@@ -35,10 +36,16 @@ export class VerifyTOTPUserCase implements UseCase<any, boolean> {
 
       const patient = await this.patientRepository.findOne(params.mrn);
 
-      await this.messageBroker.produce({
-        topics: UserConsumerTopic.VERIFY_OTP,
-        messages: [{ value: JSON.stringify(patient) }],
-      });
+      try {
+        await this.messageBroker.produce({
+          topic: UserConsumerTopic.VERIFY_OTP,
+          messages: [{ value: JSON.stringify(patient) }],
+        });
+      } catch (error) {
+        // TODO: don't use 3rd party on application layer
+        // eg: ServiceUnavailableException
+        throw new ServiceUnavailableException('Failed to send results');
+      }
 
       return true;
     } catch (error) {

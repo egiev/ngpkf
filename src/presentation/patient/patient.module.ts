@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { MongoModule, patientProvider } from '@infrastructure/database/mongo';
+import { InfrastructureModule } from '@infrastructure';
 import { PatientResolver } from './patient.resolver';
 
 @Module({
-  imports: [MongoModule],
-  providers: [...patientProvider, PatientResolver],
+  imports: [InfrastructureModule],
+  providers: [PatientResolver],
 })
 export class PatientModule {}
