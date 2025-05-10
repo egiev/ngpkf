@@ -1,6 +1,5 @@
 import { Provider } from '@nestjs/common';
 import { PatientRepository } from '@core/repositories';
-import { PatientAdapter } from '@application/adapters';
 import {
   CreatePatientCase,
   FindPatientCase,
@@ -25,12 +24,4 @@ const useCases: Provider[] = [
 export const patientProvider: Provider[] = [
   { provide: PatientRepository, useClass: PatientService },
   ...useCases,
-  {
-    provide: PatientAdapter,
-    useFactory: (
-      findPatientCase: FindPatientCase,
-      createPatientCase: CreatePatientCase,
-    ) => new PatientAdapter(findPatientCase, createPatientCase),
-    inject: [FindPatientCase, CreatePatientCase],
-  },
 ];

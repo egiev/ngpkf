@@ -1,12 +1,15 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { PatientAdapter } from '@application/adapters';
+import { CreatePatientCase, FindPatientCase } from '@application/use-cases';
 import { PatientOrmEntity } from '@infrastructure/database/mongo';
 import { maskEmail, maskMobile } from '@shared/utils';
 import { CreatePatientDto } from './dtos';
 
 @Resolver()
 export class PatientResolver {
-  constructor(private readonly patientAdapter: PatientAdapter) {}
+  constructor(
+    private readonly findPatientCase: FindPatientCase,
+    private readonly createPatientCase: CreatePatientCase,
+  ) {}
 
   // @Query(() => [Patient], { name: 'patients' })
   // async findAll() {
@@ -15,7 +18,7 @@ export class PatientResolver {
 
   @Query(() => PatientOrmEntity, { name: 'patient' })
   async findOne(@Args('mrn', { type: () => String }) mrn: string) {
-    const patient = await this.patientAdapter.findOne(mrn);
+    const patient = await this.findPatientCase.execute(mrn);
     patient.contact.email = maskEmail(patient.contact.email);
     patient.contact.mobile = maskMobile(patient.contact.mobile);
     return patient;
@@ -24,7 +27,7 @@ export class PatientResolver {
   @Mutation(() => PatientOrmEntity)
   async createPatient(@Args('createPatientInput') input: CreatePatientDto) {
     console.log(input);
-    return await this.patientAdapter.create(input);
+    return await this.createPatientCase.execute(input);
   }
 
   // @Mutation(() => Patient)
