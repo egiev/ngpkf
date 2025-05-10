@@ -1,7 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { EntityNotFoundFilter } from '@shared/exceptions';
 import { AppModule } from './app.module';
-import { EntityNotFoundFilter } from './exceptions';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

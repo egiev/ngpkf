@@ -1,19 +1,17 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { DatabaseModule } from './database/database.module';
-import { FileModule } from './file/file.module';
-import { FileStorageModule } from './infrastructure/file-storage/file-storage.module';
-import { OtpModule } from './otp/otp.module';
-import { OutboundModule } from './outbound/outbound.module';
-import { PatientModule } from './patient/patient.module';
-import { UserModule } from './user/user.module';
+import { FileModule } from '@presentation/file';
+import { OtpModule } from '@presentation/otp';
+import { PatientModule } from '@presentation/patient';
+import { UserModule } from '@presentation/user';
+import { DatabaseModule } from '@infrastructure/database';
+import { OutboundModule } from '@infrastructure/outbound';
+import { TotpModule } from './infrastructure/totp/totp.module';
 
 @Module({
   imports: [
     DatabaseModule,
-    MikroOrmModule.forMiddleware(),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       debug: true,
@@ -23,9 +21,9 @@ import { UserModule } from './user/user.module';
     UserModule,
     PatientModule,
     OtpModule,
-    OutboundModule,
     FileModule,
-    FileStorageModule,
+    OutboundModule,
+    TotpModule,
   ],
 })
 export class AppModule {}
