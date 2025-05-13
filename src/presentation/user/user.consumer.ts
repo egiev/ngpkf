@@ -18,15 +18,19 @@ export class UserConsumerService implements OnModuleInit {
     private readonly sendResultsUserCase: SendResultsUserCase,
   ) {
     this.mapper = {
-      [UserConsumerTopic.GENERATE_OTP]: (args) => this.sendTOTP(args),
-      [UserConsumerTopic.VERIFY_OTP]: (args) => this.sendResults(args),
+      [UserConsumerTopic.CREATE]: async () => {},
+      [UserConsumerTopic.CREATED]: async () => {},
+      [UserConsumerTopic.OTP_GENERATE]: (args) => this.sendTOTP(args),
+      [UserConsumerTopic.OTP_GENERATED]: async () => {},
+      [UserConsumerTopic.OTP_VERFIFY]: (args) => this.sendResults(args),
+      [UserConsumerTopic.OTP_VERIFIED]: async () => {},
     };
   }
 
   async onModuleInit(): Promise<void> {
     await this.messageBroker.consume(
       {
-        topics: [UserConsumerTopic.GENERATE_OTP, UserConsumerTopic.VERIFY_OTP],
+        topics: [UserConsumerTopic.OTP_GENERATE, UserConsumerTopic.OTP_VERFIFY],
       },
       {
         eachMessage: async ({ topic, message, partition }) => {
@@ -49,13 +53,11 @@ export class UserConsumerService implements OnModuleInit {
 
   async sendTOTP(message: KafkaMessage): Promise<void> {
     const content = JSON.parse(message.value!.toString());
-    console.log(content, 'sendTOTP');
     await this.sendTOTPUserCase.execute(content);
   }
 
   async sendResults(message: KafkaMessage): Promise<void> {
     const content = JSON.parse(message.value!.toString());
-    console.log(content, 'sendResults');
     await this.sendResultsUserCase.execute(content);
   }
 }

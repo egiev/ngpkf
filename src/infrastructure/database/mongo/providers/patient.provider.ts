@@ -1,4 +1,5 @@
 import { Provider } from '@nestjs/common';
+import { MessageBroker } from '@core/abstracts';
 import { PatientRepository } from '@core/repositories';
 import {
   CreatePatientCase,
@@ -10,5 +11,5 @@ import { PatientService } from '../implementations';
 export const patientProvider: Provider[] = [
   { provide: PatientRepository, useClass: PatientService },
   createUseCaseProvider(FindPatientCase, [PatientRepository]),
-  createUseCaseProvider(CreatePatientCase, [PatientRepository]),
+  createUseCaseProvider(CreatePatientCase, [PatientRepository, MessageBroker]),
 ];

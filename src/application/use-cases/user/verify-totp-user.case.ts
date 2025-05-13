@@ -38,7 +38,7 @@ export class VerifyTOTPUserCase implements UseCase<any, boolean> {
 
       try {
         await this.messageBroker.produce({
-          topic: UserConsumerTopic.VERIFY_OTP,
+          topic: UserConsumerTopic.OTP_VERFIFY,
           messages: [{ value: JSON.stringify(patient) }],
         });
       } catch (error) {

@@ -15,7 +15,7 @@ import { UserService } from '../implementations';
 export const userProvider: Provider[] = [
   { provide: UserRepository, useClass: UserService },
   createUseCaseProvider(FindUserCase, [UserRepository]),
-  createUseCaseProvider(CreateUserCase, [UserRepository]),
+  createUseCaseProvider(CreateUserCase, [UserRepository, MessageBroker]),
   createUseCaseProvider(GenerateTOTPUserCase, [
     PatientRepository,
     UserRepository,

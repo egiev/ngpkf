@@ -26,7 +26,6 @@ export class PatientResolver {
 
   @Mutation(() => PatientOrmEntity)
   async createPatient(@Args('createPatientInput') input: CreatePatientDto) {
-    console.log(input);
     return await this.createPatientCase.execute(input);
   }
 
