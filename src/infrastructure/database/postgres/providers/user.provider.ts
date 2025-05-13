@@ -1,8 +1,15 @@
 import { Provider } from '@nestjs/common';
-import { LocalStorage, MessageBroker, SendEmail, Totp } from '@core/abstracts';
+import {
+  LocalStorage,
+  MessageBroker,
+  SendEmail,
+  TokenManager,
+  Totp,
+} from '@core/abstracts';
 import { PatientRepository, UserRepository } from '@core/repositories';
 import {
   CreateUserCase,
+  DownloadResultUserCase,
   FindUserCase,
   GenerateTOTPUserCase,
   SendResultsUserCase,
@@ -29,5 +36,10 @@ export const userProvider: Provider[] = [
     MessageBroker,
   ]),
   createUseCaseProvider(SendTOTPUserCase, [SendEmail]),
-  createUseCaseProvider(SendResultsUserCase, [SendEmail, LocalStorage]),
+  createUseCaseProvider(SendResultsUserCase, [
+    SendEmail,
+    LocalStorage,
+    TokenManager,
+  ]),
+  createUseCaseProvider(DownloadResultUserCase, [TokenManager, LocalStorage]),
 ];

@@ -13,16 +13,17 @@ export function generateTOTPEmailMessage(to: string, totp: string) {
 
 export function generateResultsEmailMessage(
   to: string,
+  token: string,
   results: string[] = [],
 ) {
   const files = results.map(
     (file) =>
-      `<li><a href="http://localhost/files/${file}?token=valid-token">${file}</a></li>`,
+      `<li><a href="http://localhost/files/${file}?token=${token}">${file}</a></li>`,
   );
 
   return {
     from: 'sample',
-    to: 'reginaldventura23@gmail.com',
+    to,
     subject: 'Online Results',
     html: `<p>Hello,</p>
     <p>Here are your files:</p>

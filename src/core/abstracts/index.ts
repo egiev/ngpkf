@@ -4,5 +4,6 @@ export * from './local-storage.abstract';
 export * from './message-broker.abstract';
 export * from './send-email.abstract';
 export * from './send-sms.abstract';
+export * from './token-manager.abstract';
 export * from './totp.abstract';
 export * from './use-case.abstract';

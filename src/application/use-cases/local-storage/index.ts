@@ -1,2 +1,2 @@
-export * from './download-file.case';
+export * from '../user/download-result-user.case';
 export * from './upload-file.case';

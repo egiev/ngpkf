@@ -10,31 +10,15 @@ export class LocalStorageService implements LocalStorage {
   async upload(buffer: Buffer, filename: string): Promise<string> {
     const filepath = path.join(this.storagePath, filename);
     await fs.promises.mkdir(this.storagePath, { recursive: true });
-    await fs.promises.writeFile(filepath, buffer);
+    await fs.promises.writeFile(filepath, buffer, 'base64');
     return filename;
   }
 
-  async download(
-    filename: string,
-    token: string,
-    response: any,
-  ): Promise<void> {
-    if (token !== 'valid-token') {
-      response.status(400).send('Invalid or expired token');
-      return;
-    }
+  async getFilePath(filename: string): Promise<string> {
+    return path.join(this.storagePath, filename);
+  }
 
-    const filePath = path.join(this.storagePath, filename);
-
-    if (!fs.existsSync(filePath)) {
-      response.status(404).send('File not found');
-      return;
-    }
-
-    response.download(filePath, filename, (err) => {
-      if (err) {
-        response.status(500).send('Error downloading file');
-      }
-    });
+  async isExists(filename: string): Promise<boolean> {
+    return await fs.existsSync(path.join(this.storagePath, filename));
   }
 }

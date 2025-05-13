@@ -4,6 +4,7 @@ import { PostgresModule, userProvider } from './database/postgres';
 import { FileStorageModule } from './file-storage';
 import { MessageBrokerModule } from './message-broker';
 import { OutboundModule } from './outbound';
+import { TokenManagerModule } from './token-manager';
 import { TotpModule } from './totp';
 
 @Module({
@@ -12,6 +13,7 @@ import { TotpModule } from './totp';
     TotpModule,
     MessageBrokerModule,
     FileStorageModule,
+    TokenManagerModule,
     MongoModule,
     PostgresModule,
   ],
@@ -21,6 +23,7 @@ import { TotpModule } from './totp';
     TotpModule,
     MessageBrokerModule,
     FileStorageModule,
+    TokenManagerModule,
     MongoModule,
     PostgresModule,
     ...userProvider,
