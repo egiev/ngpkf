@@ -53,6 +53,7 @@ export class UserConsumerService implements OnModuleInit {
 
   async sendTOTP(message: KafkaMessage): Promise<void> {
     const content = JSON.parse(message.value!.toString());
+    console.log(content);
     await this.sendTOTPUserCase.execute(content);
   }
 

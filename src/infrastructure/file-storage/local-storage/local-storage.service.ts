@@ -5,7 +5,7 @@ import { LocalStorage } from '@core/abstracts';
 
 @Injectable()
 export class LocalStorageService implements LocalStorage {
-  storagePath: string = path.join(process.cwd(), '/files');
+  readonly storagePath: string = path.join(process.cwd(), '/files');
 
   async upload(buffer: Buffer, filename: string): Promise<string> {
     const filepath = path.join(this.storagePath, filename);

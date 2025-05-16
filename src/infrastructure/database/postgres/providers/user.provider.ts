@@ -2,6 +2,7 @@ import { Provider } from '@nestjs/common';
 import {
   LocalStorage,
   MessageBroker,
+  PdfManager,
   SendEmail,
   TokenManager,
   Totp,
@@ -40,6 +41,7 @@ export const userProvider: Provider[] = [
     SendEmail,
     LocalStorage,
     TokenManager,
+    PdfManager,
   ]),
   createUseCaseProvider(DownloadResultUserCase, [TokenManager, LocalStorage]),
 ];

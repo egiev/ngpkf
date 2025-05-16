@@ -2,6 +2,7 @@ export * from './generic-repository.abstract';
 export * from './generic-storage.abstract';
 export * from './local-storage.abstract';
 export * from './message-broker.abstract';
+export * from './pdf-manager.abstract';
 export * from './send-email.abstract';
 export * from './send-sms.abstract';
 export * from './token-manager.abstract';

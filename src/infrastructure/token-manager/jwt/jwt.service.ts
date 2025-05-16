@@ -10,7 +10,7 @@ export class JwtService implements TokenManager {
     return jwt.sign(config, this.secretKey, { expiresIn: '5m' });
   }
 
-  verify<T = any>(token: any): T {
-    return jwt.verify(token, this.secretKey) as T;
+  verify(token: string): any {
+    return jwt.verify(token, this.secretKey);
   }
 }
