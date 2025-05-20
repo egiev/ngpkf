@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Database } from '../database.enum';
-import { ContactOrmEntity, PatientOrmEntity } from './entities';
+import {
+  AllergyDocumentOrmEntity,
+  ContactOrmEntity,
+  PatientOrmEntity,
+} from './entities';
 
 @Module({
   imports: [
     MikroOrmModule.forFeature(
-      [PatientOrmEntity, ContactOrmEntity],
+      [AllergyDocumentOrmEntity, ContactOrmEntity, PatientOrmEntity],
       Database.Mongo,
     ),
   ],

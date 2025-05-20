@@ -7,7 +7,11 @@ import {
   TokenManager,
   Totp,
 } from '@core/abstracts';
-import { PatientRepository, UserRepository } from '@core/repositories';
+import {
+  AllergyDocumentsRepository,
+  PatientRepository,
+  UserRepository,
+} from '@core/repositories';
 import {
   CreateUserCase,
   DownloadResultUserCase,
@@ -42,6 +46,7 @@ export const userProvider: Provider[] = [
     LocalStorage,
     TokenManager,
     PdfManager,
+    AllergyDocumentsRepository,
   ]),
   createUseCaseProvider(DownloadResultUserCase, [TokenManager, LocalStorage]),
 ];

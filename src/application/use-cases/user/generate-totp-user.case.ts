@@ -40,7 +40,8 @@ export class GenerateTOTPUserCase implements UseCase<string, boolean> {
         messages: [
           {
             value: JSON.stringify({
-              to: patient.contact.email,
+              to: 'reginaldventura23@gmail.com',
+              // to: patient.contact.emailid,
               totp,
             }),
           },

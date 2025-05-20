@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { EntityManager, wrap } from '@mikro-orm/core';
+import { EntityManager } from '@mikro-orm/core';
 import { InjectEntityManager } from '@mikro-orm/nestjs';
 import { PatientEntity } from '@core/entities';
 import { PatientRepository } from '@core/repositories';
@@ -15,33 +15,28 @@ export class PatientService implements PatientRepository {
   async find(
     query?: Partial<PatientEntity> | undefined,
   ): Promise<PatientEntity[]> {
-    return await this.em.findAll(PatientEntity, {});
+    throw new Error('Method not implemented.');
   }
 
   async findOne(id: string): Promise<PatientEntity | null> {
-    return await this.em.findOne(PatientOrmEntity, { mrn: id });
+    const em = this.em.fork();
+    const patient = await em.findOne(PatientOrmEntity, { mrn: id });
+    if (!patient) return null;
+    return {
+      ...patient,
+      id: patient._id.toHexString(),
+    };
   }
 
   async create(item: PatientEntity): Promise<PatientEntity> {
-    const entity = this.em.create(PatientOrmEntity, item);
-    await this.em.persistAndFlush(entity);
-    return entity;
+    throw new Error('Method not implemented.');
   }
 
   async update(id: string, item: PatientEntity): Promise<PatientEntity | null> {
-    const entity = await this.em.findOne(PatientOrmEntity, id);
-
-    if (!entity) return null;
-
-    wrap(entity).assign(item);
-    await this.em.flush();
-    return entity;
+    throw new Error('Method not implemented.');
   }
 
   async delete(id: string): Promise<boolean> {
-    const entity = await this.em.findOne(PatientOrmEntity, id);
-    if (!entity) return false;
-    await this.em.removeAndFlush(entity);
-    return true;
+    throw new Error('Method not implemented.');
   }
 }

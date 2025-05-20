@@ -1,6 +1,8 @@
 import { maskEmail2, maskPhone } from 'maskdata';
 
-export function maskEmail(email: string): string {
+export function maskEmail(email?: string | null): string {
+  if (!email) return '';
+
   return maskEmail2(email, {
     maskWith: '*',
     unmaskedStartCharactersBeforeAt: 2,
@@ -9,7 +11,9 @@ export function maskEmail(email: string): string {
   });
 }
 
-export function maskMobile(mobile: string) {
+export function maskMobile(mobile?: string | null) {
+  if (!mobile) return '';
+
   return maskPhone(mobile, {
     maskWith: '*',
     unmaskedStartDigits: 4,

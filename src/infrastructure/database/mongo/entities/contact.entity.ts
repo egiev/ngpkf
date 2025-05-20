@@ -6,9 +6,17 @@ import { Embeddable, Property } from '@mikro-orm/core';
 export class ContactOrmEntity {
   @Field()
   @Property()
-  email!: string;
+  homephone?: string;
 
   @Field()
   @Property()
-  mobile!: string;
+  mobilephone?: string;
+
+  @Field()
+  @Property()
+  alternatephone?: string;
+
+  @Field()
+  @Property()
+  emailid?: string;
 }

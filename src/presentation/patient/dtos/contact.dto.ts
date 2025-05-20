@@ -6,10 +6,20 @@ export class ContactDto {
   @Field()
   @IsNotEmpty()
   @IsEmail()
-  email!: string;
+  homephone?: string;
 
   @Field()
   @IsNotEmpty()
   @IsString()
-  mobile!: string;
+  mobilephone?: string;
+
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  alternatephone?: string;
+
+  @Field()
+  @IsNotEmpty()
+  @IsString()
+  emailid?: string;
 }

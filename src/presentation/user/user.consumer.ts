@@ -59,6 +59,7 @@ export class UserConsumerService implements OnModuleInit {
 
   async sendResults(message: KafkaMessage): Promise<void> {
     const content = JSON.parse(message.value!.toString());
+    console.log('send results', content);
     await this.sendResultsUserCase.execute(content);
   }
 }
