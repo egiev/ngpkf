@@ -12,7 +12,6 @@ import {
   GlScannedDocumentsRepository,
   PatientDnrDocumentsRepository,
   PatientreFerralDetailDocumentsRepository,
-  PurchasingDocumentsRepository,
   ScannedDocumentsRepository,
 } from '@core/repositories';
 import { generateResultsEmailMessage } from '@core/utils';
@@ -28,7 +27,6 @@ export class SendResultsUserCase implements UseCase<any, void> {
     private readonly glScannedDocumentsRepository: GlScannedDocumentsRepository,
     private readonly patientDnrDocumentsRepository: PatientDnrDocumentsRepository,
     private readonly patientreFerralDetailDocumentsRepository: PatientreFerralDetailDocumentsRepository,
-    private readonly purchasingDocumentsRepository: PurchasingDocumentsRepository,
     private readonly scannedDocumentsRepository: ScannedDocumentsRepository,
   ) {}
 
@@ -42,7 +40,6 @@ export class SendResultsUserCase implements UseCase<any, void> {
         this.glScannedDocumentsRepository.find(patient),
         this.patientDnrDocumentsRepository.find(patient),
         this.patientreFerralDetailDocumentsRepository.find(patient),
-        this.purchasingDocumentsRepository.find(patient),
         this.scannedDocumentsRepository.find(patient),
       ];
 

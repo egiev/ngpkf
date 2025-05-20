@@ -8,7 +8,6 @@ import {
   GlScannedDocumentOrmEntity,
   PatientOrmEntity,
   PatientReferralDetailDocumentOrmEntity,
-  PurchasingDocumentOrmEntity,
   ScannedDocumentOrmEntity,
 } from './entities';
 
@@ -22,7 +21,6 @@ import {
         GlScannedDocumentOrmEntity,
         PatientOrmEntity,
         PatientReferralDetailDocumentOrmEntity,
-        PurchasingDocumentOrmEntity,
         ScannedDocumentOrmEntity,
       ],
       Database.Mongo,
