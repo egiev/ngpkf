@@ -14,6 +14,7 @@ import {
   PatientDocumentsRepository,
   PatientreFerralDetailDocumentsRepository,
   PurchasingDocumentsRepository,
+  ScannedDocumentsRepository,
 } from '@core/repositories';
 import { generateResultsEmailMessage } from '@core/utils';
 
@@ -30,6 +31,7 @@ export class SendResultsUserCase implements UseCase<any, void> {
     private readonly patientDocumentsRepository: PatientDocumentsRepository,
     private readonly patientreFerralDetailDocumentsRepository: PatientreFerralDetailDocumentsRepository,
     private readonly purchasingDocumentsRepository: PurchasingDocumentsRepository,
+    private readonly scannedDocumentsRepository: ScannedDocumentsRepository,
   ) {}
 
   async execute(patient: PatientEntity): Promise<void> {
@@ -37,13 +39,14 @@ export class SendResultsUserCase implements UseCase<any, void> {
       const files: string[] = [];
 
       const promises = [
-        this.allergyDocumentsRepository.find(patient),
-        this.clinicalScannedDocumentsRepository.find(patient),
-        this.glScannedDocumentsRepository.find(patient),
-        this.patientDnrDocumentsRepository.find(patient),
-        // this.patientDocumentsRepository.find(patient),
-        this.patientreFerralDetailDocumentsRepository.find(patient),
-        this.purchasingDocumentsRepository.find(patient),
+        this.allergyDocumentsRepository.find(patient), //
+        this.clinicalScannedDocumentsRepository.find(patient), //
+        this.glScannedDocumentsRepository.find(patient), //
+        this.patientDnrDocumentsRepository.find(patient), //
+        this.patientDocumentsRepository.find(patient), // not working
+        this.patientreFerralDetailDocumentsRepository.find(patient), //
+        this.purchasingDocumentsRepository.find(patient), //
+        this.scannedDocumentsRepository.find(patient), //
       ];
 
       const results = (await Promise.all(promises)).flat();
@@ -59,6 +62,7 @@ export class SendResultsUserCase implements UseCase<any, void> {
             base64Data.buffer,
             result.documentname,
           );
+
           files.push(file);
         }
       }

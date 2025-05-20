@@ -4,13 +4,13 @@ import { InjectEntityManager } from '@mikro-orm/nestjs';
 import { PurchasingDocumentEntity } from '@core/entities';
 import { PurchasingDocumentsRepository } from '@core/repositories';
 import { Database } from '@infrastructure/database';
-import { PurchasingDocumenttOrmEntity } from '../entities';
+import { PurchasingDocumentOrmEntity } from '../entities';
 import { BaseDocumentService } from './document.service';
 
 @Injectable()
 export class PurchasingDocumentsService
   extends BaseDocumentService<
-    PurchasingDocumenttOrmEntity,
+    PurchasingDocumentOrmEntity,
     PurchasingDocumentEntity
   >
   implements PurchasingDocumentsRepository
@@ -18,6 +18,6 @@ export class PurchasingDocumentsService
   constructor(
     @InjectEntityManager(Database.Mongo) protected readonly em: EntityManager,
   ) {
-    super(em, PurchasingDocumenttOrmEntity);
+    super(em, PurchasingDocumentOrmEntity);
   }
 }

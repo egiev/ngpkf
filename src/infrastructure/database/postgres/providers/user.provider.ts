@@ -16,6 +16,7 @@ import {
   PatientreFerralDetailDocumentsRepository,
   PatientRepository,
   PurchasingDocumentsRepository,
+  ScannedDocumentsRepository,
   UserRepository,
 } from '@core/repositories';
 import {
@@ -59,6 +60,7 @@ export const userProvider: Provider[] = [
     PatientDocumentsRepository,
     PatientreFerralDetailDocumentsRepository,
     PurchasingDocumentsRepository,
+    ScannedDocumentsRepository,
   ]),
   createUseCaseProvider(DownloadResultUserCase, [TokenManager, LocalStorage]),
 ];

@@ -6,3 +6,4 @@ export * from './patientdnrdocuments.service';
 export * from './patientdocuments.service';
 export * from './patientreferraldetaildocuments.service';
 export * from './purchasingdocuments.service';
+export * from './scanneddocuments.service';

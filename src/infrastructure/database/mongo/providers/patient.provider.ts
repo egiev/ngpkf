@@ -8,6 +8,7 @@ import {
   PatientreFerralDetailDocumentsRepository,
   PatientRepository,
   PurchasingDocumentsRepository,
+  ScannedDocumentsRepository,
 } from '@core/repositories';
 import { FindPatientCase } from '@application/use-cases/patient';
 import { createUseCaseProvider } from '@shared/utils';
@@ -20,6 +21,7 @@ import {
   PatientReferralDetailDocumentsService,
   PatientService,
   PurchasingDocumentsService,
+  ScannedDocumentsService,
 } from '../implementations';
 
 export const patientProvider: Provider[] = [
@@ -45,6 +47,10 @@ export const patientProvider: Provider[] = [
   {
     provide: PurchasingDocumentsRepository,
     useClass: PurchasingDocumentsService,
+  },
+  {
+    provide: ScannedDocumentsRepository,
+    useClass: ScannedDocumentsService,
   },
   createUseCaseProvider(FindPatientCase, [PatientRepository]),
 ];

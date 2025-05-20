@@ -9,7 +9,8 @@ import {
   PatientDocumentOrmEntity,
   PatientOrmEntity,
   PatientReferralDetailDocumentOrmEntity,
-  PurchasingDocumenttOrmEntity,
+  PurchasingDocumentOrmEntity,
+  ScannedDocumentOrmEntity,
 } from './entities';
 
 @Module({
@@ -19,11 +20,12 @@ import {
         AllergyDocumentOrmEntity,
         ClinicalScannedDocumentOrmEntity,
         ContactOrmEntity,
-        PatientOrmEntity,
         GlScannedDocumentOrmEntity,
         PatientDocumentOrmEntity,
+        PatientOrmEntity,
         PatientReferralDetailDocumentOrmEntity,
-        PurchasingDocumenttOrmEntity,
+        PurchasingDocumentOrmEntity,
+        ScannedDocumentOrmEntity,
       ],
       Database.Mongo,
     ),
