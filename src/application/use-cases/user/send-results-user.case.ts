@@ -11,7 +11,6 @@ import {
   ClinicalScannedDocumentsRepository,
   GlScannedDocumentsRepository,
   PatientDnrDocumentsRepository,
-  PatientDocumentsRepository,
   PatientreFerralDetailDocumentsRepository,
   PurchasingDocumentsRepository,
   ScannedDocumentsRepository,
@@ -28,7 +27,6 @@ export class SendResultsUserCase implements UseCase<any, void> {
     private readonly clinicalScannedDocumentsRepository: ClinicalScannedDocumentsRepository,
     private readonly glScannedDocumentsRepository: GlScannedDocumentsRepository,
     private readonly patientDnrDocumentsRepository: PatientDnrDocumentsRepository,
-    private readonly patientDocumentsRepository: PatientDocumentsRepository,
     private readonly patientreFerralDetailDocumentsRepository: PatientreFerralDetailDocumentsRepository,
     private readonly purchasingDocumentsRepository: PurchasingDocumentsRepository,
     private readonly scannedDocumentsRepository: ScannedDocumentsRepository,
@@ -39,14 +37,13 @@ export class SendResultsUserCase implements UseCase<any, void> {
       const files: string[] = [];
 
       const promises = [
-        this.allergyDocumentsRepository.find(patient), //
-        this.clinicalScannedDocumentsRepository.find(patient), //
-        this.glScannedDocumentsRepository.find(patient), //
-        this.patientDnrDocumentsRepository.find(patient), //
-        this.patientDocumentsRepository.find(patient), // not working
-        this.patientreFerralDetailDocumentsRepository.find(patient), //
-        this.purchasingDocumentsRepository.find(patient), //
-        this.scannedDocumentsRepository.find(patient), //
+        this.allergyDocumentsRepository.find(patient),
+        this.clinicalScannedDocumentsRepository.find(patient),
+        this.glScannedDocumentsRepository.find(patient),
+        this.patientDnrDocumentsRepository.find(patient),
+        this.patientreFerralDetailDocumentsRepository.find(patient),
+        this.purchasingDocumentsRepository.find(patient),
+        this.scannedDocumentsRepository.find(patient),
       ];
 
       const results = (await Promise.all(promises)).flat();

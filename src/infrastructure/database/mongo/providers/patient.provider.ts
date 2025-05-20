@@ -4,7 +4,6 @@ import {
   ClinicalScannedDocumentsRepository,
   GlScannedDocumentsRepository,
   PatientDnrDocumentsRepository,
-  PatientDocumentsRepository,
   PatientreFerralDetailDocumentsRepository,
   PatientRepository,
   PurchasingDocumentsRepository,
@@ -17,7 +16,6 @@ import {
   ClinicalScannedDocumentsService,
   GlScannedDocumentsService,
   PatientDnrDocumentsService,
-  PatientDocumentsService,
   PatientReferralDetailDocumentsService,
   PatientService,
   PurchasingDocumentsService,
@@ -39,7 +37,6 @@ export const patientProvider: Provider[] = [
     provide: PatientDnrDocumentsRepository,
     useClass: PatientDnrDocumentsService,
   },
-  { provide: PatientDocumentsRepository, useClass: PatientDocumentsService },
   {
     provide: PatientreFerralDetailDocumentsRepository,
     useClass: PatientReferralDetailDocumentsService,

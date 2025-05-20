@@ -4,7 +4,6 @@ export * from './document.entity';
 export * from './glscanneddocuments.entity';
 export * from './patient.entity';
 export * from './patientdnrdocuments.entity';
-export * from './patientdocuments.entity';
 export * from './patientreferraldetaildocuments.entity';
 export * from './purchasingdocuments.entity';
 export * from './scanneddocuments.entity';
