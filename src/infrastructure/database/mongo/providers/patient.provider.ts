@@ -4,6 +4,8 @@ import {
   ClinicalScannedDocumentsRepository,
   GlScannedDocumentsRepository,
   PatientDnrDocumentsRepository,
+  PatientDocumentsRepository,
+  PatientreFerralDetailDocumentsRepository,
   PatientRepository,
 } from '@core/repositories';
 import { FindPatientCase } from '@application/use-cases/patient';
@@ -13,6 +15,8 @@ import {
   ClinicalScannedDocumentsService,
   GlScannedDocumentsService,
   PatientDnrDocumentsService,
+  PatientDocumentsService,
+  PatientReferralDetailDocumentsService,
   PatientService,
 } from '../implementations';
 
@@ -30,6 +34,11 @@ export const patientProvider: Provider[] = [
   {
     provide: PatientDnrDocumentsRepository,
     useClass: PatientDnrDocumentsService,
+  },
+  { provide: PatientDocumentsRepository, useClass: PatientDocumentsService },
+  {
+    provide: PatientreFerralDetailDocumentsRepository,
+    useClass: PatientReferralDetailDocumentsService,
   },
   createUseCaseProvider(FindPatientCase, [PatientRepository]),
 ];

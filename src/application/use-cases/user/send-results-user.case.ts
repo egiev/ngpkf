@@ -11,6 +11,8 @@ import {
   ClinicalScannedDocumentsRepository,
   GlScannedDocumentsRepository,
   PatientDnrDocumentsRepository,
+  PatientDocumentsRepository,
+  PatientreFerralDetailDocumentsRepository,
 } from '@core/repositories';
 import { generateResultsEmailMessage } from '@core/utils';
 
@@ -24,6 +26,8 @@ export class SendResultsUserCase implements UseCase<any, void> {
     private readonly clinicalScannedDocumentsRepository: ClinicalScannedDocumentsRepository,
     private readonly glScannedDocumentsRepository: GlScannedDocumentsRepository,
     private readonly patientDnrDocumentsRepository: PatientDnrDocumentsRepository,
+    private readonly patientDocumentsRepository: PatientDocumentsRepository,
+    private readonly patientreFerralDetailDocumentsRepository: PatientreFerralDetailDocumentsRepository,
   ) {}
 
   async execute(patient: PatientEntity): Promise<void> {
@@ -35,6 +39,8 @@ export class SendResultsUserCase implements UseCase<any, void> {
         this.clinicalScannedDocumentsRepository.find(patient),
         this.glScannedDocumentsRepository.find(patient),
         this.patientDnrDocumentsRepository.find(patient),
+        // this.patientDocumentsRepository.find(patient),
+        this.patientreFerralDetailDocumentsRepository.find(patient),
       ];
 
       const results = (await Promise.all(promises)).flat();

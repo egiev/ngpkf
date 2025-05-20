@@ -12,6 +12,8 @@ import {
   ClinicalScannedDocumentsRepository,
   GlScannedDocumentsRepository,
   PatientDnrDocumentsRepository,
+  PatientDocumentsRepository,
+  PatientreFerralDetailDocumentsRepository,
   PatientRepository,
   UserRepository,
 } from '@core/repositories';
@@ -53,6 +55,8 @@ export const userProvider: Provider[] = [
     ClinicalScannedDocumentsRepository,
     GlScannedDocumentsRepository,
     PatientDnrDocumentsRepository,
+    PatientDocumentsRepository,
+    PatientreFerralDetailDocumentsRepository,
   ]),
   createUseCaseProvider(DownloadResultUserCase, [TokenManager, LocalStorage]),
 ];
