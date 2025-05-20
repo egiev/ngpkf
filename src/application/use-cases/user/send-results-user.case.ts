@@ -6,7 +6,10 @@ import {
   UseCase,
 } from '@core/abstracts';
 import { PatientEntity } from '@core/entities';
-import { AllergyDocumentsRepository } from '@core/repositories';
+import {
+  AllergyDocumentsRepository,
+  ClinicalScannedDocumentsRepository,
+} from '@core/repositories';
 import { generateResultsEmailMessage } from '@core/utils';
 
 export class SendResultsUserCase implements UseCase<any, void> {
@@ -16,13 +19,19 @@ export class SendResultsUserCase implements UseCase<any, void> {
     private readonly tokenManager: TokenManager,
     private readonly pdfManager: PdfManager,
     private readonly allergyDocumentsRepository: AllergyDocumentsRepository,
+    private readonly clinicalScannedDocumentsRepository: ClinicalScannedDocumentsRepository,
   ) {}
 
   async execute(patient: PatientEntity): Promise<void> {
     try {
       const files: string[] = [];
 
-      const results = await this.allergyDocumentsRepository.find(patient);
+      const promises = [
+        this.allergyDocumentsRepository.find(patient),
+        this.clinicalScannedDocumentsRepository.find(patient),
+      ];
+
+      const results = (await Promise.all(promises)).flat();
 
       // TODO: catch when patient results is empty
       if (results && results.length > 0) {
@@ -30,6 +39,7 @@ export class SendResultsUserCase implements UseCase<any, void> {
           const base64Data = this.pdfManager.decodeBase64Pdf(
             result.scanneddocument,
           );
+
           const file = await this.localStorage.upload(
             base64Data.buffer,
             result.documentname,

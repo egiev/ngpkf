@@ -9,6 +9,7 @@ import {
 } from '@core/abstracts';
 import {
   AllergyDocumentsRepository,
+  ClinicalScannedDocumentsRepository,
   PatientRepository,
   UserRepository,
 } from '@core/repositories';
@@ -47,6 +48,7 @@ export const userProvider: Provider[] = [
     TokenManager,
     PdfManager,
     AllergyDocumentsRepository,
+    ClinicalScannedDocumentsRepository,
   ]),
   createUseCaseProvider(DownloadResultUserCase, [TokenManager, LocalStorage]),
 ];
