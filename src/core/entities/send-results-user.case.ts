@@ -13,7 +13,6 @@ import {
   PatientDnrDocumentsRepository,
   PatientDocumentsRepository,
   PatientreFerralDetailDocumentsRepository,
-  PurchasingDocumentsRepository,
 } from '@core/repositories';
 import { generateResultsEmailMessage } from '@core/utils';
 
@@ -29,7 +28,6 @@ export class SendResultsUserCase implements UseCase<any, void> {
     private readonly patientDnrDocumentsRepository: PatientDnrDocumentsRepository,
     private readonly patientDocumentsRepository: PatientDocumentsRepository,
     private readonly patientreFerralDetailDocumentsRepository: PatientreFerralDetailDocumentsRepository,
-    private readonly purchasingDocumentsRepository: PurchasingDocumentsRepository,
   ) {}
 
   async execute(patient: PatientEntity): Promise<void> {
@@ -41,9 +39,8 @@ export class SendResultsUserCase implements UseCase<any, void> {
         this.clinicalScannedDocumentsRepository.find(patient),
         this.glScannedDocumentsRepository.find(patient),
         this.patientDnrDocumentsRepository.find(patient),
-        // this.patientDocumentsRepository.find(patient),
+        this.patientDocumentsRepository.find(patient),
         this.patientreFerralDetailDocumentsRepository.find(patient),
-        this.purchasingDocumentsRepository.find(patient),
       ];
 
       const results = (await Promise.all(promises)).flat();
@@ -59,6 +56,7 @@ export class SendResultsUserCase implements UseCase<any, void> {
             base64Data.buffer,
             result.documentname,
           );
+
           files.push(file);
         }
       }

@@ -7,3 +7,4 @@ export * from './patient.entity';
 export * from './patientdnrdocuments.entity';
 export * from './patientdocuments.entity';
 export * from './patientreferraldetaildocuments.entity';
+export * from './purchasingdocuments.entity';
