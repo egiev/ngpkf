@@ -10,6 +10,7 @@ import {
 import {
   AllergyDocumentsRepository,
   ClinicalScannedDocumentsRepository,
+  GlScannedDocumentsRepository,
   PatientRepository,
   UserRepository,
 } from '@core/repositories';
@@ -49,6 +50,7 @@ export const userProvider: Provider[] = [
     PdfManager,
     AllergyDocumentsRepository,
     ClinicalScannedDocumentsRepository,
+    GlScannedDocumentsRepository,
   ]),
   createUseCaseProvider(DownloadResultUserCase, [TokenManager, LocalStorage]),
 ];

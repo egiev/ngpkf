@@ -9,6 +9,7 @@ import { PatientEntity } from '@core/entities';
 import {
   AllergyDocumentsRepository,
   ClinicalScannedDocumentsRepository,
+  GlScannedDocumentsRepository,
 } from '@core/repositories';
 import { generateResultsEmailMessage } from '@core/utils';
 
@@ -20,6 +21,7 @@ export class SendResultsUserCase implements UseCase<any, void> {
     private readonly pdfManager: PdfManager,
     private readonly allergyDocumentsRepository: AllergyDocumentsRepository,
     private readonly clinicalScannedDocumentsRepository: ClinicalScannedDocumentsRepository,
+    private readonly glScannedDocumentsRepository: GlScannedDocumentsRepository,
   ) {}
 
   async execute(patient: PatientEntity): Promise<void> {
@@ -29,6 +31,7 @@ export class SendResultsUserCase implements UseCase<any, void> {
       const promises = [
         this.allergyDocumentsRepository.find(patient),
         this.clinicalScannedDocumentsRepository.find(patient),
+        this.glScannedDocumentsRepository.find(patient),
       ];
 
       const results = (await Promise.all(promises)).flat();
