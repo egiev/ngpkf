@@ -10,6 +10,7 @@ import {
   AllergyDocumentsRepository,
   ClinicalScannedDocumentsRepository,
   GlScannedDocumentsRepository,
+  PatientDnrDocumentsRepository,
 } from '@core/repositories';
 import { generateResultsEmailMessage } from '@core/utils';
 
@@ -22,6 +23,7 @@ export class SendResultsUserCase implements UseCase<any, void> {
     private readonly allergyDocumentsRepository: AllergyDocumentsRepository,
     private readonly clinicalScannedDocumentsRepository: ClinicalScannedDocumentsRepository,
     private readonly glScannedDocumentsRepository: GlScannedDocumentsRepository,
+    private readonly patientDnrDocumentsRepository: PatientDnrDocumentsRepository,
   ) {}
 
   async execute(patient: PatientEntity): Promise<void> {
@@ -32,6 +34,7 @@ export class SendResultsUserCase implements UseCase<any, void> {
         this.allergyDocumentsRepository.find(patient),
         this.clinicalScannedDocumentsRepository.find(patient),
         this.glScannedDocumentsRepository.find(patient),
+        this.patientDnrDocumentsRepository.find(patient),
       ];
 
       const results = (await Promise.all(promises)).flat();
