@@ -10,6 +10,7 @@ import {
   AllergyDocumentsRepository,
   ClinicalScannedDocumentsRepository,
   GlScannedDocumentsRepository,
+  LabDocumentsRepository,
   PatientDnrDocumentsRepository,
   PatientreFerralDetailDocumentsRepository,
   ScannedDocumentsRepository,
@@ -30,6 +31,7 @@ export class SendResultsUserCase implements UseCase<any, void> {
     private readonly patientreFerralDetailDocumentsRepository: PatientreFerralDetailDocumentsRepository,
     private readonly scannedDocumentsRepository: ScannedDocumentsRepository,
     private readonly taskDocumentsRepository: TaskDocumentsRepository,
+    private readonly labDocumentsRepository: LabDocumentsRepository,
   ) {}
 
   async execute(patient: PatientEntity): Promise<void> {
@@ -58,6 +60,25 @@ export class SendResultsUserCase implements UseCase<any, void> {
           const file = await this.localStorage.upload(
             base64Data.buffer,
             result.documentname,
+          );
+
+          files.push(file);
+        }
+      }
+
+      const labResults = await this.labDocumentsRepository.find(patient);
+      const combineLabResults = labResults.map((e) => e.documents).flat();
+
+      if (combineLabResults && combineLabResults.length > 0) {
+        for (const result of combineLabResults) {
+          const base64Data = this.pdfManager.decodeBase64Pdf(result.document);
+          const fileExtension = this.localStorage.getFileExtension(
+            result.documenttype,
+          );
+
+          const file = await this.localStorage.upload(
+            base64Data.buffer,
+            `${result.documentname}.${fileExtension}`,
           );
 
           files.push(file);

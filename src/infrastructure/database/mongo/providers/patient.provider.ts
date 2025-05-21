@@ -3,6 +3,7 @@ import {
   AllergyDocumentsRepository,
   ClinicalScannedDocumentsRepository,
   GlScannedDocumentsRepository,
+  LabDocumentsRepository,
   PatientDnrDocumentsRepository,
   PatientreFerralDetailDocumentsRepository,
   PatientRepository,
@@ -15,6 +16,7 @@ import {
   AllergyDocumentsService,
   ClinicalScannedDocumentsService,
   GlScannedDocumentsService,
+  LabDocumentsService,
   PatientDnrDocumentsService,
   PatientReferralDetailDocumentsService,
   PatientService,
@@ -48,6 +50,10 @@ export const patientProvider: Provider[] = [
   {
     provide: TaskDocumentsRepository,
     useClass: TaskDocumentsService,
+  },
+  {
+    provide: LabDocumentsRepository,
+    useClass: LabDocumentsService,
   },
   createUseCaseProvider(FindPatientCase, [PatientRepository]),
 ];

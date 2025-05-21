@@ -3,6 +3,7 @@ export * from './clinicalscanneddocuments.entity';
 export * from './contact.entity';
 export * from './document';
 export * from './glscanneddocuments.entity';
+export * from './labdocuments.entity';
 export * from './patient.entity';
 export * from './patientdnrdocuments.entity';
 export * from './patientreferraldetaildocuments.entity';

@@ -1,6 +1,7 @@
 export * from './allergydocuments.service';
 export * from './clinicalscanneddocuments.service';
 export * from './glscanneddocuments.service';
+export * from './labdocuments.service';
 export * from './patient.service';
 export * from './patientdnrdocuments.service';
 export * from './patientreferraldetaildocuments.service';

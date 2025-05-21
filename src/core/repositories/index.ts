@@ -1,6 +1,7 @@
 export * from './allergydocuments.repository';
 export * from './clinicalscanneddocuments.repository';
 export * from './glscanneddocuments.repository';
+export * from './labdocuments.repository';
 export * from './patient.repository';
 export * from './patientdnrdocuments.repository';
 export * from './patientreferraldetaildocuments.repository';
