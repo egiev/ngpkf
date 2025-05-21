@@ -13,6 +13,7 @@ import {
   PatientDnrDocumentsRepository,
   PatientreFerralDetailDocumentsRepository,
   ScannedDocumentsRepository,
+  TaskDocumentsRepository,
 } from '@core/repositories';
 import { generateResultsEmailMessage } from '@core/utils';
 
@@ -28,6 +29,7 @@ export class SendResultsUserCase implements UseCase<any, void> {
     private readonly patientDnrDocumentsRepository: PatientDnrDocumentsRepository,
     private readonly patientreFerralDetailDocumentsRepository: PatientreFerralDetailDocumentsRepository,
     private readonly scannedDocumentsRepository: ScannedDocumentsRepository,
+    private readonly taskDocumentsRepository: TaskDocumentsRepository,
   ) {}
 
   async execute(patient: PatientEntity): Promise<void> {
@@ -41,6 +43,7 @@ export class SendResultsUserCase implements UseCase<any, void> {
         this.patientDnrDocumentsRepository.find(patient),
         this.patientreFerralDetailDocumentsRepository.find(patient),
         this.scannedDocumentsRepository.find(patient),
+        this.taskDocumentsRepository.find(patient),
       ];
 
       const results = (await Promise.all(promises)).flat();
@@ -68,6 +71,7 @@ export class SendResultsUserCase implements UseCase<any, void> {
       // }
 
       // const content = generateResultsEmailMessage(contact.emailid, token, files);
+
       const content = generateResultsEmailMessage(
         'reginaldventura23@gmail.com',
         token,

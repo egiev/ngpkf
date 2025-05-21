@@ -6,4 +6,5 @@ export * from './patient.entity';
 export * from './patientdnrdocuments.entity';
 export * from './patientreferraldetaildocuments.entity';
 export * from './scanneddocuments.entity';
+export * from './taskdocuments.entity';
 export * from './user.entity';

@@ -5,3 +5,4 @@ export * from './patient.service';
 export * from './patientdnrdocuments.service';
 export * from './patientreferraldetaildocuments.service';
 export * from './scanneddocuments.service';
+export * from './taskdocuments.service';

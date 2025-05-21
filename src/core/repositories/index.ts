@@ -5,4 +5,5 @@ export * from './patient.repository';
 export * from './patientdnrdocuments.repository';
 export * from './patientreferraldetaildocuments.repository';
 export * from './scanneddocuments.repository';
+export * from './taskdocuments.repository';
 export * from './user.respository';
