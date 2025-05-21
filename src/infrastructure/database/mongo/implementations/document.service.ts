@@ -10,10 +10,16 @@ export class BaseDocumentService<
   ) {}
 
   async find(query?: any | undefined): Promise<DomainEntity[]> {
+    const date = new Date();
+    const rawMonthLimit = process.env.DOCUMENT_MONTHS_LIMIT;
+    const monthLimit = rawMonthLimit ? +rawMonthLimit : 0;
+    date.setMonth(date.getMonth() - monthLimit);
+
     const em = this.em.fork();
     const results = (await em.findAll(this.entity as any, {
       where: {
         patientuid: new ObjectId(query?.id),
+        createdat: { $lte: date },
       },
     })) as any;
 

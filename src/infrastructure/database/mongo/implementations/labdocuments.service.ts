@@ -19,10 +19,16 @@ export class LabDocumentsService
   }
 
   override async find(query?: any | undefined): Promise<LabDocumentEntity[]> {
+    const date = new Date();
+    const rawMonthLimit = process.env.DOCUMENT_MONTHS_LIMIT;
+    const monthLimit = rawMonthLimit ? +rawMonthLimit : 0;
+    date.setMonth(date.getMonth() - monthLimit);
+
     const em = this.em.fork();
     const results = await em.findAll(LabDocumentOrmEntity, {
       where: {
         patientuid: new ObjectId(query?.id),
+        createdat: { $lte: date },
       },
     });
 
