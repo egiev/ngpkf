@@ -4,8 +4,7 @@ import {
   VerifyTOTPUserCase,
 } from '@application/use-cases';
 import { UserOrmEntity } from '@infrastructure/database/postgres';
-import { GenerateOTPDto } from './dtos/generate-totp.dto';
-import { VerifyOTPDto } from './dtos/verify-otp.dto';
+import { GenerateOTPDto, VerifyOTPDto } from './dtos';
 
 @Resolver(() => UserOrmEntity)
 export class UserResolver {
