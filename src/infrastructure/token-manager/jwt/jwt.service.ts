@@ -7,7 +7,7 @@ export class JwtService implements TokenManager {
   private readonly secretKey = process.env.SECRET_KEY || '';
 
   sign(config: any): string {
-    return jwt.sign(config, this.secretKey, { expiresIn: '5m' });
+    return jwt.sign(config, this.secretKey, { expiresIn: '24h' });
   }
 
   verify(token: string): any {

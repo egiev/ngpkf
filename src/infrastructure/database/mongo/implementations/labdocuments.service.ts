@@ -28,7 +28,7 @@ export class LabDocumentsService
     const results = await em.findAll(LabDocumentOrmEntity, {
       where: {
         patientuid: new ObjectId(query?.id),
-        createdat: { $lte: date },
+        createdat: { $gte: date },
       },
     });
 

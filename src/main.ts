@@ -1,6 +1,9 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { EntityNotFoundFilter } from '@shared/exceptions';
+import {
+  DriverExceptionFilter,
+  EntityNotFoundFilter,
+} from '@shared/exceptions';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -9,7 +12,7 @@ async function bootstrap() {
   app.enableCors();
 
   // Global Exception Filter
-  app.useGlobalFilters(new EntityNotFoundFilter());
+  app.useGlobalFilters(new DriverExceptionFilter(), new EntityNotFoundFilter());
 
   // Global Validation Pipe
   app.useGlobalPipes(new ValidationPipe());

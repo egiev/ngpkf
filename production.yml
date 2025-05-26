@@ -16,24 +16,21 @@ services:
 
   mongo:
     restart: always
-    # image: bitnami/mongodb:latest
     image: bitnami/mongodb:5.0
     container_name: mongo
-    # user: root
     volumes:
       - mongo_data:/bitnami/mongodb
+    env_file:
+      - .env
     environment:
-      MONGODB_ADVERTISED_HOSTNAME: mongo
-      MONGODB_REPLICA_SET_MODE: primary
-      MONGODB_REPLICA_SET_NAME: rs0
-      MONGODB_REPLICA_SET_KEY: asdfsfss
-      # MONGODB_REPLICA_SET_MODE: primary
-      # MONGODB_REPLICA_SET_KEY: 123456
-      # ALLOW_EMPTY_PASSWORD: yes
-      MONGODB_ROOT_PASSWORD: root
-      MONGODB_USERNAME: root
-      MONGODB_PASSWORD: ba9976f1b687d5881d2100d3b468b5f9493b72ec
-      MONGODB_DATABASE: online-results
+      MONGODB_ADVERTISED_HOSTNAME: ${MONGO_ADVERTISED_HOSTNAME}
+      MONGODB_REPLICA_SET_MODE: ${MONGO_REPLICA_SET_MODE}
+      MONGODB_REPLICA_SET_NAME: ${MONGO_REPLICA_SET_NAME}
+      MONGODB_REPLICA_SET_KEY: ${MONGO_REPLICA_SET_KEY}
+      MONGODB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGODB_USERNAME: ${MONGO_USERNAME}
+      MONGODB_PASSWORD: ${MONGO_PASSWORD}
+      MONGODB_DATABASE: ${MONGO_DATABASE}
     ports:
       - 27017:27017
 
@@ -45,14 +42,14 @@ services:
     env_file:
       - .env
     ports:
-      - '80:3000'
+      - '3000:3000'
     depends_on:
       - postgres
       - mongo
       - broker
     volumes:
       - ./:/usr/src/app/
-    command: bash -c "npm install && npm run start:dev"
+    command: bash -c "npm install && npm run start:prod"
 
   broker:
     restart: always
@@ -72,6 +69,25 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_NUM_PARTITIONS: 3
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+
+  init-broker:
+    restart: always
+    image: apache/kafka:latest
+    container_name: init-broker
+    depends_on:
+      - broker
+    volumes:
+      - ./create-topics.sh:/scripts/create-topics.sh
+    command: ['/bin/bash', '/scripts/create-topics.sh']
+
+  cron:
+    restart: always
+    image: alpine
+    container_name: cron
+    volumes:
+      - ./files:/app/files
+    # command: sh -c "while true; do find /app/files -type f -mmin +1 -delete; sleep 10; done"
+    command: sh -c "while true; do find /app/files -type f -mmin +1440 -delete; sleep 3600; done"
 
   pgadmin:
     restart: always

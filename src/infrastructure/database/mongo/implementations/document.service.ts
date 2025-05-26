@@ -19,7 +19,7 @@ export class BaseDocumentService<
     const results = (await em.findAll(this.entity as any, {
       where: {
         patientuid: new ObjectId(query?.id),
-        createdat: { $lte: date },
+        createdat: { $gte: date },
       },
     })) as any;
 

@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import {
   LocalStorage,
   PdfManager,
@@ -87,14 +88,16 @@ export class SendResultsUserCase implements UseCase<any, void> {
 
       const token = this.tokenManager.sign({ mrn: patient.mrn });
 
-      // if (!patient.contact.emailid) {
-      //   throw new NotFoundException('Email not found');
-      // }
+      if (!patient.contact.emailid) {
+        throw new NotFoundException('Email not found');
+      }
 
-      // const content = generateResultsEmailMessage(contact.emailid, token, files);
+      if (!patient.contact.mobilephone) {
+        throw new NotFoundException('Email not found');
+      }
 
       const content = generateResultsEmailMessage(
-        'reginaldventura23@gmail.com',
+        patient.contact.emailid,
         token,
         files,
       );
