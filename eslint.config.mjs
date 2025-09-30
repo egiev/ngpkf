@@ -27,13 +27,36 @@ export default tseslint.config(
   },
   {
     rules: {
+      'no-console': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          vars: 'all',
+          args: 'after-used',
+          ignoreRestSiblings: true,
+          varsIgnorePattern: '^_$|^_',
+          argsIgnorePattern: '^_$|^_',
+        },
+      ],
+      '@typescript-eslint/no-empty-function': 'error',
+      '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/no-unsafe-argument': 'warn',
+      '@typescript-eslint/explicit-member-accessibility': [
+        'error',
+        {
+          accessibility: 'explicit',
+          overrides: {
+            constructors: 'no-public',
+            parameterProperties: 'explicit',
+          },
+        },
+      ],
       'prettier/prettier': [
         'error',
         {
-          endOfLine: 'off',
+          endOfLine: 'lf',
         },
       ],
     },
