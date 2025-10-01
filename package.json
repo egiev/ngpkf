@@ -3,9 +3,15 @@
   "version": "0.0.1",
   "private": true,
   "description": "",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "author": "",
   "scripts": {
+    "app:rebuild:dev": "docker compose -f docker-compose.dev.yml -f docker-compose.postgres.yml up -d --build --force-recreate",
+    "app:rebuild:prod": "docker compose -f docker-compose.prod.yml -f docker-compose.postgres.yml up -d  --build --force-recreate",
+    "app:start:dev": "docker compose -f docker-compose.dev.yml -f docker-compose.postgres.yml up -d",
+    "app:start:prod": "docker compose -f docker-compose.prod.yml -f docker-compose.postgres.yml up -d",
+    "app:stop:dev": "docker compose -f docker-compose.dev.yml -f docker-compose.postgres.yml down",
+    "app:stop:prod": "docker compose -f docker-compose.prod.yml -f docker-compose.postgres.yml down",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -49,10 +55,12 @@
     "@mikro-orm/postgresql": "^6.4.9",
     "@mikro-orm/reflection": "^6.4.9",
     "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.0.0",
