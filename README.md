@@ -38,26 +38,16 @@ Then, update the `.env` file with the necessary values.
 
 ## Running the Application
 
-### Setting Up Docker Compose File
-
 For development:
 
 ```sh
-cp docker-compose.dev.yml docker-compose.yml
+npm run app:start:dev
 ```
 
 For production:
 
 ```sh
-cp docker-compose.prod.yml docker-compose.yml
-```
-
-### Running the Application
-
-To run the application:
-
-```sh
-docker-compose up --build
+npm run app:start:prod
 ```
 
 This will start the NestJS app along with Kafka, PostgreSQL, and Firebase Pub/Sub.

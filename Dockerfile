@@ -1,0 +1,21 @@
+# Development
+FROM node:22.14.0-alpine AS development
+WORKDIR /usr/src/app
+COPY package*.json ./
+COPY . .
+
+# Build Production
+FROM node:22.14.0-alpine AS build
+WORKDIR /usr/src/app
+COPY --chown=node:node package*.json ./
+COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
+COPY --chown=node:node . .
+RUN npm run build
+RUN npm ci --only=production && npm cache clean --force
+USER node
+
+# Production
+FROM node:22.14.0-alpine AS production
+COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
+COPY --chown=node:node --from=build /usr/src/app/dist ./dist
+CMD [ "node", "dist/main.js" ]

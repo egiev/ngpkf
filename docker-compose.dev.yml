@@ -1,0 +1,20 @@
+services:
+  app:
+    restart: always
+    image: '${PROJECT_NAME}-app:dev'
+    container_name: '${PROJECT_NAME}-app'
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    environment:
+      - NODE_ENV:dev
+    env_file:
+      - .env.dev
+    volumes:
+      - ./:/usr/src/app/
+    command: sh -c "npm ci && npm run start:dev"
+    ports:
+      - '${BACKEND_PORT}:3000'
+    depends_on:
+      - postgres

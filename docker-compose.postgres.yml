@@ -1,38 +1,23 @@
 services:
-  db:
-    image: postgres
-    container_name: postgres
+  postgres:
     restart: always
+    image: postgres:latest
+    container_name: '${PROJECT_NAME}-postgres'
     env_file:
       - .env
     environment:
-      POSTGRES_USER: ${DATABASE_USER}
-      POSTGRES_DB: ${DATABASE_NAME}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_NAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - '5433:5432'
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
-  backend:
-    restart: always
-    build:
-      dockerfile: Dockerfile.dev
-    container_name: backend
-    volumes:
-      - ./:/usr/src/app/
-    ports:
-      - '80:3000'
-    depends_on:
-      - db
-    env_file:
-      - .env
-    command: pnpm run start:dev
-
   pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
     restart: always
+    image: dpage/pgadmin4
+    container_name: '${PROJECT_NAME}-pgadmin'
     env_file:
       - .env
     environment:
@@ -42,7 +27,7 @@ services:
     ports:
       - '5050:80'
     depends_on:
-      - db
+      - postgres
     volumes:
       - pgadmin-data:/var/lib/pgadmin
 
