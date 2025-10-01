@@ -6,7 +6,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import { PostgresConfig } from '@/config/types';
 import { Database } from '@/infra/databases';
-import { User } from '@/infra/databases/postgres/user.entity';
+import {
+  GroupEntity,
+  GroupPermissionEntity,
+  PermissionEntity,
+  UserEntity,
+  UserGroupEntity,
+  UserPermissionEntity,
+} from '@/modules/user/entities';
 
 @Module({
   imports: [
@@ -21,7 +28,14 @@ import { User } from '@/infra/databases/postgres/user.entity';
           driver: PostgreSqlDriver,
           registerRequestContext: false,
           ...dbConnection,
-          entities: [User],
+          entities: [
+            UserEntity,
+            GroupEntity,
+            PermissionEntity,
+            UserGroupEntity,
+            UserPermissionEntity,
+            GroupPermissionEntity,
+          ],
           metadataProvider: TsMorphMetadataProvider,
           migrations: {
             path: join(__dirname, './migrations'),
