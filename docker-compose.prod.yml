@@ -1,0 +1,17 @@
+services:
+  app:
+    restart: always
+    image: '${PROJECT_NAME}-app:prod'
+    container_name: '${PROJECT_NAME}-app'
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    environment:
+      - NODE_ENV:prod
+    env_file:
+      - .env.prod
+    ports:
+      - '${BACKEND_PORT}:3000'
+    depends_on:
+      - postgres

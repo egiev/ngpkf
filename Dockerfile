@@ -1,21 +1,24 @@
-# Development
+# Development Stage
 FROM node:22.14.0-alpine AS development
 WORKDIR /usr/src/app
 COPY package*.json ./
+RUN npm install
 COPY . .
 
-# Build Production
+# Build Stage (Production Build)
 FROM node:22.14.0-alpine AS build
 WORKDIR /usr/src/app
 COPY --chown=node:node package*.json ./
 COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node . .
 RUN npm run build
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci --only=production --ignore-scripts && npm cache clean --force
 USER node
 
-# Production
+# Production Stage
 FROM node:22.14.0-alpine AS production
-COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
+WORKDIR /usr/src/app
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
-CMD [ "node", "dist/main.js" ]
+COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
+EXPOSE 3000
+CMD ["node", "dist/main.js"]
