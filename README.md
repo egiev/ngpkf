@@ -64,9 +64,25 @@ This will start the NestJS app along with Kafka, PostgreSQL, and Firebase Pub/Su
 To stop the running containers:
 
 ```sh
-docker-compose down
+npm run app:stop:dev
 ```
 
-## Docker Compose Configuration
+For production:
 
-Ensure you have both `docker-compose.dev.yml` for development and `docker-compose.prod.yml` for production. Use the appropriate copy command before running the application.
+```sh
+npm run app:stop:prod
+```
+
+### 6.Running Database Migrations
+
+Create a new migration:
+
+```sh
+npm run db:migrate:create
+```
+
+Apply pending migrations:
+
+```sh
+npm run db:migrate:up
+```
