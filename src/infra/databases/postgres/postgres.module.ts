@@ -1,19 +1,8 @@
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { PostgreSqlDriver } from '@mikro-orm/postgresql';
-import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { join } from 'path';
 import { PostgresConfig } from '@/config/types';
 import { Database } from '@/infra/databases';
-import {
-  GroupEntity,
-  GroupPermissionEntity,
-  PermissionEntity,
-  UserEntity,
-  UserGroupEntity,
-  UserPermissionEntity,
-} from '@/modules/user/entities';
 
 @Module({
   imports: [
@@ -22,26 +11,11 @@ import {
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        const dbConnection = configService.get<PostgresConfig>(Database.Postgres);
+        const config = configService.get<PostgresConfig>(Database.Postgres);
 
-        return {
-          driver: PostgreSqlDriver,
-          registerRequestContext: false,
-          ...dbConnection,
-          entities: [
-            UserEntity,
-            GroupEntity,
-            PermissionEntity,
-            UserGroupEntity,
-            UserPermissionEntity,
-            GroupPermissionEntity,
-          ],
-          metadataProvider: TsMorphMetadataProvider,
-          migrations: {
-            path: join(__dirname, './migrations'),
-            glob: '!(*.d).{js,ts}',
-          },
-        };
+        if (!config) throw new Error(`Missing Postgres config for key "${Database.Postgres}"`);
+
+        return config;
       },
     }),
   ],
