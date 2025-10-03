@@ -1,7 +1,6 @@
-import { MikroOrmModule } from '@mikro-orm/nestjs';
+import { MikroOrmModule, MikroOrmModuleOptions } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { PostgresConfig } from '@/config/types';
 import { Database } from '@/infra/databases';
 
 @Module({
@@ -11,7 +10,7 @@ import { Database } from '@/infra/databases';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        const config = configService.get<PostgresConfig>(Database.Postgres);
+        const config: MikroOrmModuleOptions | undefined = configService.get(Database.Postgres);
 
         if (!config) throw new Error(`Missing Postgres config for key "${Database.Postgres}"`);
 
