@@ -1,7 +1,7 @@
+import kafkaConfig from './kafka.config';
 import postgresConfig from './postgres.config';
 
 export * from './env.helper';
 export * from './keys';
-export * from './types';
 
-export default [postgresConfig];
+export default [postgresConfig, kafkaConfig];
