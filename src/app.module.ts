@@ -1,9 +1,11 @@
+import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from '@/app.controller';
-import { AppService } from '@/app.service';
-import config, { getEnvFilePath } from '@/config';
-import { PostgresDatabaseModule } from '@/infra/databases';
+import config from '@/config';
+import { getEnvFilePath } from '@/config/utils';
+import { PostgresDatabaseModule } from '@/infra/database/postgres';
+import { KafkaModule } from '@/infra/kafka';
+import { UserModule } from '@/modules/user/user.module';
 
 @Module({
   imports: [
@@ -13,9 +15,14 @@ import { PostgresDatabaseModule } from '@/infra/databases';
       load: config,
       expandVariables: true,
     }),
+    KafkaModule,
+
     PostgresDatabaseModule,
+    MikroOrmModule.forMiddleware(),
+
+    UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
