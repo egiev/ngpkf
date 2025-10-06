@@ -3,6 +3,7 @@ import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { registerAs } from '@nestjs/config';
 import { join } from 'path';
+import { ENUM_CONFIG_KEY } from '@/config/constants';
 import {
   GroupEntity,
   GroupPermissionEntity,
@@ -11,7 +12,6 @@ import {
   UserGroupEntity,
   UserPermissionEntity,
 } from '@/modules/user/entities';
-import { CONFIG_KEYS } from './keys';
 
 export const postgresConfig: MikroOrmModuleOptions = {
   driver: PostgreSqlDriver,
@@ -24,9 +24,9 @@ export const postgresConfig: MikroOrmModuleOptions = {
   entities: [UserEntity, GroupEntity, PermissionEntity, UserGroupEntity, UserPermissionEntity, GroupPermissionEntity],
   metadataProvider: TsMorphMetadataProvider,
   migrations: {
-    path: join(__dirname, '../infra/databases/postgres/migrations'),
+    path: join(__dirname, '../infra/database/postgres/migrations'),
     glob: '!(*.d).{js,ts}',
   },
 };
 
-export default registerAs(CONFIG_KEYS.postgres, (): MikroOrmModuleOptions => postgresConfig);
+export default registerAs(ENUM_CONFIG_KEY.Postgres, (): MikroOrmModuleOptions => postgresConfig);
