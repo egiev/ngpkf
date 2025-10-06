@@ -11,8 +11,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  async createUser() {
-    await this.userService.createUser();
+  async users() {
+    return await this.userService.getUsers();
   }
 
   @EventPattern(ENUM_KAFKA_TOPICS.UserCreated)

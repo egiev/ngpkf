@@ -9,10 +9,10 @@ export class UserEntity extends BaseEntity {
   id: string = v4();
 
   @Property({ unique: true, nullable: true })
-  username?: string;
+  username: string;
 
   @Property({ nullable: true })
-  password?: string;
+  password: string;
 
   @OneToMany(() => UserGroupEntity, (up) => up.user, { eager: true })
   groups? = new Collection<UserGroupEntity>(this);

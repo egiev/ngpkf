@@ -9,7 +9,7 @@ import { UserService } from '@/modules/user/services';
 @Module({
   imports: [MikroOrmModule.forFeature([UserEntity], ENUM_DATABASE.Postgres)],
   providers: [UserRepository, UserService],
-  exports: [],
+  exports: [UserRepository],
   controllers: [UserController],
 })
 export class UserModule {}
