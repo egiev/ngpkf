@@ -1,0 +1,17 @@
+import { UserEntity } from '@/modules/user/entities';
+
+export function extractPermissions(user: UserEntity): string[] {
+  const permissions = new Set<string>();
+
+  user.permissions?.getItems().forEach((up) => {
+    permissions.add(up.permission.name);
+  });
+
+  user.groups?.getItems().forEach((item) => {
+    item.group.permissions?.getItems().forEach((gp) => {
+      permissions.add(gp.permission.name);
+    });
+  });
+
+  return [...permissions];
+}

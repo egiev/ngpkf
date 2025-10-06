@@ -5,6 +5,7 @@ import config from '@/config';
 import { getEnvFilePath } from '@/config/utils';
 import { PostgresDatabaseModule } from '@/infra/database/postgres';
 import { KafkaModule } from '@/infra/kafka';
+import { AuthModule } from '@/modules/auth/auth.module';
 import { UserModule } from '@/modules/user/user.module';
 
 @Module({
@@ -20,6 +21,7 @@ import { UserModule } from '@/modules/user/user.module';
     PostgresDatabaseModule,
     MikroOrmModule.forMiddleware(),
 
+    AuthModule,
     UserModule,
   ],
   controllers: [],

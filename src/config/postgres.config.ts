@@ -1,4 +1,3 @@
-import { MikroOrmModuleOptions } from '@mikro-orm/nestjs';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { registerAs } from '@nestjs/config';
@@ -13,7 +12,7 @@ import {
   UserPermissionEntity,
 } from '@/modules/user/entities';
 
-export const postgresConfig: MikroOrmModuleOptions = {
+export const postgresConfig: Record<string, any> = {
   driver: PostgreSqlDriver,
   registerRequestContext: false,
   dbName: process.env.POSTGRES_NAME!,
@@ -29,4 +28,4 @@ export const postgresConfig: MikroOrmModuleOptions = {
   },
 };
 
-export default registerAs(ENUM_CONFIG_KEY.Postgres, (): MikroOrmModuleOptions => postgresConfig);
+export default registerAs(ENUM_CONFIG_KEY.Postgres, () => postgresConfig);
