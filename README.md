@@ -86,19 +86,3 @@ Apply pending migrations:
 ```sh
 npm run db:migrate:up
 ```
-
-### 7. Kafka
-
-Check topics
-
-```sh
-npm run broker:kafka-topic:<env> -- --list
-
-npm run broker:kafka-topic:<env> -- --topic <topic> --describe
-```
-
-Check
-
-```sh
-npm run broker:kafka-console-consumer:<env> -- --topic <topic> --from-beginning
-```
