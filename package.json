@@ -21,6 +21,7 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "prepare": "husky",
     "start": "nest start",
+    "start:cli": "ts-node -r tsconfig-paths/register src/cli.ts",
     "start:debug": "nest start --debug --watch",
     "start:dev": "nest start --watch",
     "start:prod": "node dist/main",
@@ -28,7 +29,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "testss": "docker ps"
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,json,css,md}": [
@@ -64,8 +66,13 @@
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/microservices": "^11.1.6",
     "@nestjs/platform-express": "^11.0.1",
     "adminjs": "^7.8.17",
+    "i": "^0.3.7",
+    "kafkajs": "^2.2.4",
+    "nest-commander": "^3.20.1",
+    "npm": "^11.6.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "uuid": "^13.0.0"

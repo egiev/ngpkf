@@ -1,11 +1,14 @@
 import { NestFactory } from '@nestjs/core';
-import { setupAdmin } from '@/adminjs';
+import adminInit from '@/infra/admin/admin.setup';
+import kafkaInit from '@/infra/kafka/kafka.setup';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  await setupAdmin(app);
+  await adminInit(app);
+
+  await kafkaInit(app);
 
   await app.listen(process.env.PORT ?? 3000);
 }
