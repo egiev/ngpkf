@@ -1,9 +1,9 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
+import { HelperHashService } from '@/common/helpers/services';
 import { ENUM_KAFKA_TOPICS, KAFKA_SERVICE_NAME } from '@/infra/kafka/constants';
-import { UserEntity } from '@/modules/user/core/entities';
 import { UserRepository } from '@/modules/user/core/repositories';
-import { HelperHashService } from '../../../../common/helpers/services/helper.hash.service';
+import { CreateUserType } from '@/modules/user/core/types';
 
 @Injectable()
 export class UserService {
@@ -21,7 +21,7 @@ export class UserService {
     return users;
   }
 
-  async createUser(params: UserEntity) {
+  async createUser(params: CreateUserType) {
     const password = await this.helperHashService.hash(params.password);
     const user = { ...params, password };
     return this.userRepository.create(user);
