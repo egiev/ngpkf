@@ -3,7 +3,7 @@ import { EntityRepository } from '@mikro-orm/postgresql';
 import { Injectable } from '@nestjs/common';
 import { ENUM_DATABASE } from '@/common/database/constants';
 import { MikroOrmRepository } from '@/infra/database/mikroorm';
-import { UserEntity } from '@/modules/user/entities';
+import { UserEntity } from '@/modules/user/core/entities';
 
 @Injectable()
 export class UserRepository extends MikroOrmRepository<UserEntity> {

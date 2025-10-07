@@ -1,4 +1,4 @@
-import { EntityRepository, FilterQuery, wrap } from '@mikro-orm/core';
+import { EntityRepository, FilterQuery, RequiredEntityData, wrap } from '@mikro-orm/core';
 import { BaseRepository } from '@/common/database/abstracts';
 
 export class MikroOrmRepository<T extends object> implements BaseRepository<T> {
@@ -12,8 +12,8 @@ export class MikroOrmRepository<T extends object> implements BaseRepository<T> {
     return await this.repository.findOne(filter);
   }
 
-  async create(data: T): Promise<T> {
-    const entity = this.repository.create(data);
+  async create(data: Partial<T>): Promise<T> {
+    const entity = this.repository.create(data as unknown as RequiredEntityData<T>);
     await this.repository.getEntityManager().persistAndFlush(entity);
     return entity;
   }

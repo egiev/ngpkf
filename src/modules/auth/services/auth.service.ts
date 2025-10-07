@@ -6,8 +6,8 @@ import { refreshJwtConfig } from '@/config';
 import { AuthLoginDTO } from '@/modules/auth/dtos';
 import { JwtPayload } from '@/modules/auth/payloads';
 import { extractPermissions } from '@/modules/auth/utils';
-import { UserEntity } from '@/modules/user/entities';
-import { UserRepository } from '@/modules/user/repositories';
+import { UserEntity } from '@/modules/user/core/entities';
+import { UserRepository } from '@/modules/user/core/repositories';
 
 @Injectable()
 export class AuthService {

@@ -10,7 +10,7 @@ import {
   UserEntity,
   UserGroupEntity,
   UserPermissionEntity,
-} from '@/modules/user/entities';
+} from '@/modules/user/core/entities';
 
 export const postgresConfig: Record<string, any> = {
   driver: PostgreSqlDriver,

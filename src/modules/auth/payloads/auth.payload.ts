@@ -1,4 +1,4 @@
-import { UserEntity } from '@/modules/user/entities';
+import { UserEntity } from '@/modules/user/core/entities';
 
 export type AuthPayload = {
   user: UserEntity;

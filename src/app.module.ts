@@ -1,29 +1,11 @@
-import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import config from '@/config';
-import { getEnvFilePath } from '@/config/utils';
-import { PostgresDatabaseModule } from '@/infra/database/postgres';
+import { HttpApiModule, KafkaApiModule } from '@/apis';
+import { CommonModule } from '@/common/common.module';
 import { KafkaModule } from '@/infra/kafka';
-import { AuthModule } from '@/modules/auth/auth.module';
-import { UserModule } from '@/modules/user/user.module';
+import { DatabaseModule } from './infra/database/database.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: getEnvFilePath(),
-      load: config,
-      expandVariables: true,
-    }),
-    KafkaModule,
-
-    PostgresDatabaseModule,
-    MikroOrmModule.forMiddleware(),
-
-    AuthModule,
-    UserModule,
-  ],
+  imports: [CommonModule, DatabaseModule, KafkaModule, HttpApiModule, KafkaApiModule],
   controllers: [],
   providers: [],
 })
