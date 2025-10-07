@@ -27,6 +27,7 @@ export class UserCreateCommand extends CommandRunner {
   }
 
   async run(_passedParams: string[], options: CreateUserOptions): Promise<void> {
+    this.logger.log(`Received options: ${JSON.stringify(options)}`);
     if (!options.username || !options.password) {
       this.logger.error('Username and password are required');
       return;

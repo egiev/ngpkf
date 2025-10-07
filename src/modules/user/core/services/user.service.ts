@@ -2,6 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { HelperHashService } from '@/common/helpers/services';
 import { ENUM_KAFKA_TOPICS, KAFKA_SERVICE_NAME } from '@/infra/kafka/constants';
+import { UserEntity } from '@/modules/user/core/entities';
 import { UserRepository } from '@/modules/user/core/repositories';
 import { CreateUserType } from '@/modules/user/core/types';
 
@@ -17,6 +18,12 @@ export class UserService {
 
   async getUsers() {
     const users = await this.userRepository.findAll();
+    this.clientKafka.emit(ENUM_KAFKA_TOPICS.UserCreated, users);
+    return users;
+  }
+
+  async getUser(filter: Partial<UserEntity> = {}) {
+    const users = await this.userRepository.findOne(filter);
     this.clientKafka.emit(ENUM_KAFKA_TOPICS.UserCreated, users);
     return users;
   }

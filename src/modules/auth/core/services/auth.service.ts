@@ -1,24 +1,28 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import bcrypt from 'bcrypt';
 import { refreshJwtConfig } from '@/config';
-import { AuthLoginDTO } from '@/modules/auth/dtos';
-import { JwtPayload } from '@/modules/auth/payloads';
-import { extractPermissions } from '@/modules/auth/utils';
+import { JwtPayload } from '@/modules/auth/core/payloads';
+import { AuthCredentialsType } from '@/modules/auth/core/types';
+import { extractPermissions } from '@/modules/auth/core/utils';
 import { UserEntity } from '@/modules/user/core/entities';
-import { UserRepository } from '@/modules/user/core/repositories';
+import { UserService } from '@/modules/user/core/services';
+import { HelperHashService } from '../../../../common/helpers/services/helper.hash.service';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     private readonly jwtService: JwtService,
-    private readonly userRepository: UserRepository,
+    private readonly userService: UserService,
     @Inject(refreshJwtConfig.KEY)
     private readonly refreshJwtConfiguration: ConfigType<typeof refreshJwtConfig>,
+    private readonly helperHashService: HelperHashService,
   ) {}
 
-  async loginWithCredentials(credentials: AuthLoginDTO) {
+  async loginWithCredentials(credentials: AuthCredentialsType) {
+    this.logger.log(`Logging in user: ${credentials.username}`);
     const user = await this.validateCredentials(credentials);
     return this.createToken(user);
   }
@@ -26,7 +30,7 @@ export class AuthService {
   async refreshToken(token: string) {
     try {
       const payload = await this.jwtService.verifyAsync<JwtPayload>(token, this.refreshJwtConfiguration);
-      const user = await this.userRepository.findOne({ id: payload.sub });
+      const user = await this.userService.getUser({ id: payload.sub });
       if (!user) throw new BadRequestException('Invalid token');
       return this.createToken(user);
     } catch {
@@ -34,12 +38,12 @@ export class AuthService {
     }
   }
 
-  async validateCredentials(credentials: AuthLoginDTO) {
-    const user = await this.userRepository.findOne({
+  async validateCredentials(credentials: AuthCredentialsType) {
+    const user = await this.userService.getUser({
       username: credentials.username,
     });
     if (!user) throw new BadRequestException('Invalid credentials');
-    const isMatch = await bcrypt.compare(credentials.password, user.password);
+    const isMatch = await this.helperHashService.compare(credentials.password, user.password);
     if (!isMatch) throw new BadRequestException('Invalid credentials');
     return user;
   }

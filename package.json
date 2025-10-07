@@ -12,7 +12,7 @@
     "app:start:dev": "npm run compose:dev -- up -d",
     "app:start:dev:cli": "npm run compose:dev -- exec -ti app npx -- npm run start:cli",
     "app:start:local": "npm run compose:local -- up -d",
-    "app:start:local:cli": "npm run compose:local -- exec -ti app npx -- npm run start:cli",
+    "app:start:local:cli": "npm run compose:local -- exec -ti app npx ts-node -r tsconfig-paths/register src/cli.ts",
     "app:start:prod": "npm run compose:prod -- up -d",
     "app:start:prod:cli": "npm run compose:prod -- exec -ti app npx -- npm run start:cli",
     "app:stop:dev": "npm run compose:dev -- down",

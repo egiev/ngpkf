@@ -13,6 +13,6 @@ import { AuthService } from './services';
     ConfigModule.forFeature(refreshJwtConfig),
   ],
   providers: [AuthService],
-  controllers: [],
+  exports: [AuthService],
 })
-export class AuthModule {}
+export class AuthCoreModule {}
