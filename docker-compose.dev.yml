@@ -1,45 +1,8 @@
 services:
   app:
     build:
-      target: development
+      target: production
     environment:
       - NODE_ENV=dev
     env_file:
-      - .env.dev
-    volumes:
-      - ./:/usr/src/app/
-    command: sh -c "npm ci && npm run start:cli kafka:create-topics && npm run start:dev"
-
-  postgres:
-    env_file:
-      - .env.dev
-
-  pgadmin:
-    restart: always
-    image: dpage/pgadmin4
-    container_name: '${PROJECT_NAME}-pgadmin'
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-      CHECK_EMAIL_DELIVERABILITY: ${CHECK_EMAIL_DELIVERABILITY}
-    ports:
-      - '5050:80'
-    depends_on:
-      - postgres
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-
-  kafdrop:
-    restart: always
-    image: obsidiandynamics/kafdrop:latest
-    ports:
-      - '9000:9000'
-    environment:
-      KAFKA_BROKERCONNECT: ${KAFKA_BROKER}
-      JVM_OPTS: '-Xms32M -Xmx64M'
-      SERVER_SERVLET_CONTEXTPATH: '/'
-    depends_on:
-      - broker
-
-volumes:
-  pgadmin-data:
+      - .env.prod
