@@ -4,12 +4,16 @@ export function extractPermissions(user: UserEntity): string[] {
   const permissions = new Set<string>();
 
   user.permissions?.getItems().forEach((up) => {
-    permissions.add(up.permission.name);
+    if (up.permission.name) {
+      permissions.add(up.permission.name);
+    }
   });
 
   user.groups?.getItems().forEach((item) => {
     item.group.permissions?.getItems().forEach((gp) => {
-      permissions.add(gp.permission.name);
+      if (gp.permission.name) {
+        permissions.add(gp.permission.name);
+      }
     });
   });
 

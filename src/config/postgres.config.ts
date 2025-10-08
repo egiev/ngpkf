@@ -1,3 +1,4 @@
+import { MikroORM } from '@mikro-orm/core';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { registerAs } from '@nestjs/config';
@@ -26,6 +27,11 @@ export const postgresConfig: Record<string, any> = {
     path: join(__dirname, '../infra/database/postgres/migrations'),
     glob: '!(*.d).{js,ts}',
   },
+};
+
+export const init = async () => {
+  const orm = await MikroORM.init(postgresConfig);
+  return orm;
 };
 
 export default registerAs(ENUM_CONFIG_KEY.Postgres, () => postgresConfig);

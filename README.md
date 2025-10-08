@@ -130,10 +130,10 @@ npm test
 
 ### Run CLI Commands
 
-Create a user via CLI:
+Create a super user via CLI:
 
 ```sh
-npm run start:cli -- user:create -u <email> -p <password>
+npm run app:start:local:cli -- user:create -u <email> -p <password> --super-user
 ```
 
 ---

@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import adminInit from '@/infra/admin/admin.setup';
+// import adminInit from '@/infra/admin/admin.setup';
+import { adminInit } from '@/infra/admin';
 import kafkaInit from '@/infra/kafka/kafka.setup';
 import { AppModule } from './app.module';
 
