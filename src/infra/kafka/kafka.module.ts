@@ -16,7 +16,6 @@ import { KAFKA_SERVICE_NAME } from '@/infra/kafka/constants';
           options: {
             client: {
               brokers: [configService.get<string>('KAFKA_BROKER')!],
-              clientId: 'hello',
             },
             producerOnlyMode: true,
           },
@@ -24,7 +23,6 @@ import { KAFKA_SERVICE_NAME } from '@/infra/kafka/constants';
       },
     ]),
   ],
-  providers: [],
   exports: [ClientsModule],
 })
 export class KafkaModule {}

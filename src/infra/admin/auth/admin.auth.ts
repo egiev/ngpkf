@@ -24,7 +24,7 @@ export function createAuthAdmin({ em, services: { authService, configService } }
         throw new BadRequestException('Something went wrong. Please try again later.');
       }
     },
-    cookieName: configService.get('ADMIN_COOKIE_NAME') as string,
-    cookiePassword: configService.get('ADMIN_COOKIE_PASSWORD') as string,
+    cookieName: configService.get<string>('ADMIN_COOKIE_NAME') as string,
+    cookiePassword: configService.get<string>('ADMIN_COOKIE_PASSWORD') as string,
   };
 }

@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { HelperModule } from '@/common/helpers/helper.module';
+import { HelperModule } from '@/common/helpers';
 import config from '@/config';
 import { getEnvFilePath } from '@/config/utils';
 

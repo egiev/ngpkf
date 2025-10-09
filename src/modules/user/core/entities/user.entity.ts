@@ -1,17 +1,18 @@
 import { BaseEntity, Collection, Entity, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { v4 } from 'uuid';
+import { BaseUser } from '@/modules/user/core/abstracts';
 import { UserGroupEntity } from './user-group.entity';
 import { UserPermissionEntity } from './user-permission.entity';
 
 @Entity({ tableName: 'users' })
-export class UserEntity extends BaseEntity {
+export class UserEntity extends BaseEntity implements BaseUser {
   @PrimaryKey()
   id: string = v4();
 
   @Property({ unique: true, nullable: true })
   username: string;
 
-  @Property({ nullable: true })
+  @Property({ nullable: true, hidden: true })
   password: string;
 
   @OneToMany(() => UserGroupEntity, (up) => up.user, { eager: true })
