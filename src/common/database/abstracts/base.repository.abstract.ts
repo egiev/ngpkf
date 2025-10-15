@@ -1,7 +1,10 @@
-export abstract class BaseRepository<T> {
-  abstract findAll(filter?: Partial<T>): Promise<T[]>;
-  abstract findOne(filter: Partial<T>): Promise<T | null>;
-  abstract create(data: Partial<T>): Promise<T>;
-  abstract update(id: string | number, data: Partial<T>): Promise<T | null>;
-  abstract delete(id: string | number): Promise<boolean>;
-}
+export type BaseRepository<T extends object, C = Partial<T>, U = Partial<T>, F = any, O = any> = {
+  create(data: C): Promise<T>;
+  createMany(data: C[]): Promise<T[]>;
+  update(id: string, data: U): Promise<T | null>;
+  findOneById(id: string, options?: O): Promise<T | null>;
+  findOne(filter: F, options?: O): Promise<T | null>;
+  findAll(options?: O): Promise<T[]>;
+  remove(entity: T): Promise<T>;
+  removeById(id: string): Promise<boolean>;
+};

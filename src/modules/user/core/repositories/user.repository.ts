@@ -11,6 +11,14 @@ export class UserRepository extends MikroOrmRepository<UserEntity> {
     @InjectRepository(UserEntity, ENUM_DATABASE.Postgres)
     protected readonly repository: EntityRepository<UserEntity>,
   ) {
-    super(repository);
+    super(
+      repository,
+      {
+        populate: ['permissions.permission', 'groups.group', 'groups.group.permissions.permission'] as never[],
+      },
+      {
+        populate: ['permissions.permission', 'groups.group', 'groups.group.permissions.permission'] as never[],
+      },
+    );
   }
 }
