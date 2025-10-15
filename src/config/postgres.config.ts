@@ -16,11 +16,11 @@ import {
 export const postgresConfig: Record<string, any> = {
   driver: PostgreSqlDriver,
   registerRequestContext: false,
-  dbName: process.env.POSTGRES_NAME!,
-  host: process.env.POSTGRES_HOST!,
-  port: +process.env.POSTGRES_PORT!,
+  dbName: process.env.POSTGRES_NAME,
+  host: process.env.POSTGRES_HOST,
+  port: process.env.POSTGRES_PORT,
   user: process.env.POSTGRES_USER!,
-  password: process.env.POSTGRES_PASSWORD!,
+  password: process.env.POSTGRES_PASSWORD,
   entities: [UserEntity, GroupEntity, PermissionEntity, UserGroupEntity, UserPermissionEntity, GroupPermissionEntity],
   metadataProvider: TsMorphMetadataProvider,
   migrations: {

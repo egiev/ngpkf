@@ -32,6 +32,7 @@ services:
   kafdrop:
     restart: always
     image: obsidiandynamics/kafdrop:latest
+    container_name: '${PROJECT_NAME}-kafdrop'
     ports:
       - '9000:9000'
     environment:

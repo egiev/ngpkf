@@ -7,17 +7,17 @@ import { ENUM_CONFIG_KEY } from '@/config';
 @Module({
   imports: [
     MikroOrmModule.forRootAsync({
-      contextName: ENUM_DATABASE.Postgres,
+      contextName: ENUM_DATABASE.Mongo,
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        const config: MikroOrmModuleOptions | undefined = configService.get(ENUM_CONFIG_KEY.Postgres);
+        const config: MikroOrmModuleOptions | undefined = configService.get(ENUM_CONFIG_KEY.Mongo);
 
-        if (!config) throw new Error(`Missing Postgres config for key "${ENUM_CONFIG_KEY.Postgres}`);
+        if (!config) throw new Error(`Missing Mongo config for key "${ENUM_CONFIG_KEY.Mongo}`);
 
         return config;
       },
     }),
   ],
 })
-export class PostgresDatabaseModule {}
+export class MongoDatabaseModule {}
