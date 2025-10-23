@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { UserCoreModule } from '@/modules/user/core';
+import { UserModule } from '@/iam/user/user.module';
 import { UserCreateCommand } from './user.create.command';
 
 @Module({
-  imports: [UserCoreModule],
+  imports: [UserModule],
   providers: [UserCreateCommand],
   exports: [UserCreateCommand],
 })

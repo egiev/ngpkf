@@ -3,7 +3,7 @@ import { EntityManager, RequestContext } from '@mikro-orm/postgresql';
 import { Injectable, Logger } from '@nestjs/common';
 import { Command, CommandRunner, Option } from 'nest-commander';
 import { ENUM_DATABASE } from '@/common/database/constants';
-import { UserService } from '@/modules/user/core/services';
+import { CreateUserUseCase } from '../../iam/user/application/create-user.use-case';
 
 export type CreateUserOptions = {
   username: string;
@@ -21,7 +21,7 @@ export class UserCreateCommand extends CommandRunner {
 
   constructor(
     @InjectEntityManager(ENUM_DATABASE.Postgres) private readonly em: EntityManager,
-    private readonly userService: UserService,
+    private readonly createUserUseCase: CreateUserUseCase,
   ) {
     super();
   }
@@ -35,7 +35,7 @@ export class UserCreateCommand extends CommandRunner {
 
     await RequestContext.create(this.em, async () => {
       this.logger.log(`Starting ${UserCreateCommand.name} command`);
-      await this.userService.createUser({
+      await this.createUserUseCase.execute({
         ...options,
         isSuperUser: options.superUser,
       });

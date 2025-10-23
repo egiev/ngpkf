@@ -1,0 +1,43 @@
+import { EntityManager } from '@mikro-orm/core';
+import { getEntityManagerToken } from '@mikro-orm/nestjs';
+import { INestApplication } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { AdminContext } from '@/admin/common/types';
+import { LoginWithCredentialsUseCase } from '@/common/auth/application/login-with-credentials.use-case';
+import { ENUM_DATABASE } from '@/common/database/constants';
+import { HashingPort } from '@/common/helpers/ports';
+import { init } from '@/configs/postgres.config';
+
+export async function buildAdminContext(app: INestApplication): Promise<AdminContext> {
+  const adminJSModule = await import('adminjs');
+  const componentLoader = new adminJSModule.ComponentLoader();
+
+  const adminJSRelationsModule = await import('@adminjs/relations');
+  const { RelationType, owningRelationSettingsFeature, targetRelationSettingsFeature } = adminJSRelationsModule;
+
+  const orm = await init();
+  const em = app.get<EntityManager>(getEntityManagerToken(ENUM_DATABASE.Postgres));
+
+  const configService = app.get(ConfigService);
+  const loginWithCredentialsUseCase = app.get(LoginWithCredentialsUseCase);
+  const hashingService = app.get(HashingPort);
+
+  const licenseKey = configService.get<string>('ADMIN_LICENSE_KEY') || '';
+
+  return {
+    componentLoader,
+    orm,
+    em,
+    licenseKey,
+    services: {
+      configService,
+      loginWithCredentialsUseCase,
+      hashingService,
+    },
+    relations: {
+      owningRelationSettingsFeature,
+      targetRelationSettingsFeature,
+      RelationType,
+    },
+  };
+}

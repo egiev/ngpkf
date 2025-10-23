@@ -2,7 +2,9 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
-import { UserGraphqlModule } from '@/modules/user/graphql';
+import { AuthModule } from '@/common/auth/auth.module';
+import { UserResolver } from '@/iam/user/presentation/graphql/user.graphql.resolver';
+import { UserModule } from '@/iam/user/user.module';
 
 @Module({
   imports: [
@@ -18,7 +20,9 @@ import { UserGraphqlModule } from '@/modules/user/graphql';
         debug: configService.get<boolean>('GRAPHQL_DEBUG_ENABLED'),
       }),
     }),
-    UserGraphqlModule,
+    AuthModule,
+    UserModule,
   ],
+  providers: [UserResolver],
 })
 export class GraphqlApiModule {}

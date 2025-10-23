@@ -1,0 +1,44 @@
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import { LoginWithCredentialsRequest } from '@/common/auth/application/requests/login-with-credentials.request';
+import { TokenPort } from '@/common/auth/domain/ports/token.port';
+import { AuthTokenVO } from '@/common/auth/domain/value-objects/auth-token.vo';
+import { UseCase } from '@/common/ddd';
+import { HashingPort } from '@/common/helpers/ports';
+import { User } from '@/iam/user/domain/entities';
+import { UserRepositoryPort } from '@/iam/user/domain/ports';
+
+@Injectable()
+export class LoginWithCredentialsUseCase implements UseCase<LoginWithCredentialsRequest, AuthTokenVO> {
+  private readonly logger = new Logger(LoginWithCredentialsUseCase.name);
+
+  constructor(
+    private readonly userRepository: UserRepositoryPort,
+    private readonly tokenService: TokenPort,
+    private readonly hashingService: HashingPort,
+  ) {}
+
+  public async authenticateUser(username: string, password: string): Promise<User> {
+    this.logger.log(`Logging in user ${username}`);
+
+    const user = await this.userRepository.getOneByUsername(username);
+
+    if (!user) {
+      // TODO: Create exception
+      throw new UnauthorizedException('Invalid username or password');
+    }
+
+    const isMatch = await this.hashingService.compare(password, user.getPasswordHash());
+
+    if (!isMatch) {
+      // TODO: Create exception
+      throw new UnauthorizedException('Invalid username or password');
+    }
+
+    return user;
+  }
+
+  async execute(params: LoginWithCredentialsRequest): Promise<AuthTokenVO> {
+    const user = await this.authenticateUser(params.username, params.username);
+    return await this.tokenService.createToken(user);
+  }
+}

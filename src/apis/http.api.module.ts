@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AuthHttpModule } from '@/modules/auth/http';
-import { UserHttpModule } from '@/modules/user/http';
+import { AuthHttpModule } from '@/common/auth/presentation/http/auth.http.module';
+import { UserHttpModule } from '@/iam/user/presentation/http';
 
 @Module({
   imports: [AuthHttpModule, UserHttpModule],

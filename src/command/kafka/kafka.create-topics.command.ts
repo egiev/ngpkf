@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Command, CommandRunner } from 'nest-commander';
-import { KafkaAdminService } from '../../infra/kafka/services/kafka.admin.service';
+import { KafkaAdminAdapter } from '../../infra/kafka/adapters/kafka.admin.adapter';
 
 @Injectable()
 @Command({
@@ -10,7 +10,7 @@ import { KafkaAdminService } from '../../infra/kafka/services/kafka.admin.servic
 export class KafkaCreateTopicCommand extends CommandRunner {
   private readonly logger = new Logger(KafkaCreateTopicCommand.name);
 
-  constructor(private readonly kafkaAdminService: KafkaAdminService) {
+  constructor(private readonly kafkaAdminService: KafkaAdminAdapter) {
     super();
   }
 
