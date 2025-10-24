@@ -1,4 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { LoginWithCredentialsUseCase } from '@/common/auth/application/login-with-credentials.use-case';
 import { AuthSerialization } from '@/common/auth/presentation/auth.serialization';
 import { Public } from '@/common/auth/presentation/decorators/public.decorator';
@@ -6,6 +7,7 @@ import { AuthCredentialsDTO, RefreshTokenDTO } from '@/common/auth/presentation/
 import { Response } from '@/common/response/decorators';
 import { RefreshTokenUseCase } from '../../application/refresh-token.use-case';
 
+@ApiTags('Auth')
 @Controller({ path: 'auth' })
 export class AuthHttpController {
   constructor(

@@ -23,14 +23,12 @@ export class LoginWithCredentialsUseCase implements UseCase<LoginWithCredentials
     const user = await this.userRepository.getOneByUsername(username);
 
     if (!user) {
-      // TODO: Create exception
       throw new UnauthorizedException('Invalid username or password');
     }
 
     const isMatch = await this.hashingService.compare(password, user.getPasswordHash());
 
     if (!isMatch) {
-      // TODO: Create exception
       throw new UnauthorizedException('Invalid username or password');
     }
 
@@ -38,7 +36,7 @@ export class LoginWithCredentialsUseCase implements UseCase<LoginWithCredentials
   }
 
   async execute(params: LoginWithCredentialsRequest): Promise<AuthTokenVO> {
-    const user = await this.authenticateUser(params.username, params.username);
+    const user = await this.authenticateUser(params.username, params.password);
     return await this.tokenService.createToken(user);
   }
 }

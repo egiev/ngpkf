@@ -1,9 +1,12 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Response } from '@/common/response/decorators';
 import { CreateUserUseCase, GetUsersUseCase, UpdateUserPermissionsUseCase } from '@/iam/user/application';
 import { CreateUserDto, UpdatePermissionsDto } from '@/iam/user/presentation/http/dtos';
 import { UserSerialization } from '@/iam/user/presentation/user.serialization';
 
+@ApiTags('Users')
+@ApiBearerAuth('accessToken')
 @Controller({ path: 'users' })
 export class UserHttpController {
   constructor(

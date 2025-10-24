@@ -1,9 +1,10 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { useContainer } from 'class-validator';
-import { adminInit } from '@/admin';
-import kafkaInit from '@/infra/kafka/kafka.setup';
+import adminInit from './admin';
 import { AppModule } from './app.module';
+import kafkaInit from './kafka';
+import swaggerInit from './swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -12,10 +13,13 @@ async function bootstrap() {
 
   await kafkaInit(app);
 
-  app.useGlobalPipes(new ValidationPipe());
+  swaggerInit(app);
 
+  app.useGlobalPipes(new ValidationPipe());
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   await app.listen(process.env.PORT ?? 3000);
 }
+
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 bootstrap();

@@ -1,4 +1,4 @@
-import { ExecutionContext, Inject, Injectable } from '@nestjs/common';
+import { ExecutionContext, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
@@ -29,5 +29,13 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
     const ctx = GqlExecutionContext.create(context);
     return ctx.getContext<{ req: Request }>().req;
+  }
+
+  handleRequest(err: any, user: any, _info: any, _context: ExecutionContext, _status?: any): any {
+    if (err || !user) {
+      throw new UnauthorizedException('Authentication required or permissions data missings');
+    }
+
+    return user;
   }
 }

@@ -1,4 +1,11 @@
-import { CanActivate, ExecutionContext, Inject, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+  Inject,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { GraphQLResolveInfo } from 'graphql';
@@ -29,16 +36,14 @@ export class PermissionGuard implements CanActivate {
     const user = request.user;
 
     if (!user || !user.permissions || user.permissions.length === 0) {
-      // TODO:
-      throw new Error('Authentication required or permissions data missing');
+      throw new UnauthorizedException('Authentication required or permissions data missing');
     }
 
     const requiredPermission = this.buildRequiredPermission(context);
     const hasPermission = user.permissions.includes(requiredPermission);
 
     if (!hasPermission) {
-      // TODO:
-      throw new Error('You do not have permission to access this resource');
+      throw new ForbiddenException('You do not have permission to access this resource');
     }
 
     return true;
