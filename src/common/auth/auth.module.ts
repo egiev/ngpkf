@@ -10,6 +10,7 @@ import {
 } from '@/common/auth/infrastructure/types/permission-options.type';
 import { JwtAuthGuard } from '@/common/auth/presentation/guards/auth.guard';
 import { PermissionGuard } from '@/common/auth/presentation/guards/permission.guard';
+import { SuperUserGuard } from '@/common/auth/presentation/guards/super-admin.guard';
 import { HelperModule } from '@/common/helpers/helper.module';
 import { UserInfrastructureModule } from '@/iam/user/infrastructure/user.infrastructure.module';
 
@@ -27,8 +28,16 @@ import { UserInfrastructureModule } from '@/iam/user/infrastructure/user.infrast
       inject: [ConfigService],
     },
     JwtAuthGuard,
+    SuperUserGuard,
     PermissionGuard,
   ],
-  exports: [LoginWithCredentialsUseCase, RefreshTokenUseCase, PERMISSION_OPTIONS_TOKEN, JwtAuthGuard, PermissionGuard],
+  exports: [
+    LoginWithCredentialsUseCase,
+    RefreshTokenUseCase,
+    PERMISSION_OPTIONS_TOKEN,
+    JwtAuthGuard,
+    SuperUserGuard,
+    PermissionGuard,
+  ],
 })
 export class AuthModule {}

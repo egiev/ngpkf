@@ -6,36 +6,23 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { GraphQLResolveInfo } from 'graphql';
-import { Observable } from 'rxjs';
 import { JwtPayload } from '@/common/auth/domain/types/jwt-payload.type';
 import {
   PERMISSION_OPTIONS_TOKEN,
   PermissionOptions,
 } from '@/common/auth/infrastructure/types/permission-options.type';
-import { IS_PUBLIC_KEY } from '@/common/auth/presentation/decorators/public.decorator';
 
 @Injectable()
 export class PermissionGuard implements CanActivate {
-  constructor(
-    @Inject(Reflector) private readonly reflector: Reflector,
-    @Inject(PERMISSION_OPTIONS_TOKEN) private readonly options: PermissionOptions,
-  ) {}
+  constructor(@Inject(PERMISSION_OPTIONS_TOKEN) private readonly options: PermissionOptions) {}
 
-  canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-    const isPlublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
-
-    if (isPlublic) return true;
-
+  canActivate(context: ExecutionContext): boolean {
     const request = this.getRequest(context) as Request & { user: JwtPayload };
     const user = request.user;
 
-    if (!user || !user.permissions || user.permissions.length === 0) {
+    if (!user || !user.permissions) {
       throw new UnauthorizedException('Authentication required or permissions data missing');
     }
 

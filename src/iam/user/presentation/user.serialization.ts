@@ -7,9 +7,6 @@ export class UserSerialization {
   @Expose()
   username!: string;
 
-  @Expose()
-  isSuperUser!: boolean;
-
   @Expose({ toClassOnly: true })
   permissionNames!: string[];
 

@@ -22,6 +22,7 @@ export class JwtTokenAdapter implements TokenPort {
       sub: user.getId(),
       username: user.getUsername(),
       permissions: user.getAggregatedPermissions(),
+      isSuperUser: user.getIsSuperUser(),
     };
 
     const accessToken = await this.jwtService.signAsync({ ...payload });
@@ -45,6 +46,7 @@ export class JwtTokenAdapter implements TokenPort {
       sub: payload.sub,
       username: payload.username,
       permissions: payload.permissions,
+      isSuperUser: payload.isSuperUser,
     };
 
     const accessToken = await this.jwtService.signAsync({ ...refreshPayload });

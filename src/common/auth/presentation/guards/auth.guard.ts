@@ -1,24 +1,15 @@
-import { ExecutionContext, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
+import { ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
-import { IS_PUBLIC_KEY } from '@/common/auth/presentation/decorators/public.decorator';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
-  constructor(@Inject(Reflector) private readonly reflector: Reflector) {
+  constructor() {
     super();
   }
 
   canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-    const isPlublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
-
-    if (isPlublic) return true;
-
     return super.canActivate(context);
   }
 
@@ -33,7 +24,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
   handleRequest(err: any, user: any, _info: any, _context: ExecutionContext, _status?: any): any {
     if (err || !user) {
-      throw new UnauthorizedException('Authentication required or permissions data missings');
+      throw new UnauthorizedException('Authentication required or permissions data missing');
     }
 
     return user;
