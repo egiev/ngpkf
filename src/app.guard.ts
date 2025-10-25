@@ -1,9 +1,9 @@
 import { CanActivate, ExecutionContext, Inject, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { IS_PUBLIC_KEY } from '@/common/auth/presentation/decorators/public.decorator';
-import { JwtAuthGuard } from '@/common/auth/presentation/guards/auth.guard';
-import { PermissionGuard } from '@/common/auth/presentation/guards/permission.guard';
-import { SuperUserGuard } from '@/common/auth/presentation/guards/super-admin.guard';
+import { IS_PUBLIC_KEY } from '@/auth/presentation/decorators/public.decorator';
+import { JwtAuthGuard } from '@/auth/presentation/guards/auth.guard';
+import { PermissionGuard } from '@/auth/presentation/guards/permission.guard';
+import { SuperUserGuard } from '@/auth/presentation/guards/super-admin.guard';
 
 @Injectable()
 export class AppGuard implements CanActivate {

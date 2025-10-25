@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from '@/common/auth/auth.module';
+import { AuthModule } from '@/auth/auth.module';
 import { HelperModule } from '@/common/helpers/helper.module';
 import { ValidationModule } from '@/common/validation/validation.module';
 

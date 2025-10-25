@@ -1,9 +1,9 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { LoginWithCredentialsUseCase } from '@/common/auth/application/login-with-credentials.use-case';
-import { AuthSerialization } from '@/common/auth/presentation/auth.serialization';
-import { Public } from '@/common/auth/presentation/decorators/public.decorator';
-import { AuthCredentialsDTO, RefreshTokenDTO } from '@/common/auth/presentation/http/dtos';
+import { LoginWithCredentialsUseCase } from '@/auth/application/login-with-credentials.use-case';
+import { AuthSerialization } from '@/auth/presentation/auth.serialization';
+import { Public } from '@/auth/presentation/decorators/public.decorator';
+import { AuthCredentialsDTO, RefreshTokenDTO } from '@/auth/presentation/http/dtos';
 import { Response } from '@/common/response/decorators';
 import { RefreshTokenUseCase } from '../../application/refresh-token.use-case';
 

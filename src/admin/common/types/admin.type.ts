@@ -2,7 +2,7 @@ import { RelationsFeatureConfig, RelationType } from '@adminjs/relations';
 import { EntityManager, MikroORM } from '@mikro-orm/core';
 import { ConfigService } from '@nestjs/config';
 import { ComponentLoader, FeatureType } from 'adminjs';
-import { LoginWithCredentialsUseCase } from '@/common/auth/application/login-with-credentials.use-case';
+import { LoginWithCredentialsUseCase } from '@/auth/application/login-with-credentials.use-case';
 import { HashingPort, IdGeneratorPort } from '@/common/helpers/ports';
 
 export type AdminContext = {

@@ -4,7 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { UserResolver } from '@/auth-user/presentation/graphql/user.graphql.resolver';
 import { UserModule } from '@/auth-user/user.module';
-import { AuthModule } from '@/common/auth/auth.module';
+import { AuthModule } from '@/auth/auth.module';
 
 @Module({
   imports: [

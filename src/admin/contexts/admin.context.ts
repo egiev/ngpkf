@@ -3,7 +3,7 @@ import { getEntityManagerToken } from '@mikro-orm/nestjs';
 import { INestApplication } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AdminContext } from '@/admin/common/types';
-import { LoginWithCredentialsUseCase } from '@/common/auth/application/login-with-credentials.use-case';
+import { LoginWithCredentialsUseCase } from '@/auth/application/login-with-credentials.use-case';
 import { ENUM_DATABASE } from '@/common/database/constants';
 import { HashingPort, IdGeneratorPort } from '@/common/helpers/ports';
 import { init } from '@/configs/postgres.config';

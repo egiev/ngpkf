@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { RefreshTokenRequest } from '@/common/auth/application/requests/refresh-token.request';
-import { AuthTokenVO } from '@/common/auth/domain/value-objects/auth-token.vo';
+import { RefreshTokenRequest } from '@/auth/application/requests/refresh-token.request';
+import { AuthTokenVO } from '@/auth/domain/value-objects/auth-token.vo';
 import { UseCase } from '@/common/ddd';
 import { TokenPort } from '@/common/helpers/ports/token.port';
 
