@@ -1,5 +1,5 @@
 import { ResourceWithOptions } from 'adminjs';
-import { UserEntity } from '@/iam/user/infrastructure/persistence/entities';
+import { UserEntity } from '@/auth-user/infrastructure/persistence/entities';
 import { AdminContext } from '../../common/types';
 import { actions } from './user.actions';
 import { properties } from './user.properties';

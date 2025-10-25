@@ -1,6 +1,6 @@
 import { ResourceWithOptions } from 'adminjs';
 import { AdminContext } from '@/admin/common/types';
-import { PermissionEntity } from '@/iam/permission/infrastructure/persistence/entities';
+import { PermissionEntity } from '@/auth-user/infrastructure/persistence/entities/permission.entity';
 
 export function buildPermissionResource(context: AdminContext): ResourceWithOptions {
   return {

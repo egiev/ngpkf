@@ -2,9 +2,9 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
+import { UserResolver } from '@/auth-user/presentation/graphql/user.graphql.resolver';
+import { UserModule } from '@/auth-user/user.module';
 import { AuthModule } from '@/common/auth/auth.module';
-import { UserResolver } from '@/iam/user/presentation/graphql/user.graphql.resolver';
-import { UserModule } from '@/iam/user/user.module';
 
 @Module({
   imports: [

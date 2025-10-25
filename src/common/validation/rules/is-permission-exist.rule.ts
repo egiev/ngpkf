@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
-import { PermissionRepositoryPort } from '@/iam/permission/domain/ports';
+import { PermissionRepositoryPort } from '@/auth-user/domain/ports/permission.repository.port';
 
 @ValidatorConstraint({ async: true })
 @Injectable()

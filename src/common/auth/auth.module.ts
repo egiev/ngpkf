@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { UserInfrastructureModule } from '@/auth-user/infrastructure/user.infrastructure.module';
 import { LoginWithCredentialsUseCase } from '@/common/auth/application/login-with-credentials.use-case';
 import { RefreshTokenUseCase } from '@/common/auth/application/refresh-token.use-case';
 import { JwtStrategy } from '@/common/auth/infrastructure/strategies/jwt.strategy';
@@ -11,7 +12,6 @@ import { JwtAuthGuard } from '@/common/auth/presentation/guards/auth.guard';
 import { PermissionGuard } from '@/common/auth/presentation/guards/permission.guard';
 import { SuperUserGuard } from '@/common/auth/presentation/guards/super-admin.guard';
 import { HelperModule } from '@/common/helpers/helper.module';
-import { UserInfrastructureModule } from '@/iam/user/infrastructure/user.infrastructure.module';
 
 @Module({
   imports: [UserInfrastructureModule, HelperModule],

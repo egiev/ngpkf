@@ -3,8 +3,11 @@ import { buildApiKeyResource } from '@/admin/resources/api-key';
 import { buildGroupResource } from '@/admin/resources/group';
 import { buildPermissionResource } from '@/admin/resources/permission';
 import { buildUserResource } from '@/admin/resources/user';
-import { GroupPermissionEntity } from '@/iam/group/infrastructure/persistence/entities';
-import { UserGroupEntity, UserPermissionEntity } from '@/iam/user/infrastructure/persistence/entities';
+import {
+  GroupPermissionEntity,
+  UserGroupEntity,
+  UserPermissionEntity,
+} from '@/auth-user/infrastructure/persistence/entities';
 import { AdminContext } from '../common/types';
 
 export function createResources(context: AdminContext): ResourceWithOptions[] {

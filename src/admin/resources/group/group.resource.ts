@@ -1,6 +1,6 @@
 import { ResourceWithOptions } from 'adminjs';
 import { AdminContext } from '@/admin/common/types/admin.type';
-import { GroupEntity } from '@/iam/group/infrastructure/persistence/entities';
+import { GroupEntity } from '@/auth-user/infrastructure/persistence/entities';
 import { createGroupRelations } from './group.relations';
 
 export function buildGroupResource(context: AdminContext): ResourceWithOptions {
