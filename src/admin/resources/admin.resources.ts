@@ -1,4 +1,5 @@
 import { ResourceWithOptions } from 'adminjs';
+import { buildApiKeyResource } from '@/admin/resources/api-key';
 import { buildGroupResource } from '@/admin/resources/group';
 import { buildPermissionResource } from '@/admin/resources/permission';
 import { buildUserResource } from '@/admin/resources/user';
@@ -11,6 +12,7 @@ export function createResources(context: AdminContext): ResourceWithOptions[] {
     buildUserResource(context),
     buildGroupResource(context),
     buildPermissionResource(context),
+    buildApiKeyResource(context),
     ...[UserGroupEntity, UserPermissionEntity, GroupPermissionEntity].map((model) => ({
       resource: {
         model,

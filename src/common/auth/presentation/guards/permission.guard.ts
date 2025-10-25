@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { GraphQLResolveInfo } from 'graphql';
+import { ServiceAccount } from '@/common/api-key/domain/types/service-account.type';
 import { JwtPayload } from '@/common/auth/domain/types/jwt-payload.type';
 import {
   PERMISSION_OPTIONS_TOKEN,
@@ -19,8 +20,12 @@ export class PermissionGuard implements CanActivate {
   constructor(@Inject(PERMISSION_OPTIONS_TOKEN) private readonly options: PermissionOptions) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const request = this.getRequest(context) as Request & { user: JwtPayload };
-    const user = request.user;
+    const request = this.getRequest(context);
+    const user = request['user'] as JwtPayload | ServiceAccount;
+
+    if ('clientId' in user) {
+      return true;
+    }
 
     if (!user || !user.permissions) {
       throw new UnauthorizedException('Authentication required or permissions data missing');

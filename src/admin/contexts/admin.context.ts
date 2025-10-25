@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { AdminContext } from '@/admin/common/types';
 import { LoginWithCredentialsUseCase } from '@/common/auth/application/login-with-credentials.use-case';
 import { ENUM_DATABASE } from '@/common/database/constants';
-import { HashingPort } from '@/common/helpers/ports';
+import { HashingPort, IdGeneratorPort } from '@/common/helpers/ports';
 import { init } from '@/configs/postgres.config';
 
 export async function buildAdminContext(app: INestApplication): Promise<AdminContext> {
@@ -21,6 +21,7 @@ export async function buildAdminContext(app: INestApplication): Promise<AdminCon
   const configService = app.get(ConfigService);
   const loginWithCredentialsUseCase = app.get(LoginWithCredentialsUseCase);
   const hashingService = app.get(HashingPort);
+  const idGeneratorService = app.get(IdGeneratorPort);
 
   const licenseKey = configService.get<string>('ADMIN_LICENSE_KEY') || '';
 
@@ -33,6 +34,7 @@ export async function buildAdminContext(app: INestApplication): Promise<AdminCon
       configService,
       loginWithCredentialsUseCase,
       hashingService,
+      idGeneratorService,
     },
     relations: {
       owningRelationSettingsFeature,

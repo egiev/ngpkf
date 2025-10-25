@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { LoginWithCredentialsUseCase } from '@/common/auth/application/login-with-credentials.use-case';
 import { RefreshTokenUseCase } from '@/common/auth/application/refresh-token.use-case';
-import { AuthInfrastructureModule } from '@/common/auth/infrastructure/auth.infrastructure.module';
 import { JwtStrategy } from '@/common/auth/infrastructure/strategies/jwt.strategy';
 import {
   PERMISSION_OPTIONS_TOKEN,
@@ -15,7 +14,7 @@ import { HelperModule } from '@/common/helpers/helper.module';
 import { UserInfrastructureModule } from '@/iam/user/infrastructure/user.infrastructure.module';
 
 @Module({
-  imports: [UserInfrastructureModule, AuthInfrastructureModule, HelperModule],
+  imports: [UserInfrastructureModule, HelperModule],
   providers: [
     JwtStrategy,
     LoginWithCredentialsUseCase,

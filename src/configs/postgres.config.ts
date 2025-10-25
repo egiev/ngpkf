@@ -3,6 +3,7 @@ import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { registerAs } from '@nestjs/config';
 import { join } from 'path';
+import { ServiceAccountEntity } from '@/common/api-key/infrastructure/persisntence/entities/service-account.entity';
 import { ENUM_CONFIG_KEY } from '@/configs/constants';
 import { GroupEntity, GroupPermissionEntity } from '@/iam/group/infrastructure/persistence/entities';
 import { PermissionEntity } from '@/iam/permission/infrastructure/persistence/entities';
@@ -16,7 +17,15 @@ export const postgresConfig = {
   port: +process.env.POSTGRES_PORT!,
   user: process.env.POSTGRES_USER!,
   password: process.env.POSTGRES_PASSWORD,
-  entities: [UserEntity, GroupEntity, PermissionEntity, UserGroupEntity, UserPermissionEntity, GroupPermissionEntity],
+  entities: [
+    UserEntity,
+    GroupEntity,
+    PermissionEntity,
+    UserGroupEntity,
+    UserPermissionEntity,
+    GroupPermissionEntity,
+    ServiceAccountEntity,
+  ],
   metadataProvider: TsMorphMetadataProvider,
   migrations: {
     path: join(__dirname, '../infra/database/postgres/migrations'),

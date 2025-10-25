@@ -5,8 +5,8 @@ import { JwtPayload } from '@/common/auth/domain/types/jwt-payload.type';
 @Injectable()
 export class SuperUserGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
-    const request = this.getRequest(context) as Request & { user: JwtPayload };
-    const user = request.user;
+    const request = this.getRequest(context);
+    const user = request['user'] as JwtPayload;
 
     if (user && user.isSuperUser) return true;
 

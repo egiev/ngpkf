@@ -9,11 +9,11 @@ import { GroupEntity } from '@/iam/group/infrastructure/persistence/entities';
 export class MikoormGroupRepositoryAdapter implements GroupRepositoryPort {
   constructor(
     @InjectRepository(GroupEntity, ENUM_DATABASE.Postgres)
-    private readonly groupRepository: EntityRepository<GroupEntity>,
+    private readonly repository: EntityRepository<GroupEntity>,
   ) {}
 
   async existsByName(name: string): Promise<boolean> {
-    const count = await this.groupRepository.count({ name });
+    const count = await this.repository.count({ name });
     return count > 0;
   }
 
@@ -22,7 +22,7 @@ export class MikoormGroupRepositoryAdapter implements GroupRepositoryPort {
       return [];
     }
 
-    const foundGroups = await this.groupRepository.find({ name: { $in: names } });
+    const foundGroups = await this.repository.find({ name: { $in: names } });
 
     const foundNamesSet = new Set(foundGroups.map((group) => group.name));
 

@@ -9,11 +9,11 @@ import { PermissionEntity } from '@/iam/permission/infrastructure/persistence/en
 export class MikoormPermissionRepositoryAdapter implements PermissionRepositoryPort {
   constructor(
     @InjectRepository(PermissionEntity, ENUM_DATABASE.Postgres)
-    private readonly permissionRepository: EntityRepository<PermissionEntity>,
+    private readonly repository: EntityRepository<PermissionEntity>,
   ) {}
 
   async existsByName(name: string): Promise<boolean> {
-    const count = await this.permissionRepository.count({ name });
+    const count = await this.repository.count({ name });
     return count > 0;
   }
 
@@ -22,7 +22,7 @@ export class MikoormPermissionRepositoryAdapter implements PermissionRepositoryP
       return [];
     }
 
-    const foundPermissions = await this.permissionRepository.find({ name: { $in: names } });
+    const foundPermissions = await this.repository.find({ name: { $in: names } });
 
     const foundNamesSet = new Set(foundPermissions.map((permission) => permission.name));
 

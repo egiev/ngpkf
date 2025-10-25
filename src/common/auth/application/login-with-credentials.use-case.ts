@@ -1,9 +1,10 @@
 import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { LoginWithCredentialsRequest } from '@/common/auth/application/requests/login-with-credentials.request';
-import { TokenPort } from '@/common/auth/domain/ports/token.port';
+import { JwtPayload } from '@/common/auth/domain/types/jwt-payload.type';
 import { AuthTokenVO } from '@/common/auth/domain/value-objects/auth-token.vo';
 import { UseCase } from '@/common/ddd';
 import { HashingPort } from '@/common/helpers/ports';
+import { TokenPort } from '@/common/helpers/ports/token.port';
 import { User } from '@/iam/user/domain/entities';
 import { UserRepositoryPort } from '@/iam/user/domain/ports';
 
@@ -36,7 +37,18 @@ export class LoginWithCredentialsUseCase implements UseCase<LoginWithCredentials
   }
 
   async execute(params: LoginWithCredentialsRequest): Promise<AuthTokenVO> {
-    const user = await this.authenticateUser(params.username, params.password);
-    return await this.tokenService.createToken(user);
+    const { username, password } = params;
+    const user = await this.authenticateUser(username, password);
+
+    const payload: JwtPayload = {
+      sub: user.getId(),
+      username: user.getUsername(),
+      permissions: user.getAggregatedPermissions(),
+      isSuperUser: user.getIsSuperUser(),
+    };
+
+    const token = await this.tokenService.signAccessToken(payload);
+
+    return AuthTokenVO.create(token);
   }
 }

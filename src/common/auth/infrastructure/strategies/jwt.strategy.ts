@@ -19,14 +19,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: JwtPayload) {
+  validate(payload: JwtPayload) {
+    // TODO: validate if service account or users still exist
     // Ensure user still exist and active
-    const user = await this.userRepository.getOneById(payload.sub);
+    // const user = await this.userRepository.getOneById(payload.sub);
 
-    if (!user) {
-      // TODO: Create exception
-      throw new Error('User does not exist or account is inactive');
-    }
+    // if (!user) {
+    //   // TODO: Create exception
+    //   throw new Error('User does not exist or account is inactive');
+    // }
 
     return payload;
   }
