@@ -1,8 +1,8 @@
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
-import { ServiceAccountRepositoryPort } from '@/common/api-key/domain/ports/service-account.repository.port';
-import { MikroormApiKeyRespositoryAdapter } from '@/common/api-key/infrastructure/persisntence/adapters/mikoorm.service-account.respository.adapter';
-import { ServiceAccountEntity } from '@/common/api-key/infrastructure/persisntence/entities/service-account.entity';
+import { ServiceAccountRepositoryPort } from '@/api-key/domain/ports/service-account.repository.port';
+import { MikroormApiKeyRespositoryAdapter } from '@/api-key/infrastructure/persisntence/adapters/mikoorm.service-account.respository.adapter';
+import { ServiceAccountEntity } from '@/api-key/infrastructure/persisntence/entities/service-account.entity';
 import { ENUM_CONFIG_KEY } from '@/configs';
 
 @Module({

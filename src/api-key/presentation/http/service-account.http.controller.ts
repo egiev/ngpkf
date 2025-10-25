@@ -1,6 +1,6 @@
 import { Controller, Post, Req, UseGuards } from '@nestjs/common';
-import { ServiceAccount } from '@/common/api-key/domain/types/service-account.type';
-import { ServiceAuthGuard } from '@/common/api-key/presentation/guards/service-auth.guard';
+import { ServiceAccount } from '@/api-key/domain/types/service-account.type';
+import { ServiceAuthGuard } from '@/api-key/presentation/guards/service-auth.guard';
 import { AuthSerialization } from '@/common/auth/presentation/auth.serialization';
 import { Public } from '@/common/auth/presentation/decorators/public.decorator';
 import { Response } from '@/common/response/decorators';

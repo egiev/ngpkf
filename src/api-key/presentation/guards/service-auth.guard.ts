@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { IssueServiceTokenUseCase } from '@/common/api-key/application/issue-service-token.use-case';
+import { IssueServiceTokenUseCase } from '@/api-key/application/issue-service-token.use-case';
 
 @Injectable()
 export class ServiceAuthGuard implements CanActivate {

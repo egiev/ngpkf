@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { GraphQLResolveInfo } from 'graphql';
-import { ServiceAccount } from '@/common/api-key/domain/types/service-account.type';
+import { ServiceAccount } from '@/api-key/domain/types/service-account.type';
 import { JwtPayload } from '@/common/auth/domain/types/jwt-payload.type';
 import {
   PERMISSION_OPTIONS_TOKEN,

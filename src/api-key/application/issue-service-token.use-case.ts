@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { IssueServiceTokenRequest } from '@/common/api-key/application/request/issue-service-token.request';
-import { ServiceAccountRepositoryPort } from '@/common/api-key/domain/ports/service-account.repository.port';
-import { ServiceAccount } from '@/common/api-key/domain/types/service-account.type';
+import { IssueServiceTokenRequest } from '@/api-key/application/request/issue-service-token.request';
+import { ServiceAccountRepositoryPort } from '@/api-key/domain/ports/service-account.repository.port';
+import { ServiceAccount } from '@/api-key/domain/types/service-account.type';
 import { AuthTokenVO } from '@/common/auth/domain/value-objects/auth-token.vo';
 import { UseCase } from '@/common/ddd';
 import { TokenPort } from '@/common/helpers/ports/token.port';
