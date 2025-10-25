@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Command, CommandRunner } from 'nest-commander';
-import { KafkaAdminAdapter } from '../../infra/kafka/adapters/kafka.admin.adapter';
+import { KafkaAdminAdapter } from '@/infra/kafka/adapters';
 
 @Injectable()
 @Command({

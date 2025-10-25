@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ApiKeyModule } from '@/api-key/api-key.module';
-import { ServiceAuthHttpController } from '@/api-key/presentation/http/service-account.http.controller';
+import { ApiKeyModule } from '@/api-key';
+import { ServiceAuthHttpController } from '@/api-key/presentation/http';
 
 @Module({
   imports: [ApiKeyModule],

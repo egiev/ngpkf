@@ -2,8 +2,8 @@ import { InjectEntityManager } from '@mikro-orm/nestjs';
 import { EntityManager, RequestContext } from '@mikro-orm/postgresql';
 import { Injectable, Logger } from '@nestjs/common';
 import { Command, CommandRunner, Option } from 'nest-commander';
+import { CreateUserUseCase } from '@/auth-user/application';
 import { ENUM_DATABASE } from '@/common/database/constants';
-import { CreateUserUseCase } from '../../auth-user/application/create-user.use-case';
 
 export type CreateUserOptions = {
   username: string;

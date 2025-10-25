@@ -8,9 +8,9 @@ import {
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { GraphQLResolveInfo } from 'graphql';
-import { ServiceAccount } from '@/api-key/domain/types/service-account.type';
-import { JwtPayload } from '@/auth/domain/types/jwt-payload.type';
-import { PERMISSION_OPTIONS_TOKEN, PermissionOptions } from '@/auth/infrastructure/types/permission-options.type';
+import { ServiceAccount } from '@/api-key/domain/types';
+import { JwtPayload } from '@/auth/domain/types';
+import { PERMISSION_OPTIONS_TOKEN, PermissionOptions } from './permission-options.type';
 
 @Injectable()
 export class PermissionGuard implements CanActivate {

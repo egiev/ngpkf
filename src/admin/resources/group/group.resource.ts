@@ -1,5 +1,5 @@
 import { ResourceWithOptions } from 'adminjs';
-import { AdminContext } from '@/admin/common/types/admin.type';
+import { AdminContext } from '@/admin/common/types';
 import { GroupEntity } from '@/auth-user/infrastructure/persistence/entities';
 import { createGroupRelations } from './group.relations';
 

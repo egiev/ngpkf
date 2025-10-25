@@ -3,7 +3,7 @@ import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { registerAs } from '@nestjs/config';
 import { join } from 'path';
-import { ServiceAccountEntity } from '@/api-key/infrastructure/persisntence/entities/service-account.entity';
+import { ServiceAccountEntity } from '@/api-key/infrastructure/persistence/entities';
 import {
   GroupEntity,
   GroupPermissionEntity,

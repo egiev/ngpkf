@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import ms, { StringValue } from 'ms';
-import { Token, TokenPort } from '@/common/helpers/ports/token.port';
+import { Token, TokenPort } from '@/common/helpers/ports';
 import { jwtConfig, refreshJwtConfig } from '@/configs';
 
 @Injectable()

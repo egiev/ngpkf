@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { GraphqlApiModule, HttpApiModule } from '@/apis';
-import { AppGuard } from '@/app.guard';
-import { CommonModule } from '@/common/common.module';
+import { CommonModule } from '@/common';
 import config from '@/configs';
 import { getEnvFilePath } from '@/configs/utils';
-import { InfraModule } from '@/infra/infra.module';
+import { InfraModule } from '@/infra';
+import { AppGuard } from './app.guard';
 
 @Module({
   imports: [

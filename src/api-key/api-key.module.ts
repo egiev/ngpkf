@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { IssueServiceTokenUseCase } from '@/api-key/application/issue-service-token.use-case';
+import { IssueServiceTokenUseCase } from '@/api-key/application';
 import { ApiKeyInfrastructureModule } from '@/api-key/infrastructure/api-key.infrastructure.module';
 import { HelperModule } from '@/common/helpers/helper.module';
 

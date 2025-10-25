@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CreateUserUseCase, GetUsersUseCase, UpdateUserPermissionsUseCase } from '@/auth-user/application';
-import { UserInfrastructureModule } from '@/auth-user/infrastructure/user.infrastructure.module';
-import { CommonModule } from '../common/common.module';
+import { UserInfrastructureModule } from '@/auth-user/infrastructure';
+import { CommonModule } from '@/common';
 
 @Module({
   imports: [CommonModule, UserInfrastructureModule],

@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from '@/auth/auth.module';
-import { HelperModule } from '@/common/helpers/helper.module';
-import { ValidationModule } from '@/common/validation/validation.module';
+import { GuardModule } from '@/common/guards';
+import { HelperModule } from '@/common/helpers';
+import { ValidationModule } from '@/common/validation';
 
 @Module({
-  imports: [AuthModule, ValidationModule, HelperModule],
-  exports: [AuthModule, ValidationModule, HelperModule],
+  imports: [ValidationModule, HelperModule, GuardModule],
+  exports: [ValidationModule, HelperModule, GuardModule],
 })
 export class CommonModule {}

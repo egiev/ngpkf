@@ -1,12 +1,11 @@
 import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { User } from '@/auth-user/domain/entities';
 import { UserRepositoryPort } from '@/auth-user/domain/ports';
-import { LoginWithCredentialsRequest } from '@/auth/application/requests/login-with-credentials.request';
-import { JwtPayload } from '@/auth/domain/types/jwt-payload.type';
-import { AuthTokenVO } from '@/auth/domain/value-objects/auth-token.vo';
+import { LoginWithCredentialsRequest } from '@/auth/application/requests';
+import { JwtPayload } from '@/auth/domain/types';
+import { AuthTokenVO } from '@/auth/domain/value-objects';
 import { UseCase } from '@/common/ddd';
-import { HashingPort } from '@/common/helpers/ports';
-import { TokenPort } from '@/common/helpers/ports/token.port';
+import { HashingPort, TokenPort } from '@/common/helpers/ports';
 
 @Injectable()
 export class LoginWithCredentialsUseCase implements UseCase<LoginWithCredentialsRequest, AuthTokenVO> {

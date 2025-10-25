@@ -1,9 +1,9 @@
 import { Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Admin, ITopicConfig, Kafka, KafkaConfig } from 'kafkajs';
-import { KafkaAdminPort } from '@/common/kafka/ports';
 import { ENUM_CONFIG_KEY } from '@/configs';
 import { KafkaCreateTopics } from '@/infra/kafka/constants';
+import { KafkaAdminPort } from '@/infra/kafka/ports';
 
 @Injectable()
 export class KafkaAdminAdapter implements KafkaAdminPort, OnModuleInit, OnModuleDestroy {

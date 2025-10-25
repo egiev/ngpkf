@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { JwtPayload } from '@/auth/domain/types/jwt-payload.type';
+import { JwtPayload } from '@/auth/domain/types';
 
 @Injectable()
 export class SuperUserGuard implements CanActivate {

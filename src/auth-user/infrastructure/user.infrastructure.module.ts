@@ -1,12 +1,12 @@
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
-import { GroupRepositoryPort, UserRepositoryPort } from '@/auth-user/domain/ports';
-import { PermissionRepositoryPort } from '@/auth-user/domain/ports/permission.repository.port';
-import { MikoormGroupRepositoryAdapter } from '@/auth-user/infrastructure/persistence/adapters/mikroorm.group.repository.adapter';
-import { MikoormPermissionRepositoryAdapter } from '@/auth-user/infrastructure/persistence/adapters/mikroorm.permission.repository.adapter';
-import { MikroormUserRepositoryAdapter } from '@/auth-user/infrastructure/persistence/adapters/mikroorm.user.repository.adapter';
-import { GroupEntity, UserEntity } from '@/auth-user/infrastructure/persistence/entities';
-import { PermissionEntity } from '@/auth-user/infrastructure/persistence/entities/permission.entity';
+import { GroupRepositoryPort, PermissionRepositoryPort, UserRepositoryPort } from '@/auth-user/domain/ports';
+import {
+  MikoormGroupRepositoryAdapter,
+  MikoormPermissionRepositoryAdapter,
+  MikroormUserRepositoryAdapter,
+} from '@/auth-user/infrastructure/persistence/adapters';
+import { GroupEntity, PermissionEntity, UserEntity } from '@/auth-user/infrastructure/persistence/entities';
 import { ENUM_CONFIG_KEY } from '@/configs';
 
 @Module({

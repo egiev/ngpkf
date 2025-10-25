@@ -1,9 +1,9 @@
 import { EntityRepository } from '@mikro-orm/mongodb';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
-import { ServiceAccountRepositoryPort } from '@/api-key/domain/ports/service-account.repository.port';
-import { ServiceAccount } from '@/api-key/domain/types/service-account.type';
-import { ServiceAccountEntity } from '@/api-key/infrastructure/persisntence/entities/service-account.entity';
+import { ServiceAccountRepositoryPort } from '@/api-key/domain/ports';
+import { ServiceAccount } from '@/api-key/domain/types';
+import { ServiceAccountEntity } from '@/api-key/infrastructure/persistence/entities';
 import { ENUM_DATABASE } from '@/common/database/constants';
 
 @Injectable()

@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { HashingPort, IdGeneratorPort } from '@/common/helpers/ports';
-import { TokenPort } from '@/common/helpers/ports/token.port';
+import { BycryptHashingAdapter, JwtTokenAdapter, UUIDGeneratorAdapter } from '@/common/helpers/adapters';
+import { HashingPort, IdGeneratorPort, TokenPort } from '@/common/helpers/ports';
 import { jwtConfig, refreshJwtConfig } from '@/configs';
-import { BycryptHashingAdapter, JwtTokenAdapter, UUIDGeneratorAdapter } from '@/infra/helpers/adapters';
 
 @Module({
   imports: [

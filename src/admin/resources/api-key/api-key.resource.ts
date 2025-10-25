@@ -1,6 +1,6 @@
 import { ResourceWithOptions } from 'adminjs';
 import { AdminContext } from '@/admin/common/types';
-import { ServiceAccountEntity } from '@/api-key/infrastructure/persisntence/entities/service-account.entity';
+import { ServiceAccountEntity } from '@/api-key/infrastructure/persistence/entities';
 
 export function buildApiKeyResource(context: AdminContext): ResourceWithOptions {
   const {

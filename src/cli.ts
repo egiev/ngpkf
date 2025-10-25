@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { CommandFactory } from 'nest-commander';
-import { CommandModule } from '@/command/command.module';
+import { CommandModule } from '@/command';
 
 async function bootstrap() {
   const logger = new Logger();

@@ -1,10 +1,10 @@
 import { Controller, Post, Req, UseGuards } from '@nestjs/common';
-import { ServiceAccount } from '@/api-key/domain/types/service-account.type';
-import { ServiceAuthGuard } from '@/api-key/presentation/guards/service-auth.guard';
-import { AuthSerialization } from '@/auth/presentation/auth.serialization';
-import { Public } from '@/auth/presentation/decorators/public.decorator';
+import { IssueServiceTokenUseCase } from '@/api-key/application';
+import { ServiceAccount } from '@/api-key/domain/types';
+import { AuthSerialization } from '@/auth/presentation';
+import { Public } from '@/common/decorators';
+import { ServiceAuthGuard } from '@/common/guards';
 import { Response } from '@/common/response/decorators';
-import { IssueServiceTokenUseCase } from '../../application/issue-service-token.use-case';
 
 @Controller({
   path: 'auth/service',

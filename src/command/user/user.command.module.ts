@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { UserModule } from '@/auth-user/user.module';
+import { UserModule } from '@/auth-user';
 import { UserCreateCommand } from './user.create.command';
 
 @Module({

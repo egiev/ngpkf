@@ -1,8 +1,8 @@
 import { EntityRepository } from '@mikro-orm/mongodb';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
-import { PermissionRepositoryPort } from '@/auth-user/domain/ports/permission.repository.port';
-import { PermissionEntity } from '@/auth-user/infrastructure/persistence/entities/permission.entity';
+import { PermissionRepositoryPort } from '@/auth-user/domain/ports';
+import { PermissionEntity } from '@/auth-user/infrastructure/persistence/entities';
 import { ENUM_DATABASE } from '@/common/database/constants';
 
 @Injectable()

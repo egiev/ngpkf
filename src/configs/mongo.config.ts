@@ -3,7 +3,7 @@ import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { registerAs } from '@nestjs/config';
 import { join } from 'path';
 import { ENUM_CONFIG_KEY } from '@/configs/constants';
-import { SampleOrmEntity } from '@/infra/database/mongo/entities/sample.entity';
+import { SampleOrmEntity } from '@/infra/database/mongo/entities';
 
 export const mongoConfig = {
   driver: MongoDriver,

@@ -2,8 +2,7 @@ import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { User } from '@/auth-user/domain/entities';
 import { UserRepositoryPort } from '@/auth-user/domain/ports';
-import { UserEntity, UserPermissionEntity } from '@/auth-user/infrastructure/persistence/entities';
-import { PermissionEntity } from '@/auth-user/infrastructure/persistence/entities/permission.entity';
+import { PermissionEntity, UserEntity, UserPermissionEntity } from '@/auth-user/infrastructure/persistence/entities';
 import { ENUM_DATABASE } from '@/common/database/constants';
 
 export class MikroormUserRepositoryAdapter implements UserRepositoryPort {

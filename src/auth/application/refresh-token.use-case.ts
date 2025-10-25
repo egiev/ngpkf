@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { RefreshTokenRequest } from '@/auth/application/requests/refresh-token.request';
-import { AuthTokenVO } from '@/auth/domain/value-objects/auth-token.vo';
+import { RefreshTokenRequest } from '@/auth/application/requests';
+import { AuthTokenVO } from '@/auth/domain/value-objects';
 import { UseCase } from '@/common/ddd';
-import { TokenPort } from '@/common/helpers/ports/token.port';
+import { TokenPort } from '@/common/helpers/ports';
 
 @Injectable()
 export class RefreshTokenUseCase implements UseCase<RefreshTokenRequest, AuthTokenVO> {
