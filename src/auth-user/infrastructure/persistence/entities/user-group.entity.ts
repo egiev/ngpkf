@@ -1,20 +1,20 @@
 import { BaseEntity, Cascade, Entity, ManyToOne, PrimaryKey } from '@mikro-orm/core';
 import { v4 } from 'uuid';
-import { GroupEntity } from '@/auth-user/infrastructure/persistence/entities/group.entity';
-import { UserEntity } from './user.entity';
+import { AuthGroupEntity } from '@/auth-user/infrastructure/persistence/entities/group.entity';
+import { AuthUserEntity } from './user.entity';
 
 @Entity({ tableName: 'auth_user_groups' })
-export class UserGroupEntity extends BaseEntity {
+export class AuthUserGroupEntity extends BaseEntity {
   @PrimaryKey()
   id: string = v4();
 
-  @ManyToOne(() => UserEntity, {
+  @ManyToOne(() => AuthUserEntity, {
     cascade: [Cascade.REMOVE],
   })
-  user: UserEntity;
+  user: AuthUserEntity;
 
-  @ManyToOne(() => GroupEntity, {
+  @ManyToOne(() => AuthGroupEntity, {
     cascade: [Cascade.REMOVE],
   })
-  group: GroupEntity;
+  group: AuthGroupEntity;
 }

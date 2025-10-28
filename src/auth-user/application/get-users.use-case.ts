@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@/auth-user/domain/entities';
-import { UserRepositoryPort } from '@/auth-user/domain/ports';
+import { AuthUser } from '@/auth-user/domain/entities';
+import { AuthUserRepositoryPort } from '@/auth-user/domain/ports';
 import { UseCase } from '@/common/ddd/use-case';
 
 @Injectable()
-export class GetUsersUseCase implements UseCase<undefined, User[]> {
-  constructor(private readonly userRepository: UserRepositoryPort) {}
+export class GetUsersUseCase implements UseCase<undefined, AuthUser[]> {
+  constructor(private readonly authUserRepository: AuthUserRepositoryPort) {}
 
-  async execute(): Promise<User[]> {
-    return await this.userRepository.getAll();
+  async execute(): Promise<AuthUser[]> {
+    return await this.authUserRepository.getAll();
   }
 }

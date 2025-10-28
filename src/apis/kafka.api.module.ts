@@ -1,7 +1,6 @@
-// import { Module } from '@nestjs/common';
-// import { AuthKafkaModule } from '@/modules/auth/kafka';
+import { Module } from '@nestjs/common';
 
-// @Module({
-//   imports: [AuthKafkaModule],
-// })
-// export class KafkaApiModule {}
+@Module({
+  imports: [],
+})
+export class KafkaApiModule {}

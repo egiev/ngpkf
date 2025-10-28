@@ -8,7 +8,7 @@ import {
 } from '@/auth-user/domain/value-objects';
 import { BaseDomainEntity } from '@/common/ddd';
 
-export type UserPrimitives = {
+export type AuthUserPrimitives = {
   id: string;
   username: string;
   passwordHash: string;
@@ -19,7 +19,7 @@ export type UserPrimitives = {
   isStaff: boolean;
 };
 
-export type UserCreationParams = {
+export type AuthUserCreationParams = {
   id: string;
   username: string;
   hashedPassword: string;
@@ -30,7 +30,7 @@ export type UserCreationParams = {
   isStaff?: boolean;
 };
 
-export class User implements BaseDomainEntity<UserPrimitives> {
+export class AuthUser implements BaseDomainEntity<AuthUserPrimitives> {
   constructor(
     private readonly id: UserId,
     private username: UsernameVO,
@@ -73,14 +73,14 @@ export class User implements BaseDomainEntity<UserPrimitives> {
     this.permissionNames = newPermissions;
   }
 
-  static create(data: UserCreationParams): User {
+  static create(data: AuthUserCreationParams): AuthUser {
     const permissionNameVOs = (data.permissionNames ?? []).map((value) => PermissionNameVO.create(value));
     const groupNameVOs = (data.groupNames ?? []).map((value) => GroupNameVO.create(value));
     const groupPermissionNameVOs = (data.groupPermissionNames ?? []).map((value) =>
       GroupPermissionNameVO.create(value),
     );
 
-    return new User(
+    return new AuthUser(
       UserId.create(data.id),
       UsernameVO.create(data.username),
       HashedPasswordVO.create(data.hashedPassword),
@@ -92,7 +92,7 @@ export class User implements BaseDomainEntity<UserPrimitives> {
   }
 
   // Domain to Infrastructure(persistence)
-  public toPrimitives(): UserPrimitives {
+  public toPrimitives(): AuthUserPrimitives {
     return {
       id: this.id.value,
       username: this.username.value,
@@ -106,14 +106,14 @@ export class User implements BaseDomainEntity<UserPrimitives> {
   }
 
   // Infrastructure to Domain
-  static fromPrimitives(data: UserPrimitives): User {
+  static fromPrimitives(data: AuthUserPrimitives): AuthUser {
     const permissionNameVOs = (data.permissionNames ?? []).map((value) => PermissionNameVO.create(value));
     const groupNamesVOs = (data.groupNames ?? []).map((value) => GroupNameVO.create(value));
     const groupPermissionnNameVOs = (data.groupPermissionNames ?? []).map((value) =>
       GroupPermissionNameVO.create(value),
     );
 
-    return new User(
+    return new AuthUser(
       UserId.fromPrimitives(data.id),
       UsernameVO.fromPrimitives(data.username),
       HashedPasswordVO.fromPrimitives(data.passwordHash),

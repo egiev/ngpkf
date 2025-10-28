@@ -1,1 +1,2 @@
-export * from './user.graphql.resolver';
+export * from './auth-user.graphql.module';
+export * from './auth-user.graphql.resolver';

@@ -1,20 +1,20 @@
 import { Cascade, Entity, ManyToOne, PrimaryKey } from '@mikro-orm/core';
 import { v4 } from 'uuid';
-import { GroupEntity } from './group.entity';
-import { PermissionEntity } from './permission.entity';
+import { AuthGroupEntity } from './group.entity';
+import { AuthPermissionEntity } from './permission.entity';
 
 @Entity({ tableName: 'auth_group_permissions' })
-export class GroupPermissionEntity {
+export class AuthGroupPermissionEntity {
   @PrimaryKey()
   id: string = v4();
 
-  @ManyToOne(() => GroupEntity, {
+  @ManyToOne(() => AuthGroupEntity, {
     cascade: [Cascade.REMOVE],
   })
-  group: GroupEntity;
+  group: AuthGroupEntity;
 
-  @ManyToOne(() => PermissionEntity, {
+  @ManyToOne(() => AuthPermissionEntity, {
     cascade: [Cascade.REMOVE],
   })
-  permission: PermissionEntity;
+  permission: AuthPermissionEntity;
 }

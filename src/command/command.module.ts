@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { AuthUserCommandModule } from '@/command/auth-user';
 import { KafkaCommandModule } from '@/command/kafka';
-import { UserCommandModule } from '@/command/user';
 import { CommonModule } from '@/common';
 import configs from '@/configs';
 import { getEnvFilePath } from '@/configs/utils';
@@ -18,7 +18,7 @@ import { InfraModule } from '@/infra';
     CommonModule,
     InfraModule,
     KafkaCommandModule,
-    UserCommandModule,
+    AuthUserCommandModule,
   ],
 })
 export class CommandModule {}

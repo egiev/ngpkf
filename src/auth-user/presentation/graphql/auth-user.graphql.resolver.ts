@@ -5,7 +5,7 @@ import { UserSerialization } from '@/auth-user/presentation/user.serialization';
 import { Response } from '@/common/response/decorators';
 
 @Resolver()
-export class UserResolver {
+export class AuthUserGraphqlResolver {
   constructor(
     private readonly getUsersUseCase: GetUsersUseCase,
     private readonly createUserUseCase: CreateUserUseCase,

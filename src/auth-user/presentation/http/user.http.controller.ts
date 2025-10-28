@@ -8,7 +8,7 @@ import { Response } from '@/common/response/decorators';
 @ApiTags('Users')
 @ApiBearerAuth('accessToken')
 @Controller({ path: 'users' })
-export class UserHttpController {
+export class AuthUserHttpController {
   constructor(
     private readonly getUsersUseCase: GetUsersUseCase,
     private readonly createUserUseCase: CreateUserUseCase,

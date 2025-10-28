@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { UserInfrastructureModule } from '@/auth-user/infrastructure/user.infrastructure.module';
+import { AuthUserInfrastructureModule } from '@/auth-user/infrastructure/auth-user.infrastructure.module';
 import { IsPermissionExistsConstraint } from '@/common/validation/rules';
 
 @Module({
-  imports: [UserInfrastructureModule],
+  imports: [AuthUserInfrastructureModule],
   providers: [IsPermissionExistsConstraint],
   exports: [IsPermissionExistsConstraint],
 })

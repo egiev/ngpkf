@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { UpdateUserPermissionsRequest } from '@/auth-user/application/requests';
-import { User } from '@/auth-user/domain/entities';
-import { UserRepositoryPort } from '@/auth-user/domain/ports';
+import { AuthUser } from '@/auth-user/domain/entities';
+import { AuthUserRepositoryPort } from '@/auth-user/domain/ports';
 import { PermissionNameVO } from '@/auth-user/domain/value-objects';
 import { UseCase } from '@/common/ddd';
 
 @Injectable()
-export class UpdateUserPermissionsUseCase implements UseCase<UpdateUserPermissionsRequest, User> {
-  constructor(private readonly userRepository: UserRepositoryPort) {}
+export class UpdateUserPermissionsUseCase implements UseCase<UpdateUserPermissionsRequest, AuthUser> {
+  constructor(private readonly authUserRepository: AuthUserRepositoryPort) {}
 
-  async execute(params: UpdateUserPermissionsRequest): Promise<User> {
+  async execute(params: UpdateUserPermissionsRequest): Promise<AuthUser> {
     const { id, newPermissions } = params;
 
-    const user = await this.userRepository.getOneById(id);
+    const user = await this.authUserRepository.getOneById(id);
 
     if (!user) {
       // TODO: Creaete exception
@@ -23,7 +23,7 @@ export class UpdateUserPermissionsUseCase implements UseCase<UpdateUserPermissio
 
     user.setPermissions(newPermissionVOs);
 
-    await this.userRepository.save(user);
+    await this.authUserRepository.save(user);
 
     return user;
   }

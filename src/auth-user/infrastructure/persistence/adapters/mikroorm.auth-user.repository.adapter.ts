@@ -1,29 +1,35 @@
 import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { User } from '@/auth-user/domain/entities';
-import { UserRepositoryPort } from '@/auth-user/domain/ports';
-import { PermissionEntity, UserEntity, UserPermissionEntity } from '@/auth-user/infrastructure/persistence/entities';
+import { Injectable } from '@nestjs/common';
+import { AuthUser } from '@/auth-user/domain/entities';
+import { AuthUserRepositoryPort } from '@/auth-user/domain/ports';
+import {
+  AuthPermissionEntity,
+  AuthUserEntity,
+  AuthUserPermissionEntity,
+} from '@/auth-user/infrastructure/persistence/entities';
 import { ENUM_DATABASE } from '@/common/database/constants';
 
-export class MikroormUserRepositoryAdapter implements UserRepositoryPort {
+@Injectable()
+export class MikroormAuthUserRepositoryAdapter implements AuthUserRepositoryPort {
   constructor(
-    @InjectRepository(UserEntity, ENUM_DATABASE.Postgres)
-    private readonly repository: EntityRepository<UserEntity>,
+    @InjectRepository(AuthUserEntity, ENUM_DATABASE.Postgres)
+    private readonly repository: EntityRepository<AuthUserEntity>,
   ) {}
 
-  async save(user: User): Promise<void> {
+  async save(user: AuthUser): Promise<void> {
     const { permissionNames, groupNames, groupPermissionNames, ...primitives } = user.toPrimitives();
     const em = this.repository.getEntityManager();
-    const entity = await em.upsert(UserEntity, primitives);
+    const entity = await em.upsert(AuthUserEntity, primitives);
 
     // Sync permissions
     if (permissionNames) {
       entity.permissions.removeAll();
 
-      const permissionEntities = await em.find(PermissionEntity, { name: { $in: permissionNames } });
+      const permissionEntities = await em.find(AuthPermissionEntity, { name: { $in: permissionNames } });
 
       for (const permission of permissionEntities) {
-        const userPermission = em.create(UserPermissionEntity, { user: entity, permission });
+        const userPermission = em.create(AuthUserPermissionEntity, { user: entity, permission });
         entity.permissions.add(userPermission);
       }
     }
@@ -31,14 +37,14 @@ export class MikroormUserRepositoryAdapter implements UserRepositoryPort {
     await em.flush();
   }
 
-  async getAll(): Promise<User[]> {
+  async getAll(): Promise<AuthUser[]> {
     const entities = await this.repository.findAll({
       populate: ['permissions.permission', 'groups.group.permissions.permission'],
     });
     return entities.map((entity) => this.mapToDomain(entity));
   }
 
-  async getOneById(id: string): Promise<User | null> {
+  async getOneById(id: string): Promise<AuthUser | null> {
     const entity = await this.repository.findOne(
       { id },
       { populate: ['permissions.permission', 'groups.group.permissions.permission'] },
@@ -47,7 +53,7 @@ export class MikroormUserRepositoryAdapter implements UserRepositoryPort {
     return this.mapToDomain(entity);
   }
 
-  async getOneByUsername(username: string): Promise<User | null> {
+  async getOneByUsername(username: string): Promise<AuthUser | null> {
     const entity = await this.repository.findOne(
       { username },
       { populate: ['permissions.permission', 'groups.group.permissions.permission'] },
@@ -65,14 +71,14 @@ export class MikroormUserRepositoryAdapter implements UserRepositoryPort {
     return count > 0;
   }
 
-  private mapToDomain(entity: UserEntity): User {
+  private mapToDomain(entity: AuthUserEntity): AuthUser {
     const permissionNames = entity.permissions.getItems().map((up) => up.permission.name);
     const groupNames = entity.groups.getItems().map((ug) => ug.group.name);
     const groupPermissionNames = entity.groups
       .getItems()
       .flatMap((ug) => ug.group.permissions.getItems().map((up) => up.permission.name));
 
-    return User.fromPrimitives({
+    return AuthUser.fromPrimitives({
       id: entity.id,
       username: entity.username,
       passwordHash: entity.passwordHash,

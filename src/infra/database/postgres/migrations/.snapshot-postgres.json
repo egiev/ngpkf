@@ -45,19 +45,19 @@
           "mappedType": "datetime"
         }
       },
-      "name": "groups",
+      "name": "auth_groups",
       "schema": "public",
       "indexes": [
         {
           "columnNames": ["name"],
           "composite": false,
-          "keyName": "groups_name_unique",
+          "keyName": "auth_groups_name_unique",
           "constraint": true,
           "primary": false,
           "unique": true
         },
         {
-          "keyName": "groups_pkey",
+          "keyName": "auth_groups_pkey",
           "columnNames": ["id"],
           "composite": false,
           "constraint": true,
@@ -112,19 +112,19 @@
           "mappedType": "datetime"
         }
       },
-      "name": "permissions",
+      "name": "auth_permissions",
       "schema": "public",
       "indexes": [
         {
           "columnNames": ["name"],
           "composite": false,
-          "keyName": "permissions_name_unique",
+          "keyName": "auth_permissions_name_unique",
           "constraint": true,
           "primary": false,
           "unique": true
         },
         {
-          "keyName": "permissions_pkey",
+          "keyName": "auth_permissions_pkey",
           "columnNames": ["id"],
           "composite": false,
           "constraint": true,
@@ -169,11 +169,11 @@
           "mappedType": "string"
         }
       },
-      "name": "group_permissions",
+      "name": "auth_group_permissions",
       "schema": "public",
       "indexes": [
         {
-          "keyName": "group_permissions_pkey",
+          "keyName": "auth_group_permissions_pkey",
           "columnNames": ["id"],
           "composite": false,
           "constraint": true,
@@ -183,20 +183,259 @@
       ],
       "checks": [],
       "foreignKeys": {
-        "group_permissions_group_id_foreign": {
-          "constraintName": "group_permissions_group_id_foreign",
+        "auth_group_permissions_group_id_foreign": {
+          "constraintName": "auth_group_permissions_group_id_foreign",
           "columnNames": ["group_id"],
-          "localTableName": "public.group_permissions",
+          "localTableName": "public.auth_group_permissions",
           "referencedColumnNames": ["id"],
-          "referencedTableName": "public.groups",
+          "referencedTableName": "public.auth_groups",
           "deleteRule": "cascade"
         },
-        "group_permissions_permission_id_foreign": {
-          "constraintName": "group_permissions_permission_id_foreign",
+        "auth_group_permissions_permission_id_foreign": {
+          "constraintName": "auth_group_permissions_permission_id_foreign",
           "columnNames": ["permission_id"],
-          "localTableName": "public.group_permissions",
+          "localTableName": "public.auth_group_permissions",
           "referencedColumnNames": ["id"],
-          "referencedTableName": "public.permissions",
+          "referencedTableName": "public.auth_permissions",
+          "deleteRule": "cascade"
+        }
+      },
+      "nativeEnums": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "username": {
+          "name": "username",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "is_super_user": {
+          "name": "is_super_user",
+          "type": "boolean",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "default": "false",
+          "mappedType": "boolean"
+        },
+        "is_staff": {
+          "name": "is_staff",
+          "type": "boolean",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "default": "false",
+          "mappedType": "boolean"
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "default": "true",
+          "mappedType": "boolean"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 6,
+          "mappedType": "datetime"
+        }
+      },
+      "name": "auth_users",
+      "schema": "public",
+      "indexes": [
+        {
+          "columnNames": ["username"],
+          "composite": false,
+          "keyName": "auth_users_username_unique",
+          "constraint": true,
+          "primary": false,
+          "unique": true
+        },
+        {
+          "keyName": "auth_users_pkey",
+          "columnNames": ["id"],
+          "composite": false,
+          "constraint": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {},
+      "nativeEnums": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "group_id": {
+          "name": "group_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 255,
+          "mappedType": "string"
+        }
+      },
+      "name": "auth_user_groups",
+      "schema": "public",
+      "indexes": [
+        {
+          "keyName": "auth_user_groups_pkey",
+          "columnNames": ["id"],
+          "composite": false,
+          "constraint": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "auth_user_groups_user_id_foreign": {
+          "constraintName": "auth_user_groups_user_id_foreign",
+          "columnNames": ["user_id"],
+          "localTableName": "public.auth_user_groups",
+          "referencedColumnNames": ["id"],
+          "referencedTableName": "public.auth_users",
+          "deleteRule": "cascade"
+        },
+        "auth_user_groups_group_id_foreign": {
+          "constraintName": "auth_user_groups_group_id_foreign",
+          "columnNames": ["group_id"],
+          "localTableName": "public.auth_user_groups",
+          "referencedColumnNames": ["id"],
+          "referencedTableName": "public.auth_groups",
+          "deleteRule": "cascade"
+        }
+      },
+      "nativeEnums": {}
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 255,
+          "mappedType": "string"
+        },
+        "permission_id": {
+          "name": "permission_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 255,
+          "mappedType": "string"
+        }
+      },
+      "name": "auth_user_permissions",
+      "schema": "public",
+      "indexes": [
+        {
+          "keyName": "auth_user_permissions_pkey",
+          "columnNames": ["id"],
+          "composite": false,
+          "constraint": true,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "auth_user_permissions_user_id_foreign": {
+          "constraintName": "auth_user_permissions_user_id_foreign",
+          "columnNames": ["user_id"],
+          "localTableName": "public.auth_user_permissions",
+          "referencedColumnNames": ["id"],
+          "referencedTableName": "public.auth_users",
+          "deleteRule": "cascade"
+        },
+        "auth_user_permissions_permission_id_foreign": {
+          "constraintName": "auth_user_permissions_permission_id_foreign",
+          "columnNames": ["permission_id"],
+          "localTableName": "public.auth_user_permissions",
+          "referencedColumnNames": ["id"],
+          "referencedTableName": "public.auth_permissions",
           "deleteRule": "cascade"
         }
       },
@@ -301,6 +540,15 @@
       "columns": {
         "id": {
           "name": "id",
+          "type": "uuid",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "uuid"
+        },
+        "user_id": {
+          "name": "user_id",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
@@ -309,8 +557,8 @@
           "length": 255,
           "mappedType": "string"
         },
-        "username": {
-          "name": "username",
+        "totp_secret_key": {
+          "name": "totp_secret_key",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
@@ -319,45 +567,15 @@
           "length": 255,
           "mappedType": "string"
         },
-        "password": {
-          "name": "password",
-          "type": "varchar(255)",
+        "last_request_at": {
+          "name": "last_request_at",
+          "type": "timestamptz",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
-          "length": 255,
-          "mappedType": "string"
-        },
-        "is_super_user": {
-          "name": "is_super_user",
-          "type": "boolean",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "default": "false",
-          "mappedType": "boolean"
-        },
-        "is_staff": {
-          "name": "is_staff",
-          "type": "boolean",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "default": "false",
-          "mappedType": "boolean"
-        },
-        "is_active": {
-          "name": "is_active",
-          "type": "boolean",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "default": "true",
-          "mappedType": "boolean"
+          "nullable": true,
+          "length": 6,
+          "mappedType": "datetime"
         },
         "created_at": {
           "name": "created_at",
@@ -384,14 +602,6 @@
       "schema": "public",
       "indexes": [
         {
-          "columnNames": ["username"],
-          "composite": false,
-          "keyName": "users_username_unique",
-          "constraint": true,
-          "primary": false,
-          "unique": true
-        },
-        {
           "keyName": "users_pkey",
           "columnNames": ["id"],
           "composite": false,
@@ -408,6 +618,15 @@
       "columns": {
         "id": {
           "name": "id",
+          "type": "uuid",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "uuid"
+        },
+        "code": {
+          "name": "code",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
@@ -416,32 +635,32 @@
           "length": 255,
           "mappedType": "string"
         },
-        "user_id": {
-          "name": "user_id",
-          "type": "varchar(255)",
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
-          "length": 255,
-          "mappedType": "string"
+          "length": 6,
+          "mappedType": "datetime"
         },
-        "group_id": {
-          "name": "group_id",
-          "type": "varchar(255)",
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": true,
-          "length": 255,
-          "mappedType": "string"
+          "length": 6,
+          "mappedType": "datetime"
         }
       },
-      "name": "user_groups",
+      "name": "whitelisted_order_items",
       "schema": "public",
       "indexes": [
         {
-          "keyName": "user_groups_pkey",
+          "keyName": "whitelisted_order_items_pkey",
           "columnNames": ["id"],
           "composite": false,
           "constraint": true,
@@ -450,90 +669,7 @@
         }
       ],
       "checks": [],
-      "foreignKeys": {
-        "user_groups_user_id_foreign": {
-          "constraintName": "user_groups_user_id_foreign",
-          "columnNames": ["user_id"],
-          "localTableName": "public.user_groups",
-          "referencedColumnNames": ["id"],
-          "referencedTableName": "public.users",
-          "deleteRule": "cascade"
-        },
-        "user_groups_group_id_foreign": {
-          "constraintName": "user_groups_group_id_foreign",
-          "columnNames": ["group_id"],
-          "localTableName": "public.user_groups",
-          "referencedColumnNames": ["id"],
-          "referencedTableName": "public.groups",
-          "deleteRule": "cascade"
-        }
-      },
-      "nativeEnums": {}
-    },
-    {
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "length": 255,
-          "mappedType": "string"
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "length": 255,
-          "mappedType": "string"
-        },
-        "permission_id": {
-          "name": "permission_id",
-          "type": "varchar(255)",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "length": 255,
-          "mappedType": "string"
-        }
-      },
-      "name": "user_permissions",
-      "schema": "public",
-      "indexes": [
-        {
-          "keyName": "user_permissions_pkey",
-          "columnNames": ["id"],
-          "composite": false,
-          "constraint": true,
-          "primary": true,
-          "unique": true
-        }
-      ],
-      "checks": [],
-      "foreignKeys": {
-        "user_permissions_user_id_foreign": {
-          "constraintName": "user_permissions_user_id_foreign",
-          "columnNames": ["user_id"],
-          "localTableName": "public.user_permissions",
-          "referencedColumnNames": ["id"],
-          "referencedTableName": "public.users",
-          "deleteRule": "cascade"
-        },
-        "user_permissions_permission_id_foreign": {
-          "constraintName": "user_permissions_permission_id_foreign",
-          "columnNames": ["permission_id"],
-          "localTableName": "public.user_permissions",
-          "referencedColumnNames": ["id"],
-          "referencedTableName": "public.permissions",
-          "deleteRule": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "nativeEnums": {}
     }
   ],

@@ -3,8 +3,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AuthModule } from '@/auth';
-import { UserModule } from '@/auth-user';
-import { UserResolver } from '@/auth-user/presentation/graphql';
 
 @Module({
   imports: [
@@ -21,8 +19,7 @@ import { UserResolver } from '@/auth-user/presentation/graphql';
       }),
     }),
     AuthModule,
-    UserModule,
   ],
-  providers: [UserResolver],
+  providers: [],
 })
 export class GraphqlApiModule {}

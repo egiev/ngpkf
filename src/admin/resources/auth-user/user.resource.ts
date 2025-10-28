@@ -1,15 +1,15 @@
 import { ResourceWithOptions } from 'adminjs';
-import { UserEntity } from '@/auth-user/infrastructure/persistence/entities';
+import { AuthUserEntity } from '@/auth-user/infrastructure/persistence/entities';
 import { AdminContext } from '../../common/types';
 import { actions } from './user.actions';
 import { properties } from './user.properties';
 import { buildUserRelations } from './user.relations';
 
-export function buildUserResource(context: AdminContext): ResourceWithOptions {
+export function buildAuthUserResource(context: AdminContext): ResourceWithOptions {
   const userRelations = buildUserRelations(context);
 
   return {
-    resource: { model: UserEntity, orm: context.orm },
+    resource: { model: AuthUserEntity, orm: context.orm },
     options: {
       titleProperty: 'username',
       navigation: { name: null, icon: 'UserPlus' },

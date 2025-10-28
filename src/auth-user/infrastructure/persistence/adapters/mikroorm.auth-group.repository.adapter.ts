@@ -1,15 +1,15 @@
 import { EntityRepository } from '@mikro-orm/mongodb';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
-import { GroupRepositoryPort } from '@/auth-user/domain/ports';
-import { GroupEntity } from '@/auth-user/infrastructure/persistence/entities';
+import { AuthGroupRepositoryPort } from '@/auth-user/domain/ports';
+import { AuthGroupEntity } from '@/auth-user/infrastructure/persistence/entities';
 import { ENUM_DATABASE } from '@/common/database/constants';
 
 @Injectable()
-export class MikoormGroupRepositoryAdapter implements GroupRepositoryPort {
+export class MikoormAuthGroupRepositoryAdapter implements AuthGroupRepositoryPort {
   constructor(
-    @InjectRepository(GroupEntity, ENUM_DATABASE.Postgres)
-    private readonly repository: EntityRepository<GroupEntity>,
+    @InjectRepository(AuthGroupEntity, ENUM_DATABASE.Postgres)
+    private readonly repository: EntityRepository<AuthGroupEntity>,
   ) {}
 
   async existsByName(name: string): Promise<boolean> {

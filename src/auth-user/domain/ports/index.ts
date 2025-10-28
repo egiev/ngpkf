@@ -1,3 +1,3 @@
-export * from './group.repository.port';
-export * from './permission.repository.port';
-export * from './user.repository.port';
+export * from './auth-group.repository.port';
+export * from './auth-permission.repository.port';
+export * from './auth-user.repository.port';

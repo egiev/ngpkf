@@ -1,12 +1,12 @@
 import { Collection, Entity, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { Exclude } from 'class-transformer';
 import { v4 } from 'uuid';
-import { UserGroupEntity } from './user-group.entity';
-import { UserPermissionEntity } from './user-permission.entity';
+import { AuthUserGroupEntity } from './user-group.entity';
+import { AuthUserPermissionEntity } from './user-permission.entity';
 
 @Exclude()
 @Entity({ tableName: 'auth_users' })
-export class UserEntity {
+export class AuthUserEntity {
   @PrimaryKey()
   id: string = v4();
 
@@ -16,11 +16,11 @@ export class UserEntity {
   @Property({ fieldName: 'password' })
   passwordHash!: string;
 
-  @OneToMany(() => UserGroupEntity, (up) => up.user, { eager: true })
-  groups = new Collection<UserGroupEntity>(this);
+  @OneToMany(() => AuthUserGroupEntity, (up) => up.user, { eager: true })
+  groups = new Collection<AuthUserGroupEntity>(this);
 
-  @OneToMany(() => UserPermissionEntity, (up) => up.user, { eager: true })
-  permissions = new Collection<UserPermissionEntity>(this);
+  @OneToMany(() => AuthUserPermissionEntity, (up) => up.user, { eager: true })
+  permissions = new Collection<AuthUserPermissionEntity>(this);
 
   @Property({ default: false })
   isSuperUser: boolean;
@@ -31,7 +31,7 @@ export class UserEntity {
   @Property({ default: true })
   isActive: boolean;
 
-  @Property({ nullable: true })
+  @Property({ defaultRaw: 'now()', nullable: true })
   createdAt?: Date = new Date();
 
   @Property({ nullable: true, onUpdate: () => new Date() })

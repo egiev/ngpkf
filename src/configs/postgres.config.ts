@@ -5,12 +5,12 @@ import { registerAs } from '@nestjs/config';
 import { join } from 'path';
 import { ServiceAccountEntity } from '@/api-key/infrastructure/persistence/entities';
 import {
-  GroupEntity,
-  GroupPermissionEntity,
-  PermissionEntity,
-  UserEntity,
-  UserGroupEntity,
-  UserPermissionEntity,
+  AuthGroupEntity,
+  AuthGroupPermissionEntity,
+  AuthPermissionEntity,
+  AuthUserEntity,
+  AuthUserGroupEntity,
+  AuthUserPermissionEntity,
 } from '@/auth-user/infrastructure/persistence/entities';
 import { ENUM_CONFIG_KEY } from '@/configs/constants';
 
@@ -23,12 +23,12 @@ export const postgresConfig = {
   user: process.env.POSTGRES_USER!,
   password: process.env.POSTGRES_PASSWORD,
   entities: [
-    UserEntity,
-    GroupEntity,
-    PermissionEntity,
-    UserGroupEntity,
-    UserPermissionEntity,
-    GroupPermissionEntity,
+    AuthUserEntity,
+    AuthGroupEntity,
+    AuthPermissionEntity,
+    AuthUserGroupEntity,
+    AuthUserPermissionEntity,
+    AuthGroupPermissionEntity,
     ServiceAccountEntity,
   ],
   metadataProvider: TsMorphMetadataProvider,

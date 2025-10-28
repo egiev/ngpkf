@@ -5,7 +5,7 @@ import { Command, CommandRunner, Option } from 'nest-commander';
 import { CreateUserUseCase } from '@/auth-user/application';
 import { ENUM_DATABASE } from '@/common/database/constants';
 
-export type CreateUserOptions = {
+export type CreateAuthUserOptions = {
   username: string;
   password: string;
   superUser: boolean;
@@ -13,11 +13,11 @@ export type CreateUserOptions = {
 
 @Injectable()
 @Command({
-  name: 'user:create',
+  name: 'auth-user:create',
   description: 'Create a new user',
 })
-export class UserCreateCommand extends CommandRunner {
-  private readonly logger = new Logger(UserCreateCommand.name);
+export class AuthUserCreateCommand extends CommandRunner {
+  private readonly logger = new Logger(AuthUserCreateCommand.name);
 
   constructor(
     @InjectEntityManager(ENUM_DATABASE.Postgres) private readonly em: EntityManager,
@@ -26,7 +26,7 @@ export class UserCreateCommand extends CommandRunner {
     super();
   }
 
-  async run(_passedParams: string[], options: CreateUserOptions): Promise<void> {
+  async run(_passedParams: string[], options: CreateAuthUserOptions): Promise<void> {
     this.logger.log(`Received options: ${JSON.stringify(options)}`);
     if (!options.username || !options.password) {
       this.logger.error('Username and password are required');
@@ -34,12 +34,12 @@ export class UserCreateCommand extends CommandRunner {
     }
 
     await RequestContext.create(this.em, async () => {
-      this.logger.log(`Starting ${UserCreateCommand.name} command`);
+      this.logger.log(`Starting ${AuthUserCreateCommand.name} command`);
       await this.createUserUseCase.execute({
         ...options,
         isSuperUser: options.superUser,
       });
-      this.logger.log(`${UserCreateCommand.name} command finished`);
+      this.logger.log(`${AuthUserCreateCommand.name} command finished`);
     });
   }
 

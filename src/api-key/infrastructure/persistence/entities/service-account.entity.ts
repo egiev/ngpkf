@@ -15,8 +15,8 @@ export class ServiceAccountEntity {
   @Property({ default: true })
   isActive: boolean;
 
-  @Property({ nullable: true })
-  createdAt?: Date = new Date();
+  @Property({ defaultRaw: 'now()', nullable: true })
+  createdAt: Date = new Date();
 
   @Property({ nullable: true, onUpdate: () => new Date() })
   updatedAt?: Date = new Date();

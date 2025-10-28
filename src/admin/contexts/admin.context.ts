@@ -16,10 +16,12 @@ export async function buildAdminContext(app: INestApplication): Promise<AdminCon
   const { RelationType, owningRelationSettingsFeature, targetRelationSettingsFeature } = adminJSRelationsModule;
 
   const orm = await init();
-  const em = app.get<EntityManager>(getEntityManagerToken(ENUM_DATABASE.Postgres));
+  const postgresEm = app.get<EntityManager>(getEntityManagerToken(ENUM_DATABASE.Postgres));
 
   const configService = app.get(ConfigService);
   const loginWithCredentialsUseCase = app.get(LoginWithCredentialsUseCase);
+
+  // TODO: use common module
   const hashingService = app.get(HashingPort);
   const idGeneratorService = app.get(IdGeneratorPort);
 
@@ -28,7 +30,7 @@ export async function buildAdminContext(app: INestApplication): Promise<AdminCon
   return {
     componentLoader,
     orm,
-    em,
+    postgresEm,
     licenseKey,
     services: {
       configService,

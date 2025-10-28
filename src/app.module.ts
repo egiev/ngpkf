@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
-import { GraphqlApiModule, HttpApiModule } from '@/apis';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { AuthModule } from '@/auth';
 import { CommonModule } from '@/common';
 import config from '@/configs';
 import { getEnvFilePath } from '@/configs/utils';
@@ -16,11 +17,14 @@ import { AppGuard } from './app.guard';
       load: config,
       expandVariables: true,
     }),
+    ThrottlerModule.forRoot({
+      throttlers: [{ ttl: 60000, limit: 60 }],
+    }),
     CommonModule,
     InfraModule,
-
-    HttpApiModule,
-    GraphqlApiModule,
+    AuthModule,
+    // HttpApiModule,
+    // GraphqlApiModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: AppGuard }],
 })

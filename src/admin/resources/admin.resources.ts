@@ -1,22 +1,22 @@
 import { ResourceWithOptions } from 'adminjs';
 import { buildApiKeyResource } from '@/admin/resources/api-key';
-import { buildGroupResource } from '@/admin/resources/group';
-import { buildPermissionResource } from '@/admin/resources/permission';
-import { buildUserResource } from '@/admin/resources/user';
+import { buildAuthGroupResource } from '@/admin/resources/auth-group';
+import { buildAuthPermissionResource } from '@/admin/resources/auth-permission';
+import { buildAuthUserResource } from '@/admin/resources/auth-user';
 import {
-  GroupPermissionEntity,
-  UserGroupEntity,
-  UserPermissionEntity,
+  AuthGroupPermissionEntity,
+  AuthUserGroupEntity,
+  AuthUserPermissionEntity,
 } from '@/auth-user/infrastructure/persistence/entities';
 import { AdminContext } from '../common/types';
 
 export function createResources(context: AdminContext): ResourceWithOptions[] {
   return [
-    buildUserResource(context),
-    buildGroupResource(context),
-    buildPermissionResource(context),
+    buildAuthUserResource(context),
+    buildAuthGroupResource(context),
+    buildAuthPermissionResource(context),
     buildApiKeyResource(context),
-    ...[UserGroupEntity, UserPermissionEntity, GroupPermissionEntity].map((model) => ({
+    ...[AuthUserGroupEntity, AuthUserPermissionEntity, AuthGroupPermissionEntity].map((model) => ({
       resource: {
         model,
         orm: context.orm,

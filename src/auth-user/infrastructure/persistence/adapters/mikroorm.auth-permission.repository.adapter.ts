@@ -1,15 +1,15 @@
 import { EntityRepository } from '@mikro-orm/mongodb';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
-import { PermissionRepositoryPort } from '@/auth-user/domain/ports';
-import { PermissionEntity } from '@/auth-user/infrastructure/persistence/entities';
+import { AuthPermissionRepositoryPort } from '@/auth-user/domain/ports';
+import { AuthPermissionEntity } from '@/auth-user/infrastructure/persistence/entities';
 import { ENUM_DATABASE } from '@/common/database/constants';
 
 @Injectable()
-export class MikoormPermissionRepositoryAdapter implements PermissionRepositoryPort {
+export class MikoormAuthPermissionRepositoryAdapter implements AuthPermissionRepositoryPort {
   constructor(
-    @InjectRepository(PermissionEntity, ENUM_DATABASE.Postgres)
-    private readonly repository: EntityRepository<PermissionEntity>,
+    @InjectRepository(AuthPermissionEntity, ENUM_DATABASE.Postgres)
+    private readonly repository: EntityRepository<AuthPermissionEntity>,
   ) {}
 
   async existsByName(name: string): Promise<boolean> {

@@ -1,23 +1,23 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { CreateUserRequest } from '@/auth-user/application/requests';
-import { User } from '@/auth-user/domain/entities';
+import { AuthUser } from '@/auth-user/domain/entities';
 import { UsernameAlreadyExistError } from '@/auth-user/domain/errors';
-import { UserRepositoryPort } from '@/auth-user/domain/ports';
+import { AuthUserRepositoryPort } from '@/auth-user/domain/ports';
 import { UseCase } from '@/common/ddd/use-case';
 import { HashingPort, IdGeneratorPort } from '@/common/helpers/ports';
 
 @Injectable()
-export class CreateUserUseCase implements UseCase<CreateUserRequest, User> {
+export class CreateUserUseCase implements UseCase<CreateUserRequest, AuthUser> {
   private readonly logger = new Logger(CreateUserUseCase.name);
 
   constructor(
-    private readonly userRepository: UserRepositoryPort,
+    private readonly authUserRepository: AuthUserRepositoryPort,
     private readonly idGenerator: IdGeneratorPort,
     private readonly hashing: HashingPort,
   ) {}
 
-  async execute(params: CreateUserRequest): Promise<User> {
-    const usernameExist = await this.userRepository.existByUsername(params.username);
+  async execute(params: CreateUserRequest): Promise<AuthUser> {
+    const usernameExist = await this.authUserRepository.existByUsername(params.username);
 
     if (usernameExist) {
       // TODO: Create exception
@@ -30,14 +30,14 @@ export class CreateUserUseCase implements UseCase<CreateUserRequest, User> {
 
     const hashedPassword = await this.hashing.hash(params.password);
 
-    const user = User.create({
+    const user = AuthUser.create({
       id,
       username: params.username,
       hashedPassword,
       isSuperUser: params.isSuperUser,
     });
 
-    await this.userRepository.save(user);
+    await this.authUserRepository.save(user);
     this.logger.log('User successfully created', user);
     return user;
   }

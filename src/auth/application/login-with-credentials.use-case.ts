@@ -1,6 +1,6 @@
 import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
-import { User } from '@/auth-user/domain/entities';
-import { UserRepositoryPort } from '@/auth-user/domain/ports';
+import { AuthUser } from '@/auth-user/domain/entities';
+import { AuthUserRepositoryPort } from '@/auth-user/domain/ports';
 import { LoginWithCredentialsRequest } from '@/auth/application/requests';
 import { JwtPayload } from '@/auth/domain/types';
 import { AuthTokenVO } from '@/auth/domain/value-objects';
@@ -12,15 +12,15 @@ export class LoginWithCredentialsUseCase implements UseCase<LoginWithCredentials
   private readonly logger = new Logger(LoginWithCredentialsUseCase.name);
 
   constructor(
-    private readonly userRepository: UserRepositoryPort,
+    private readonly authUserRepository: AuthUserRepositoryPort,
     private readonly tokenService: TokenPort,
     private readonly hashingService: HashingPort,
   ) {}
 
-  public async authenticateUser(username: string, password: string): Promise<User> {
+  public async authenticateUser(username: string, password: string): Promise<AuthUser> {
     this.logger.log(`Logging in user ${username}`);
 
-    const user = await this.userRepository.getOneByUsername(username);
+    const user = await this.authUserRepository.getOneByUsername(username);
 
     if (!user) {
       throw new UnauthorizedException('Invalid username or password');

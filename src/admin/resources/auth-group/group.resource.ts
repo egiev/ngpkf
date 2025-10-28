@@ -1,13 +1,13 @@
 import { ResourceWithOptions } from 'adminjs';
 import { AdminContext } from '@/admin/common/types';
-import { GroupEntity } from '@/auth-user/infrastructure/persistence/entities';
+import { AuthGroupEntity } from '@/auth-user/infrastructure/persistence/entities';
 import { createGroupRelations } from './group.relations';
 
-export function buildGroupResource(context: AdminContext): ResourceWithOptions {
+export function buildAuthGroupResource(context: AdminContext): ResourceWithOptions {
   const groupRelations = createGroupRelations(context);
 
   return {
-    resource: { model: GroupEntity, orm: context.orm },
+    resource: { model: AuthGroupEntity, orm: context.orm },
     options: {
       navigation: { name: null, icon: 'Users' },
     },

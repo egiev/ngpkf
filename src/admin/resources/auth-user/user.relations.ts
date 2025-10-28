@@ -8,7 +8,7 @@ export function buildUserRelations(context: AdminContext): RelationsFeatureOptio
       junction: {
         joinKey: 'user',
         inverseJoinKey: 'group',
-        throughResourceId: 'UserGroupEntity',
+        throughResourceId: 'AuthUserGroupEntity',
       },
       target: {
         resourceId: 'GroupEntity',
@@ -23,10 +23,10 @@ export function buildUserRelations(context: AdminContext): RelationsFeatureOptio
       junction: {
         joinKey: 'user',
         inverseJoinKey: 'permission',
-        throughResourceId: 'UserPermissionEntity',
+        throughResourceId: 'AuthUserPermissionEntity',
       },
       target: {
-        resourceId: 'PermissionEntity',
+        resourceId: 'AuthPermissionEntity',
       },
       deleteOptions: {
         enableDeleteRelation: false,

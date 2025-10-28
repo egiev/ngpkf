@@ -7,7 +7,7 @@ import { HashingPort, IdGeneratorPort } from '@/common/helpers/ports';
 
 export type AdminContext = {
   orm: MikroORM;
-  em: EntityManager;
+  postgresEm: EntityManager;
   componentLoader: ComponentLoader;
   services: {
     configService: ConfigService;

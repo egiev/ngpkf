@@ -1,7 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import ms, { StringValue } from 'ms';
+import ms from 'ms';
 import { Token, TokenPort } from '@/common/helpers/ports';
 import { jwtConfig, refreshJwtConfig } from '@/configs';
 
@@ -29,7 +29,7 @@ export class JwtTokenAdapter implements TokenPort {
     try {
       payload = await this.jwtService.verifyAsync(token, this.refreshJwtConfiguration);
     } catch {
-      throw new Error('Invalid or expired refresh token');
+      throw new UnauthorizedException('Invalid or expired refresh token');
     }
 
     const refreshPayload = { ...payload };
@@ -44,8 +44,16 @@ export class JwtTokenAdapter implements TokenPort {
     return { accessToken, refreshToken, expiresIn, expirationTimestamp };
   }
 
+  async verify(token: string): Promise<Token> {
+    try {
+      return await this.jwtService.verify(token);
+    } catch {
+      throw new UnauthorizedException('Invalid or expired token');
+    }
+  }
+
   private getAccessTokenExpiresInSeconds(): number {
-    const expiry = this.jwtConfigConfiguration.signOptions.expiresIn as StringValue;
+    const expiry = this.jwtConfigConfiguration.signOptions.expiresIn;
 
     const milliseconds = ms(expiry);
 
