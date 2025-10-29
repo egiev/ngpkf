@@ -23,7 +23,7 @@ import { AppGuard } from './app.guard';
       throttlers: [{ ttl: 60000, limit: 60 }],
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'client'),
+      rootPath: join(__dirname, '..', 'public'),
     }),
     CommonModule,
     InfraModule,
