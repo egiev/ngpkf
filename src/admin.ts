@@ -20,7 +20,7 @@ export default async function (app: INestApplication) {
   const auth = createAuthAdmin(adminContext);
   const sessionStore = createSessionStore(adminContext);
 
-  adminContext.componentLoader.override('SidebarResourceSection', './admin/ui/components/sidebar.component');
+  adminContext.componentLoader.override('SidebarResourceSection', './admin/ui/components/sidebar.component.jsx');
 
   const adminJs = new AdminJS({
     rootPath: '/admin',
@@ -30,7 +30,7 @@ export default async function (app: INestApplication) {
       logo: '',
     },
     dashboard: {
-      component: adminContext.componentLoader.add('Dashboard', './admin/ui/pages/dashboard.page'),
+      component: adminContext.componentLoader.add('Dashboard', './admin/ui/pages/dashboard.page.jsx'),
     },
     componentLoader: adminContext.componentLoader,
     resources,
@@ -44,13 +44,14 @@ export default async function (app: INestApplication) {
             AuthGroupEntity: 'Groups',
             AuthPermissionEntity: 'Permissions',
             ServiceAccountEntity: 'Service Accounts',
-            'Access & Security': 'Access & Security',
           },
         },
       },
     },
   });
-  await adminJs.watch();
+
+  if (process.env.NODE_ENV === 'local') await adminJs.watch();
+  else await adminJs.initialize();
 
   const adminRouter = AdminJSExpress.buildAuthenticatedRouter(adminJs, auth, null, sessionStore);
 

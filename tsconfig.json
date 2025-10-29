@@ -22,5 +22,7 @@
     "module": "nodenext",
     "target": "esnext",
     "jsx": "react-jsx"
+    // "allowJs": true
   }
+  // "include": ["src/**/*", "src/admin/ui/**/*.jsx"]
 }

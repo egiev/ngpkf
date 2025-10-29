@@ -1,9 +1,5 @@
 import { Navigation } from '@adminjs/design-system';
-import {
-  useNavigationResources,
-  useTranslation,
-  ViewHelpers,
-} from 'adminjs';
+import { useNavigationResources, useTranslation, ViewHelpers } from 'adminjs';
 import { useLocation, useNavigate } from 'react-router';
 
 const SidebarResourceSection = ({ resources }) => {
@@ -22,7 +18,7 @@ const SidebarResourceSection = ({ resources }) => {
     isSelected: location.pathname === h.dashboardUrl(),
   };
 
-  elements.unshift(dashboard)
+  elements.unshift(dashboard);
 
   const updatedElements = elements.map((el) => {
     if (el.label === 'Datasets') {
@@ -35,12 +31,7 @@ const SidebarResourceSection = ({ resources }) => {
     return el;
   });
 
-  return (
-    <Navigation
-      label={translateLabel('navigation')}
-      elements={updatedElements}
-    />
-  )
-}
+  return <Navigation label={translateLabel('navigation')} elements={updatedElements} />;
+};
 
-export default SidebarResourceSection
+export default SidebarResourceSection;
