@@ -55,3 +55,10 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Github
 .github
+
+# Generated Files
+/files
+/tmp
+
+# AdminJS
+./adminjs

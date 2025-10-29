@@ -2,7 +2,7 @@ import { MikroOrmModule, MikroOrmModuleOptions } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ENUM_DATABASE } from '@/common/database/constants';
-import { ENUM_CONFIG_KEY } from '@/config';
+import { ENUM_CONFIG_KEY } from '@/configs';
 
 @Module({
   imports: [

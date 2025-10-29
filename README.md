@@ -133,7 +133,9 @@ npm test
 Create a super user via CLI:
 
 ```sh
-npm run app:start:local:cli -- user:create -u <email> -p <password> --super-user
+npm run app:start:local:cli -- auth-user:create -u <email> -p <password> --super-user
+npm run app:start:dev:cli -- auth-user:create -u <email> -p <password> --super-user
+npm run app:start:prod:cli -- auth-user:create -u <email> -p <password> --super-user
 ```
 
 ---

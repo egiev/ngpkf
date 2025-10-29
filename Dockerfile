@@ -11,8 +11,9 @@ WORKDIR /usr/src/app
 COPY --chown=node:node package*.json ./
 COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node . .
+ENV HUSKY=0
 RUN npm run build
-RUN npm ci --only=production --ignore-scripts && npm cache clean --force
+RUN npm ci && npm cache clean --force
 USER node
 
 # Production Stage
@@ -20,6 +21,7 @@ FROM node:22.14.0-alpine AS production
 WORKDIR /usr/src/app
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
+COPY tsconfig.json ./
+COPY package.json ./
 EXPOSE 3000
-# CMD ["node", "dist/main.js"]
 CMD node dist/cli.js kafka:create-topics && node dist/main.js

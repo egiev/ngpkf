@@ -1,11 +1,24 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { AuthUserCommandModule } from '@/command/auth-user';
 import { KafkaCommandModule } from '@/command/kafka';
-import { UserCommandModule } from '@/command/user';
-import { CommonModule } from '@/common/common.module';
-import { DatabaseModule } from '@/infra/database/database.module';
-import { KafkaModule } from '@/infra/kafka';
+import { CommonModule } from '@/common';
+import configs from '@/configs';
+import { getEnvFilePath } from '@/configs/utils';
+import { InfraModule } from '@/infra';
 
 @Module({
-  imports: [CommonModule, DatabaseModule, KafkaModule, KafkaCommandModule, UserCommandModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: getEnvFilePath(),
+      load: configs,
+      expandVariables: true,
+    }),
+    CommonModule,
+    InfraModule,
+    KafkaCommandModule,
+    AuthUserCommandModule,
+  ],
 })
 export class CommandModule {}

@@ -1,20 +1,10 @@
-import { Global, Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { Module } from '@nestjs/common';
+import { GuardModule } from '@/common/guards';
 import { HelperModule } from '@/common/helpers';
-import config from '@/config';
-import { getEnvFilePath } from '@/config/utils';
+import { ValidationModule } from '@/common/validation';
 
-@Global()
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: getEnvFilePath(),
-      load: config,
-      expandVariables: true,
-    }),
-    HelperModule,
-  ],
-  exports: [HelperModule],
+  imports: [ValidationModule, HelperModule, GuardModule],
+  exports: [ValidationModule, HelperModule, GuardModule],
 })
 export class CommonModule {}

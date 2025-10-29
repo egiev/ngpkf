@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { CommandFactory } from 'nest-commander';
-import { CommandModule } from '@/command/command.module';
+import { CommandModule } from '@/command';
 
 async function bootstrap() {
   const logger = new Logger();
@@ -12,4 +12,5 @@ async function bootstrap() {
   process.exit(0);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 bootstrap();

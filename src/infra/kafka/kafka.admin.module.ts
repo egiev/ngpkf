@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { KafkaAdminService } from '@/infra/kafka/services';
+import { KafkaAdminAdapter } from '@/infra/kafka/adapters';
 
 @Module({
-  providers: [KafkaAdminService],
-  exports: [KafkaAdminService],
+  providers: [KafkaAdminAdapter],
+  exports: [KafkaAdminAdapter],
 })
 export class KafkaAdminModule {}

@@ -5,4 +5,8 @@ services:
     environment:
       - NODE_ENV=dev
     env_file:
-      - .env.prod
+      - .env.dev
+
+  postgres:
+    env_file:
+      - .env.dev
