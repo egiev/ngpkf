@@ -20,13 +20,35 @@ export default async function (app: INestApplication) {
   const auth = createAuthAdmin(adminContext);
   const sessionStore = createSessionStore(adminContext);
 
+  adminContext.componentLoader.override('SidebarResourceSection', './admin/ui/components/sidebar.component');
+
   const adminJs = new AdminJS({
     rootPath: '/admin',
     branding: {
       companyName: 'Company Name',
+      favicon: '',
+      logo: '',
+    },
+    dashboard: {
+      component: adminContext.componentLoader.add('Dashboard', './admin/ui/pages/dashboard.page'),
     },
     componentLoader: adminContext.componentLoader,
     resources,
+    locale: {
+      language: 'en',
+      availableLanguages: ['en'],
+      translations: {
+        en: {
+          labels: {
+            AuthUserEntity: 'Users',
+            AuthGroupEntity: 'Groups',
+            AuthPermissionEntity: 'Permissions',
+            ServiceAccountEntity: 'Service Accounts',
+            'Access & Security': 'Access & Security',
+          },
+        },
+      },
+    },
   });
   await adminJs.watch();
 

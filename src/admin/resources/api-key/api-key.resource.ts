@@ -1,5 +1,5 @@
 import { ResourceWithOptions } from 'adminjs';
-import { AdminContext } from '@/admin/common/types';
+import { AdminContext, AdminUser } from '@/admin/common/types';
 import { ServiceAccountEntity } from '@/api-key/infrastructure/persistence/entities';
 
 export function buildApiKeyResource(context: AdminContext): ResourceWithOptions {
@@ -10,8 +10,14 @@ export function buildApiKeyResource(context: AdminContext): ResourceWithOptions 
   return {
     resource: { model: ServiceAccountEntity, orm: context.orm },
     options: {
-      navigation: { name: null, icon: 'Shield' },
+      navigation: { icon: 'Key' },
       actions: {
+        list: {
+          isAccessible: ({ currentAdmin }) => {
+            const adminUser = currentAdmin as AdminUser;
+            return adminUser.isSuperUser;
+          },
+        },
         new: {
           layout: ['clientId'],
           before: async (request) => {

@@ -1,10 +1,8 @@
 import { Collection, Entity, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
-import { Exclude } from 'class-transformer';
 import { v4 } from 'uuid';
 import { AuthUserGroupEntity } from './user-group.entity';
 import { AuthUserPermissionEntity } from './user-permission.entity';
 
-@Exclude()
 @Entity({ tableName: 'auth_users' })
 export class AuthUserEntity {
   @PrimaryKey()

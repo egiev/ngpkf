@@ -1,2 +1,2 @@
-export * from './group.relations';
-export * from './group.resource';
+export * from './auth-group.relations';
+export * from './auth-group.resource';

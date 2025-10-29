@@ -18,7 +18,12 @@ export function createAuthAdmin({
             );
           }
 
-          return { email: user.getUsername(), permissions: user.getAggregatedPermissions() };
+          return {
+            email: user.getUsername(),
+            permissions: user.getAggregatedPermissions(),
+            isSuperUser: user.getIsSuperUser(),
+            isStaff: user.getIsStaff(),
+          };
         });
       } catch (error) {
         if (error instanceof UnauthorizedException) {

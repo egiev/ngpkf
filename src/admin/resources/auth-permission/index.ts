@@ -1,1 +1,1 @@
-export * from './permission.resource';
+export * from './auth-permission.resource';

@@ -10,9 +10,5 @@
     "prettier-plugin-packagejson"
   ],
   "importOrder": ["<THIRD_PARTY_MODULES>", "^@/.*$", "^[./]"],
-  "importOrderParserPlugins": [
-    "typescript",
-    "classProperties",
-    "decorators-legacy"
-  ]
+  "importOrderParserPlugins": ["typescript", "jsx", "classProperties", "decorators-legacy"]
 }

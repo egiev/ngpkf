@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { join } from 'path';
 import { AuthModule } from '@/auth';
 import { CommonModule } from '@/common';
 import config from '@/configs';
@@ -19,6 +21,9 @@ import { AppGuard } from './app.guard';
     }),
     ThrottlerModule.forRoot({
       throttlers: [{ ttl: 60000, limit: 60 }],
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
     }),
     CommonModule,
     InfraModule,

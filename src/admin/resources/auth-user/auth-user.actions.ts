@@ -1,5 +1,5 @@
 import { ActionResponse, BaseRecord, ResourceOptions } from 'adminjs';
-import { AdminContext } from '@/admin/common/types';
+import { AdminContext, AdminUser } from '@/admin/common/types';
 
 export function actions(context: AdminContext): ResourceOptions['actions'] {
   const {
@@ -7,6 +7,12 @@ export function actions(context: AdminContext): ResourceOptions['actions'] {
   } = context;
 
   return {
+    list: {
+      isAccessible: ({ currentAdmin }) => {
+        const adminUser = currentAdmin as AdminUser;
+        return adminUser.isSuperUser;
+      },
+    },
     new: {
       before: async (request) => {
         if (request.payload?.password) {
