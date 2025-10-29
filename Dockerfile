@@ -21,6 +21,7 @@ FROM node:22.14.0-alpine AS production
 WORKDIR /usr/src/app
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
+COPY --chown=node:node --from=build /usr/src/app/public ./public
 COPY tsconfig.json ./
 COPY package.json ./
 EXPOSE 3000
