@@ -27,7 +27,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "local:db:migrate:up": "npm run compose:local -- exec -ti app npx mikro-orm migration:up --config ./src/configs/postgres.config.ts --context postgres",
-    "local:migrate:create": "npm run compose:local -- exec -ti app npx mikro-orm migration:create --config ./src/configs/postgres.config.ts --context postgres",
+    "local:db:migrate:create": "npm run compose:local -- exec -ti app npx mikro-orm migration:create --config ./src/configs/postgres.config.ts --context postgres",
     "prepare": "husky",
     "prod:db:migrate:create": "npm run compose:prod -- exec -ti app npx mikro-orm migration:create --config ./dist/configs/postgres.config.js --context postgres",
     "prod:db:migrate:up": "npm run compose:prod -- exec -ti app npx mikro-orm migration:up --config ./dist/configs/postgres.config.js --context postgres",
