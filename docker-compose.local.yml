@@ -12,7 +12,7 @@ services:
 
   postgres:
     env_file:
-      - .env.dev
+      - .env.local
 
   pgadmin:
     restart: always

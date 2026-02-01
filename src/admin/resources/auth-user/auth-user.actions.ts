@@ -1,5 +1,5 @@
-import { ActionResponse, BaseRecord, ResourceOptions } from 'adminjs';
 import { AdminContext, AdminUser } from '@/admin/common/types';
+import { ActionResponse, BaseRecord, ResourceOptions } from 'adminjs';
 
 export function actions(context: AdminContext): ResourceOptions['actions'] {
   const {
@@ -15,8 +15,8 @@ export function actions(context: AdminContext): ResourceOptions['actions'] {
     },
     new: {
       before: async (request) => {
-        if (request.payload?.password) {
-          request.payload.password = await hashingService.hash(request.payload.password as string);
+        if (request.payload?.passwordHash) {
+          request.payload.passwordHash = await hashingService.hash(request.payload.passwordHash as string);
         }
         return request;
       },
@@ -24,10 +24,10 @@ export function actions(context: AdminContext): ResourceOptions['actions'] {
     edit: {
       before: async (request) => {
         if (request.method === 'post') {
-          if (request.payload?.password) {
-            request.payload.password = await hashingService.hash(request.payload.password as string);
+          if (request.payload?.passwordHash) {
+            request.payload.passwordHash = await hashingService.hash(request.payload.passwordHash as string);
           } else {
-            delete request.payload?.password;
+            delete request.payload?.passwordHash;
           }
         }
         return request;
@@ -36,7 +36,7 @@ export function actions(context: AdminContext): ResourceOptions['actions'] {
         const record = response.record as BaseRecord;
 
         if (record && record.params) {
-          record.params.password = undefined;
+          record.params.passwordHash = undefined;
         }
         return response;
       },
