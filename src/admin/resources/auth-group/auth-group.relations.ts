@@ -11,7 +11,7 @@ export function createGroupRelations(context: AdminContext): RelationsFeatureOpt
         throughResourceId: 'GroupPermissionEntity',
       },
       target: {
-        resourceId: 'PermissionEntity',
+        resourceId: 'AuthPermissionEntity',
       },
       deleteOptions: {
         enableDeleteRelation: false,
