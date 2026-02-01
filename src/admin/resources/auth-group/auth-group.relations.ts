@@ -8,7 +8,7 @@ export function createGroupRelations(context: AdminContext): RelationsFeatureOpt
       junction: {
         joinKey: 'group',
         inverseJoinKey: 'permission',
-        throughResourceId: 'GroupPermissionEntity',
+        throughResourceId: 'AuthGroupPermissionEntity',
       },
       target: {
         resourceId: 'AuthPermissionEntity',
