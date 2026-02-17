@@ -11,7 +11,7 @@ export function buildUserRelations(context: AdminContext): RelationsFeatureOptio
         throughResourceId: 'AuthUserGroupEntity',
       },
       target: {
-        resourceId: 'GroupEntity',
+        resourceId: 'AuthGroupEntity',
       },
       deleteOptions: {
         enableDeleteRelation: false,

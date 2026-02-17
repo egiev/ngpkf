@@ -25,6 +25,7 @@ import { AppGuard } from './app.guard';
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
+      serveRoot: `${process.env.PROJECT_BASE_PATH}/assets`,
     }),
     CommonModule,
     InfraModule,

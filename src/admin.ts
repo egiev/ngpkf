@@ -23,11 +23,13 @@ export default async function (app: INestApplication) {
   adminContext.componentLoader.override('SidebarResourceSection', './admin/ui/components/sidebar.component.jsx');
 
   const adminJs = new AdminJS({
-    rootPath: '/admin',
+    rootPath: `${process.env.PROJECT_BASE_PATH}/admin`,
+    loginPath: `${process.env.PROJECT_BASE_PATH}/admin/login`,
+    logoutPath: `${process.env.PROJECT_BASE_PATH}/admin/logout`,
     branding: {
       companyName: 'Company Name',
-      favicon: '',
-      logo: '',
+      favicon: `${process.env.PROJECT_BASE_PATH}/favicon.ico`,
+      logo: `${process.env.PROJECT_BASE_PATH}/assets/logo.png`,
     },
     dashboard: {
       component: adminContext.componentLoader.add('Dashboard', './admin/ui/pages/dashboard.page.jsx'),
