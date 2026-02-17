@@ -101,30 +101,4 @@ export class AuthUser {
       data.isStaff,
     );
   }
-
-  // static fromPrimitives(data: AuthUserPrimitives): AuthUser {
-  // return new AuthUser(
-  //   data.id,
-  //   data.username,
-  //   data.passwordHash,
-  //   data.permissionNames,
-  //   data.groupNames,
-  //   data.groupPermissionNames,
-  //   data.isSuperUser,
-  //   data.isStaff,
-  // );
-  // }
-
-  // toPrimitives(): AuthUserPrimitives {
-  //   return {
-  //     id: this.id,
-  //     username: this.username,
-  //     passwordHash: this.passwordHash,
-  //     permissionNames: this.permissionNames,
-  //     groupNames: this.groupNames,
-  //     groupPermissionNames: this.groupPermissionNames,
-  //     isSuperUser: this.isSuperUser,
-  //     isStaff: this.isStaff,
-  //   };
-  // }
 }

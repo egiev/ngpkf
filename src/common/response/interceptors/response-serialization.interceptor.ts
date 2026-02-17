@@ -19,22 +19,25 @@ export class ResponseSerializationInterceptor<T> implements NestInterceptor<Prom
       context.getHandler(),
     );
 
-    if (!classSerialization) {
-      return next.handle();
-    }
-
     return next.handle().pipe(
       map((data: unknown) => {
-        if (!data) return data;
+        let transformed = data;
 
         // Directly transform plain object into DTO
-        const transformed = plainToInstance(
-          classSerialization,
-          data,
-          classSerializationOptions ?? { excludeExtraneousValues: true },
-        );
+        if (classSerialization) {
+          transformed = plainToInstance(
+            classSerialization,
+            data,
+            classSerializationOptions ?? { excludeExtraneousValues: true },
+          );
+        }
 
-        return transformed;
+        return {
+          success: true,
+          // message: data?.message ?? null,
+          data: transformed ?? null,
+          timestamp: new Date().toISOString(),
+        };
       }),
     );
   }

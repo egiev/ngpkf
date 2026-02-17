@@ -1,4 +1,5 @@
-import { BadRequestException, ValidationError, ValidationPipe } from '@nestjs/common';
+import { ValidationError, ValidationPipe } from '@nestjs/common';
+import { BadRequestAppException } from '../exceptions';
 
 export class CustomValidationPipe extends ValidationPipe {
   constructor() {
@@ -8,7 +9,7 @@ export class CustomValidationPipe extends ValidationPipe {
       transform: true,
       exceptionFactory: (errors: ValidationError[]) => {
         const formattedErrors = errors.flatMap((err) => this.formatError(err));
-        return new BadRequestException({ statusCode: 400, error: 'Bad Request', errors: formattedErrors });
+        return new BadRequestAppException('Bad Request', formattedErrors);
       },
     });
   }

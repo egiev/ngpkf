@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { useContainer } from 'class-validator';
 import adminInit from './admin';
 import { AppModule } from './app.module';
+import { AppExceptionFilter } from './common/filters/app-exception.filter';
 import { CustomValidationPipe } from './common/pipes';
 import kafkaInit from './kafka';
 import swaggerInit from './swagger';
@@ -18,6 +19,7 @@ async function bootstrap() {
   swaggerInit(app);
 
   app.setGlobalPrefix('api/v1');
+  app.useGlobalFilters(new AppExceptionFilter());
   app.useGlobalPipes(new CustomValidationPipe());
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
