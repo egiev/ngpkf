@@ -1,13 +1,3 @@
-import {
-  GroupNameVO,
-  GroupPermissionNameVO,
-  HashedPasswordVO,
-  PermissionNameVO,
-  UserId,
-  UsernameVO,
-} from '@/auth-user/domain/value-objects';
-import { BaseDomainEntity } from '@/common/ddd';
-
 export type AuthUserPrimitives = {
   id: string;
   username: string;
@@ -30,28 +20,28 @@ export type AuthUserCreationParams = {
   isStaff?: boolean;
 };
 
-export class AuthUser implements BaseDomainEntity<AuthUserPrimitives> {
+export class AuthUser {
   constructor(
-    private readonly id: UserId,
-    private username: UsernameVO,
-    private password: HashedPasswordVO,
-    private permissionNames: PermissionNameVO[],
-    private groupNames: GroupNameVO[],
-    private groupPermissionNames: GroupPermissionNameVO[],
+    private readonly id: string,
+    private readonly username: string,
+    private readonly passwordHash: string,
+    private permissionNames: string[] = [],
+    private groupNames: string[] = [],
+    private groupPermissionNames: string[] = [],
     private isSuperUser: boolean = false,
     private isStaff: boolean = false,
   ) {}
 
   public getId(): string {
-    return this.id.value;
+    return this.id;
   }
 
   public getUsername(): string {
-    return this.username.value;
+    return this.username;
   }
 
   public getPasswordHash(): string {
-    return this.password.value;
+    return this.passwordHash;
   }
 
   public getIsSuperUser(): boolean {
@@ -62,31 +52,24 @@ export class AuthUser implements BaseDomainEntity<AuthUserPrimitives> {
     return this.isStaff;
   }
 
-  public getAggregatedPermissions(): string[] {
-    const permissions = this.permissionNames.map((vo) => vo.value);
-    const groupPermissions = this.permissionNames.map((vo) => vo.value);
-    const allPermissions = [...permissions, ...groupPermissions];
+  getAggregatedPermissions(): string[] {
+    const allPermissions = [...this.permissionNames, ...this.groupPermissionNames];
+
     return Array.from(new Set(allPermissions));
   }
 
-  public setPermissions(newPermissions: PermissionNameVO[]): void {
-    this.permissionNames = newPermissions;
+  setPermissions(permissions: string[]): void {
+    this.permissionNames = permissions;
   }
 
   static create(data: AuthUserCreationParams): AuthUser {
-    const permissionNameVOs = (data.permissionNames ?? []).map((value) => PermissionNameVO.create(value));
-    const groupNameVOs = (data.groupNames ?? []).map((value) => GroupNameVO.create(value));
-    const groupPermissionNameVOs = (data.groupPermissionNames ?? []).map((value) =>
-      GroupPermissionNameVO.create(value),
-    );
-
     return new AuthUser(
-      UserId.create(data.id),
-      UsernameVO.create(data.username),
-      HashedPasswordVO.create(data.hashedPassword),
-      permissionNameVOs,
-      groupNameVOs,
-      groupPermissionNameVOs,
+      data.id,
+      data.username,
+      data.hashedPassword,
+      data.permissionNames ?? [],
+      data.groupNames ?? [],
+      data.groupPermissionNames ?? [],
       data.isSuperUser ?? false,
     );
   }
@@ -94,12 +77,12 @@ export class AuthUser implements BaseDomainEntity<AuthUserPrimitives> {
   // Domain to Infrastructure(persistence)
   public toPrimitives(): AuthUserPrimitives {
     return {
-      id: this.id.value,
-      username: this.username.value,
-      passwordHash: this.password.value,
-      permissionNames: this.permissionNames.map((vo) => vo.value),
-      groupNames: this.groupNames.map((vo) => vo.value),
-      groupPermissionNames: this.groupPermissionNames.map((vo) => vo.value),
+      id: this.id,
+      username: this.username,
+      passwordHash: this.passwordHash,
+      permissionNames: this.permissionNames,
+      groupNames: this.groupNames,
+      groupPermissionNames: this.groupPermissionNames,
       isSuperUser: this.isSuperUser,
       isStaff: this.isStaff,
     };
@@ -107,21 +90,41 @@ export class AuthUser implements BaseDomainEntity<AuthUserPrimitives> {
 
   // Infrastructure to Domain
   static fromPrimitives(data: AuthUserPrimitives): AuthUser {
-    const permissionNameVOs = (data.permissionNames ?? []).map((value) => PermissionNameVO.create(value));
-    const groupNamesVOs = (data.groupNames ?? []).map((value) => GroupNameVO.create(value));
-    const groupPermissionnNameVOs = (data.groupPermissionNames ?? []).map((value) =>
-      GroupPermissionNameVO.create(value),
-    );
-
     return new AuthUser(
-      UserId.fromPrimitives(data.id),
-      UsernameVO.fromPrimitives(data.username),
-      HashedPasswordVO.fromPrimitives(data.passwordHash),
-      permissionNameVOs,
-      groupNamesVOs,
-      groupPermissionnNameVOs,
+      data.id,
+      data.username,
+      data.passwordHash,
+      data.permissionNames,
+      data.groupNames,
+      data.groupPermissionNames,
       data.isSuperUser,
       data.isStaff,
     );
   }
+
+  // static fromPrimitives(data: AuthUserPrimitives): AuthUser {
+  // return new AuthUser(
+  //   data.id,
+  //   data.username,
+  //   data.passwordHash,
+  //   data.permissionNames,
+  //   data.groupNames,
+  //   data.groupPermissionNames,
+  //   data.isSuperUser,
+  //   data.isStaff,
+  // );
+  // }
+
+  // toPrimitives(): AuthUserPrimitives {
+  //   return {
+  //     id: this.id,
+  //     username: this.username,
+  //     passwordHash: this.passwordHash,
+  //     permissionNames: this.permissionNames,
+  //     groupNames: this.groupNames,
+  //     groupPermissionNames: this.groupPermissionNames,
+  //     isSuperUser: this.isSuperUser,
+  //     isStaff: this.isStaff,
+  //   };
+  // }
 }

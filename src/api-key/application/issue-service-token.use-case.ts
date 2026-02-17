@@ -2,12 +2,12 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { IssueServiceTokenRequest } from '@/api-key/application/request/issue-service-token.request';
 import { ServiceAccountRepositoryPort } from '@/api-key/domain/ports/service-account.repository.port';
 import { ServiceAccount } from '@/api-key/domain/types/service-account.type';
-import { AuthTokenVO } from '@/auth/domain/value-objects/auth-token.vo';
 import { UseCase } from '@/common/ddd';
 import { TokenPort } from '@/common/helpers/ports/token.port';
+import { IssueServiceTokenResponse } from './response';
 
 @Injectable()
-export class IssueServiceTokenUseCase implements UseCase<IssueServiceTokenRequest, AuthTokenVO> {
+export class IssueServiceTokenUseCase implements UseCase<IssueServiceTokenRequest, IssueServiceTokenResponse> {
   constructor(
     private readonly serviceAccountRepository: ServiceAccountRepositoryPort,
     private readonly tokenService: TokenPort,
@@ -29,18 +29,18 @@ export class IssueServiceTokenUseCase implements UseCase<IssueServiceTokenReques
     return account;
   }
 
-  public async generateTokenFromValidatedAccount(account: ServiceAccount): Promise<AuthTokenVO> {
+  public async generateTokenFromValidatedAccount(account: ServiceAccount): Promise<IssueServiceTokenResponse> {
     const payload = {
-      sub: account.id,
+      id: account.id,
       clientId: account.clientId,
     };
 
     const token = await this.tokenService.signAccessToken(payload);
 
-    return AuthTokenVO.create(token);
+    return token;
   }
 
-  async execute(params: IssueServiceTokenRequest): Promise<AuthTokenVO> {
+  async execute(params: IssueServiceTokenRequest): Promise<IssueServiceTokenResponse> {
     const account = await this.validateServiceAccount(params.clientId, params.apiKey);
     return this.generateTokenFromValidatedAccount(account);
   }

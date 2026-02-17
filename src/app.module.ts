@@ -9,6 +9,7 @@ import { CommonModule } from '@/common';
 import config from '@/configs';
 import { getEnvFilePath } from '@/configs/utils';
 import { InfraModule } from '@/infra';
+import { HttpApiModule } from './apis';
 import { AppGuard } from './app.guard';
 
 @Module({
@@ -28,7 +29,7 @@ import { AppGuard } from './app.guard';
     CommonModule,
     InfraModule,
     AuthModule,
-    // HttpApiModule,
+    HttpApiModule,
     // GraphqlApiModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: AppGuard }],

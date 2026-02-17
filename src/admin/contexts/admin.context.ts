@@ -21,7 +21,6 @@ export async function buildAdminContext(app: INestApplication): Promise<AdminCon
   const configService = app.get(ConfigService);
   const loginWithCredentialsUseCase = app.get(LoginWithCredentialsUseCase);
 
-  // TODO: use common module
   const hashingService = app.get(HashingPort);
   const idGeneratorService = app.get(IdGeneratorPort);
 

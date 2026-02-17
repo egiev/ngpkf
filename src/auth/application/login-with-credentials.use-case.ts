@@ -3,12 +3,12 @@ import { AuthUser } from '@/auth-user/domain/entities';
 import { AuthUserRepositoryPort } from '@/auth-user/domain/ports';
 import { LoginWithCredentialsRequest } from '@/auth/application/requests';
 import { JwtPayload } from '@/auth/domain/types';
-import { AuthTokenVO } from '@/auth/domain/value-objects';
 import { UseCase } from '@/common/ddd';
 import { HashingPort, TokenPort } from '@/common/helpers/ports';
+import { LoginWithCredentialsResponse } from './response';
 
 @Injectable()
-export class LoginWithCredentialsUseCase implements UseCase<LoginWithCredentialsRequest, AuthTokenVO> {
+export class LoginWithCredentialsUseCase implements UseCase<LoginWithCredentialsRequest, LoginWithCredentialsResponse> {
   private readonly logger = new Logger(LoginWithCredentialsUseCase.name);
 
   constructor(
@@ -35,12 +35,12 @@ export class LoginWithCredentialsUseCase implements UseCase<LoginWithCredentials
     return user;
   }
 
-  async execute(params: LoginWithCredentialsRequest): Promise<AuthTokenVO> {
+  async execute(params: LoginWithCredentialsRequest): Promise<LoginWithCredentialsResponse> {
     const { username, password } = params;
     const user = await this.authenticateUser(username, password);
 
     const payload: JwtPayload = {
-      sub: user.getId(),
+      id: user.getId(),
       username: user.getUsername(),
       permissions: user.getAggregatedPermissions(),
       isSuperUser: user.getIsSuperUser(),
@@ -48,6 +48,6 @@ export class LoginWithCredentialsUseCase implements UseCase<LoginWithCredentials
 
     const token = await this.tokenService.signAccessToken(payload);
 
-    return AuthTokenVO.create(token);
+    return { ...token, user };
   }
 }

@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { RefreshTokenRequest } from '@/auth/application/requests';
-import { AuthTokenVO } from '@/auth/domain/value-objects';
 import { UseCase } from '@/common/ddd';
 import { TokenPort } from '@/common/helpers/ports';
+import { RefreshTokenResponse } from './response';
 
 @Injectable()
-export class RefreshTokenUseCase implements UseCase<RefreshTokenRequest, AuthTokenVO> {
+export class RefreshTokenUseCase implements UseCase<RefreshTokenRequest, RefreshTokenResponse> {
   constructor(private readonly tokenService: TokenPort) {}
 
-  async execute(params: RefreshTokenRequest): Promise<AuthTokenVO> {
+  async execute(params: RefreshTokenRequest): Promise<RefreshTokenResponse> {
     const token = await this.tokenService.refreshToken(params.refreshToken);
-    return AuthTokenVO.create(token);
+    return token;
   }
 }

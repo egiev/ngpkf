@@ -1,8 +1,7 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { ClassConstructor, ClassTransformOptions, instanceToPlain, plainToInstance } from 'class-transformer';
+import { ClassConstructor, ClassTransformOptions, plainToInstance } from 'class-transformer';
 import { map, Observable } from 'rxjs';
-import { BaseDomainEntity } from '@/common/ddd';
 import { RESPONSE_SERIALIZATION_KEY, RESPONSE_SERIALIZATION_OPTIONS_KEY } from '@/common/response/decorators';
 
 @Injectable()
@@ -28,31 +27,15 @@ export class ResponseSerializationInterceptor<T> implements NestInterceptor<Prom
       map((data: unknown) => {
         if (!data) return data;
 
-        let raw: unknown;
-
-        if (Array.isArray(data)) {
-          const entities = data.filter(this.isDomainEntity);
-          raw = entities.length ? entities.map((item) => item.toPrimitives()) : [];
-        } else if (this.isDomainEntity(data)) {
-          raw = data.toPrimitives();
-        } else {
-          return data;
-        }
-
+        // Directly transform plain object into DTO
         const transformed = plainToInstance(
           classSerialization,
-          raw,
-          classSerializationOptions ?? {
-            excludeExtraneousValues: true,
-          },
+          data,
+          classSerializationOptions ?? { excludeExtraneousValues: true },
         );
 
-        return instanceToPlain(transformed, { excludeExtraneousValues: true });
+        return transformed;
       }),
     );
   }
-
-  isDomainEntity = <T>(item: unknown): item is BaseDomainEntity<T> => {
-    return typeof item === 'object' && typeof (item as BaseDomainEntity<any>).toPrimitives === 'function';
-  };
 }

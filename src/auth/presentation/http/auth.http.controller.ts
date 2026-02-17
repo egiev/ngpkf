@@ -27,4 +27,10 @@ export class AuthHttpController {
   async refresh(@Body() dto: RefreshTokenDTO) {
     return await this.refreshTokenUseCase.execute(dto);
   }
+
+  @Public()
+  @Post('logout')
+  logout() {
+    return true;
+  }
 }

@@ -1,8 +1,8 @@
-import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { useContainer } from 'class-validator';
 import adminInit from './admin';
 import { AppModule } from './app.module';
+import { CustomValidationPipe } from './common/pipes';
 import kafkaInit from './kafka';
 import swaggerInit from './swagger';
 
@@ -17,7 +17,8 @@ async function bootstrap() {
 
   swaggerInit(app);
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.setGlobalPrefix('api/v1');
+  app.useGlobalPipes(new CustomValidationPipe());
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   await app.listen(process.env.PORT ?? 3000);

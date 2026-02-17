@@ -1,5 +1,5 @@
 export type JwtPayload = {
-  sub: string;
+  id: string;
   username: string;
   permissions: string[];
   isSuperUser: boolean;

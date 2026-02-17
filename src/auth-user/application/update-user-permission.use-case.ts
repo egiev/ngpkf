@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { UpdateUserPermissionsRequest } from '@/auth-user/application/requests';
 import { AuthUser } from '@/auth-user/domain/entities';
 import { AuthUserRepositoryPort } from '@/auth-user/domain/ports';
-import { PermissionNameVO } from '@/auth-user/domain/value-objects';
 import { UseCase } from '@/common/ddd';
 
 @Injectable()
@@ -19,9 +18,7 @@ export class UpdateUserPermissionsUseCase implements UseCase<UpdateUserPermissio
       throw new Error('User not found');
     }
 
-    const newPermissionVOs = newPermissions.map((permission) => PermissionNameVO.create(permission));
-
-    user.setPermissions(newPermissionVOs);
+    user.setPermissions(newPermissions);
 
     await this.authUserRepository.save(user);
 
